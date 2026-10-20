@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "ZONA-001",
+        "sector": "Sector Los Notros, Temuco",
+        "distribuidora": "saesa",
+        "afectados": 234,
+        "nivel": "critico"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-72.5950, -38.7400],
+            [-72.5850, -38.7380],
+            [-72.5800, -38.7440],
+            [-72.5820, -38.7500],
+            [-72.5920, -38.7510],
+            [-72.5970, -38.7460],
+            [-72.5950, -38.7400]
+          ]
+        ]
+      }
+    }
+  ]
+}

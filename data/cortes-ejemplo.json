@@ -1,0 +1,52 @@
+{
+  "zonas": [
+    {
+      "id": "CRT-SAESA-001",
+      "distribuidora": "saesa",
+      "comuna": "Temuco",
+      "sector": "Los Notros - Caupolicán",
+      "clientesAfectados": 234,
+      "estado": "en_reparacion",
+      "horaInicio": "2026-10-19T20:30:00Z",
+      "horaEstimada": "2026-10-19T23:45:00Z",
+      "coordenadas": {
+        "lat": -38.7450,
+        "lng": -72.5885
+      },
+      "causa": "Caída de ramas sobre alimentador principal",
+      "brigadaAsignada": "BRG-045"
+    },
+    {
+      "id": "CRT-SAESA-002",
+      "distribuidora": "saesa",
+      "comuna": "Valdivia",
+      "sector": "Isla Teja - Los Pelúes",
+      "clientesAfectados": 128,
+      "estado": "cuadrilla_en_camino",
+      "horaInicio": "2026-10-19T21:15:00Z",
+      "horaEstimada": "2026-10-20T00:30:00Z",
+      "coordenadas": {
+        "lat": -39.8142,
+        "lng": -73.2514
+      },
+      "causa": "Falla en transformador de distribución",
+      "brigadaAsignada": "BRG-012"
+    },
+    {
+      "id": "CRT-CRELL-003",
+      "distribuidora": "crell",
+      "comuna": "Puerto Varas",
+      "sector": "Costanera Poniente",
+      "clientesAfectados": 89,
+      "estado": "evaluacion",
+      "horaInicio": "2026-10-19T21:40:00Z",
+      "horaEstimada": "2026-10-20T01:00:00Z",
+      "coordenadas": {
+        "lat": -41.3204,
+        "lng": -72.9856
+      },
+      "causa": "Choque de poste de media tensión",
+      "brigadaAsignada": "BRG-089"
+    }
+  ]
+}

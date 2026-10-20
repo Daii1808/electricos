@@ -1,0 +1,491 @@
+/**
+ * ═══════════════════════════════════════════════════════
+ *  main.css — Sistema de diseño global
+ *  Tokens, reset, layout, tipografía, utilidades
+ * ═══════════════════════════════════════════════════════
+ */
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* ─── Tokens de diseño — Modo Claro (default) ──────────────────────────────── */
+:root {
+  /* Marca — se sobreescribe dinámicamente por UIManager.applyCompanyBranding() */
+  --color-brand-primary: #E8A000;
+  --color-brand-accent:  #FF6B00;
+  --color-brand-light:   color-mix(in srgb, var(--color-brand-primary) 15%, transparent);
+
+  /* Superficie */
+  --bg-base:         #FFFFFF;
+  --bg-surface:      #F8F9FA;
+  --bg-surface-2:    #F0F2F5;
+  --bg-overlay:      rgba(255,255,255,0.92);
+  --bg-glass:        rgba(255,255,255,0.80);
+
+  /* Bordes */
+  --border-color:    #E2E8F0;
+  --border-subtle:   #F1F5F9;
+
+  /* Texto */
+  --text-primary:    #0F172A;
+  --text-secondary:  #475569;
+  --text-muted:      #94A3B8;
+  --text-inverse:    #FFFFFF;
+
+  /* Estado */
+  --color-danger:    #DC2626;
+  --color-danger-bg: rgba(220,38,38,0.08);
+  --color-warning:   #D97706;
+  --color-warning-bg:rgba(217,119,6,0.08);
+  --color-success:   #16A34A;
+  --color-success-bg:rgba(22,163,74,0.08);
+  --color-info:      #2563EB;
+  --color-info-bg:   rgba(37,99,235,0.08);
+
+  /* Sombras */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.12);
+  --shadow-xl:  0 16px 48px rgba(0,0,0,0.15);
+
+  /* Bordes redondeados */
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-full:9999px;
+
+  /* Tipografía */
+  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Transiciones */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Layout */
+  --header-height: 64px;
+  --panel-width:   360px;
+}
+
+/* ─── Modo Oscuro ──────────────────────────────────────────────────────────── */
+.dark-mode {
+  --bg-base:         #0A0F1A;
+  --bg-surface:      #111827;
+  --bg-surface-2:    #1C2333;
+  --bg-overlay:      rgba(10,15,26,0.92);
+  --bg-glass:        rgba(17,24,39,0.85);
+
+  --border-color:    #1E2D45;
+  --border-subtle:   #172033;
+
+  --text-primary:    #F1F5F9;
+  --text-secondary:  #94A3B8;
+  --text-muted:      #475569;
+  --text-inverse:    #0F172A;
+
+  --color-danger-bg: rgba(220,38,38,0.15);
+  --color-warning-bg:rgba(217,119,6,0.15);
+  --color-success-bg:rgba(22,163,74,0.15);
+  --color-info-bg:   rgba(37,99,235,0.15);
+
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.30);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.50);
+  --shadow-xl:  0 16px 48px rgba(0,0,0,0.60);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.5;
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+  overflow: hidden;
+  height: 100dvh;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ─── Layout principal ──────────────────────────────────────────────────────── */
+.app-layout {
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app-body {
+  display: grid;
+  grid-template-columns: 1fr var(--panel-width);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+  z-index: 100;
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+/* ── Branding / Logo ── */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-brand-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: background-color var(--transition-base);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-brand-primary) 40%, transparent);
+}
+
+.logo-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--color-brand-primary);
+  transition: color var(--transition-base);
+}
+
+.logo-subtitle {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ── Selector de empresa ── */
+.company-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  transition: background-color var(--transition-base);
+}
+
+.company-selector-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.company-btn {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.3px;
+}
+
+.company-btn:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+.company-btn.active {
+  background: var(--color-brand-primary);
+  color: var(--text-inverse);
+  border-color: var(--color-brand-primary);
+}
+
+/* ── Controles del header ── */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Badge de estado */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+.status-badge.status--active {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid rgba(220,38,38,0.2);
+}
+
+.status-badge.status--resolving {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid rgba(217,119,6,0.2);
+}
+
+.status-badge.status--restored {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(22,163,74,0.2);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status--active .status-dot {
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.6; }
+}
+
+/* Botón tema */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* ─── Panel lateral ─────────────────────────────────────────────────────────── */
+.side-panel {
+  background: var(--bg-base);
+  border-left: 1px solid var(--border-color);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 10;
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.side-panel::-webkit-scrollbar { width: 4px; }
+.side-panel::-webkit-scrollbar-track { background: transparent; }
+.side-panel::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
+
+.panel-section {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.panel-section:last-child {
+  border-bottom: none;
+}
+
+.panel-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: background-color var(--transition-slow), border-color var(--transition-slow);
+}
+
+.card + .card { margin-top: 12px; }
+
+/* ─── Tipografía ────────────────────────────────────────────────────────────── */
+.text-sm   { font-size: 13px; }
+.text-xs   { font-size: 11px; }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.font-mono { font-family: var(--font-mono); }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* ─── Skeleton loader ───────────────────────────────────────────────────────── */
+.skeleton {
+  border-radius: var(--radius-sm);
+  background: transparent;
+  transition: background-color var(--transition-base);
+}
+
+.skeleton--active {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-2) 25%,
+    var(--border-color) 50%,
+    var(--bg-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  color: transparent !important;
+  border-radius: var(--radius-sm);
+  min-height: 1em;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────────── */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transform: translateY(16px) scale(0.95);
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.toast--success { background: var(--color-success); color: white; }
+.toast--error   { background: var(--color-danger);  color: white; }
+.toast--info    { background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-color); }
+
+.toast-icon {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow: auto; }
+
+  .app-layout {
+    grid-template-rows: var(--header-height) 1fr auto;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .app-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 55vw auto;
+    overflow: visible;
+  }
+
+  .side-panel {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    overflow: visible;
+  }
+
+  .company-selector-label,
+  #theme-label,
+  #brigadista-link-label {
+    display: none;
+  }
+
+  .header-brand .logo-subtitle { display: none; }
+
+  .status-badge { padding: 6px 10px; }
+  #status-badge-text { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .app-header { padding: 0 14px; }
+  .panel-section { padding: 16px; }
+}

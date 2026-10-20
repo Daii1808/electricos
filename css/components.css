@@ -1,0 +1,571 @@
+/**
+ * ═══════════════════════════════════════════════════════
+ *  components.css — Cards, badges, botones, animaciones
+ * ═══════════════════════════════════════════════════════
+ */
+
+/* ─── Tarjeta: Detalles del Corte ──────────────────────────────────────────── */
+
+.outage-header-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.reason-icon-bubble {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-danger-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid rgba(220,38,38,0.15);
+}
+
+.outage-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.outage-reason-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-danger);
+  margin-bottom: 3px;
+}
+
+.outage-reason-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+/* ─── Meta info rows ──────────────────────────────────────────────────────── */
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
+}
+
+.meta-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.meta-icon {
+  font-size: 15px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.meta-label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 80px;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.meta-value {
+  color: var(--text-primary);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-value.code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-surface-2);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--color-brand-primary);
+}
+
+/* ─── Countdown ───────────────────────────────────────────────────────────── */
+
+.countdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-color);
+  margin: 12px 0;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.countdown-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--color-brand-primary) 5%, transparent),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.countdown-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+#countdown-display {
+  font-family: var(--font-mono);
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--color-brand-primary);
+  line-height: 1;
+  transition: color var(--transition-base);
+}
+
+.countdown-sublabel {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.countdown-wrapper.countdown--urgent #countdown-display {
+  color: var(--color-danger);
+  animation: urgent-pulse 1s ease-in-out infinite;
+}
+
+@keyframes urgent-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+.countdown-wrapper.countdown--done #countdown-display {
+  color: var(--color-success);
+}
+
+/* ─── ETA pill ───────────────────────────────────────────────────────────── */
+
+.eta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ─── Tarjeta: Brigada ────────────────────────────────────────────────────── */
+
+.brigade-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.brigade-card-header {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--color-brand-primary) 12%, var(--bg-surface)),
+    var(--bg-surface) 70%
+  );
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brigade-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background-size: cover;
+  background-position: center;
+}
+
+.brigade-identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.brigade-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brigade-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.brigade-employee-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-surface-2);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.brigade-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.brigade-status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.brigade-status--route {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.brigade-status--dispatched {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.brigade-status--onsite {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.brigade-status--done {
+  background: var(--bg-surface-2);
+  color: var(--text-muted);
+}
+
+.brigade-status--route::before {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+.brigade-card-body {
+  padding: 14px 16px;
+}
+
+/* ─── Tarjeta: Vehículo ──────────────────────────────────────────────────── */
+
+.vehicle-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.vehicle-icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  border: 1px solid rgba(217,119,6,0.15);
+}
+
+.vehicle-info { flex: 1; min-width: 0; }
+
+.vehicle-plate {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.vehicle-model-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.vehicle-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ─── Botón de Actualización ─────────────────────────────────────────────── */
+
+.refresh-btn-wrapper {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  transition: background-color var(--transition-slow);
+}
+
+#refresh-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--color-brand-primary);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-brand-primary) 40%, transparent);
+}
+
+#refresh-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-brand-primary) 50%, transparent);
+}
+
+#refresh-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+#refresh-btn:disabled {
+  cursor: not-allowed;
+}
+
+#refresh-btn.btn--loading {
+  background: var(--bg-surface-2);
+  color: var(--text-muted);
+  box-shadow: none;
+}
+
+#refresh-btn.btn--cooldown {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+/* Barra de progreso del cooldown */
+#refresh-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-brand-primary);
+  border-radius: 0 2px 2px 0;
+  width: 0%;
+  transition: width 500ms linear;
+}
+
+.refresh-btn-icon {
+  font-size: 16px;
+  transition: transform var(--transition-base);
+}
+
+#refresh-btn.btn--loading .refresh-btn-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Nota anti-spam */
+.refresh-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* ─── Info box ───────────────────────────────────────────────────────────── */
+
+.info-box {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-info-bg);
+  border: 1px solid rgba(37,99,235,0.15);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+.info-box-icon { font-size: 14px; flex-shrink: 0; }
+
+/* ─── Botón ver en mapa ──────────────────────────────────────────────────── */
+
+#view-brigade-on-map {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+#view-brigade-on-map:hover {
+  background: var(--color-brand-primary);
+  color: white;
+  border-color: var(--color-brand-primary);
+}
+
+/* ─── Stats row ──────────────────────────────────────────────────────────── */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.stat-box {
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle);
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+/* ─── ETA bar (brigada) ──────────────────────────────────────────────────── */
+
+.brigade-eta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.brigade-eta-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.eta--arrived {
+  color: var(--color-success) !important;
+}
+
+/* ─── Divisor ────────────────────────────────────────────────────────────── */
+
+.divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 12px 0;
+}
+
+/* ─── Panel toggle (mobile) ──────────────────────────────────────────────── */
+
+.panel-toggle-btn {
+  display: none;
+  width: 100%;
+  padding: 10px 20px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color var(--transition-fast);
+}
+
+.toggle-arrow {
+  transition: transform var(--transition-base);
+  display: inline-block;
+}
+
+.toggle-arrow.arrow--up {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .panel-toggle-btn { display: flex; }
+
+  .side-panel.panel--collapsed .panel-section {
+    display: none;
+  }
+
+  .side-panel.panel--collapsed .refresh-btn-wrapper {
+    display: block;
+  }
+}

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portal de campo para brigadistas eléctricos. Inicia sesión para reportar el estado del corte asignado." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0A0F1A"  media="(prefers-color-scheme: dark)" />
+
+  <title>Portal Brigadista — Corte Eléctrico</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/brigadista.css" />
+</head>
+
+<body>
+<div class="brigadista-app">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PANTALLA DE LOGIN
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div class="login-screen" id="login-screen" role="main">
+
+    <!-- Toggle tema (esquina superior derecha) -->
+    <button id="login-theme-toggle"
+            style="position:absolute;top:16px;right:16px;z-index:10;"
+            class="theme-toggle-btn"
+            aria-label="Cambiar tema">
+      <span id="login-theme-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="login-card">
+
+      <!-- Logo -->
+      <div class="login-logo-area">
+        <div class="login-logo-icon" aria-hidden="true">
+          <span id="portal-logo-icon">⚡</span>
+        </div>
+        <h1 class="login-title">Portal Brigadista</h1>
+        <p class="login-subtitle">
+          <span id="portal-logo-text">SAESA</span> — Acceso exclusivo para personal técnico de terreno
+        </p>
+      </div>
+
+      <!-- Hint de credenciales demo -->
+      <div class="demo-hint" role="note" aria-label="Credenciales de demostración">
+        <strong>🧪 Modo demo — credenciales de prueba:</strong><br>
+        ID: <strong>EMP-12483</strong> · Contraseña: <strong>saesa2026</strong><br>
+        ID: <strong>EMP-09341</strong> · Contraseña: <strong>crell2026</strong>
+      </div>
+
+      <!-- Error global de login -->
+      <div class="login-error-box" id="login-error-box" role="alert" aria-live="polite">
+        <span aria-hidden="true">⚠️</span>
+        <span id="login-error-text">ID o contraseña incorrectos.</span>
+      </div>
+
+      <!-- Formulario -->
+      <form id="login-form" novalidate autocomplete="off">
+
+        <!-- ID de empleado -->
+        <div class="form-group">
+          <label class="form-label" for="login-id">ID de Empleado</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">🪪</span>
+            <input type="text"
+                   id="login-id"
+                   class="form-input"
+                   placeholder="Ej: EMP-12483"
+                   autocomplete="username"
+                   autocapitalize="characters"
+                   spellcheck="false"
+                   aria-required="true"
+                   aria-describedby="id-error" />
+          </div>
+          <span class="form-error" id="id-error" role="alert"></span>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-group">
+          <label class="form-label" for="login-password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon" aria-hidden="true">🔒</span>
+            <input type="password"
+                   id="login-password"
+                   class="form-input"
+                   placeholder="••••••••"
+                   autocomplete="current-password"
+                   aria-required="true"
+                   aria-describedby="pw-error" />
+            <button type="button"
+                    class="password-toggle"
+                    id="pw-toggle"
+                    aria-label="Mostrar contraseña">
+              👁️
+            </button>
+          </div>
+          <span class="form-error" id="pw-error" role="alert"></span>
+        </div>
+
+        <!-- Botón de acceso -->
+        <button type="submit"
+                class="login-btn"
+                id="login-submit-btn">
+          <span class="login-btn-text">Ingresar al portal</span>
+          <div class="login-btn-spinner" aria-hidden="true"></div>
+        </button>
+
+      </form>
+
+      <!-- Footer -->
+      <div class="login-footer">
+        ¿Olvidaste tu contraseña?
+        <a id="forgot-pw-link" role="button" tabindex="0"
+           onclick="alert('Contacta a tu supervisor o al área de TI para restablecer tu acceso.')">
+          Contactar soporte
+        </a>
+        <br><br>
+        <a href="index.html">← Volver al panel de seguimiento</a>
+      </div>
+
+    </div><!-- /login-card -->
+  </div><!-- /login-screen -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       PANTALLA DE DASHBOARD (oculta hasta autenticación)
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div class="dashboard-screen" id="dashboard-screen" role="main" aria-label="Portal de campo del brigadista">
+
+    <!-- ── Header del dashboard ─────────────────────────────────────────── -->
+    <header class="dash-header" role="banner">
+
+      <div class="dash-logo">
+        <div class="dash-logo-icon" aria-hidden="true">
+          <span id="portal-logo-icon-dash">⚡</span>
+        </div>
+        <div>
+          <div class="dash-logo-text">Portal Brigadista</div>
+          <div class="dash-logo-sub">Reporte de terreno</div>
+        </div>
+      </div>
+
+      <div class="dash-user-info">
+        <div>
+          <div class="dash-user-name" id="dash-user-name">—</div>
+          <div class="dash-user-role" id="dash-user-role">—</div>
+        </div>
+        <div class="dash-user-avatar" id="dash-user-avatar" aria-hidden="true">?</div>
+
+        <!-- Toggle tema -->
+        <button id="dash-theme-toggle"
+                class="theme-toggle-btn"
+                style="margin-left:4px"
+                aria-label="Cambiar tema">
+          <span id="dash-theme-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Cerrar sesión -->
+        <button class="logout-btn" id="logout-btn" aria-label="Cerrar sesión">
+          <span aria-hidden="true">⏻</span>
+          <span>Salir</span>
+        </button>
+
+        <!-- Volver al mapa -->
+        <a href="index.html"
+           style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-full);font-size:12px;font-weight:600;color:var(--text-secondary);text-decoration:none;transition:all 150ms ease;"
+           onmouseover="this.style.background='var(--bg-surface-2)'"
+           onmouseout="this.style.background='var(--bg-surface)'"
+           aria-label="Ver panel de seguimiento público">
+          🗺️ <span>Ver mapa</span>
+        </a>
+      </div>
+
+    </header>
+
+    <!-- ── Cuerpo del dashboard ──────────────────────────────────────────── -->
+    <div class="dash-body">
+
+      <!-- Banner del caso activo -->
+      <div class="case-banner" role="region" aria-label="Caso asignado">
+        <div class="case-banner-left">
+          <div class="case-icon-bubble" aria-hidden="true">⚡</div>
+          <div class="case-title-group">
+            <div class="case-label">Caso asignado</div>
+            <div class="case-id-text" id="dash-case-id">CRT-2026-00847</div>
+            <div class="case-reason" id="dash-case-reason">Cargando detalles…</div>
+          </div>
+        </div>
+        <div>
+          <span class="case-status-pill">Corte activo</span>
+          <div style="font-size:11px;color:var(--text-muted);text-align:right;margin-top:5px;">
+            Brigada: <strong id="dash-brigade-id" style="color:var(--text-secondary)">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor del formulario + pantalla de éxito -->
+      <div id="report-form-container" style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- ─── SECCIÓN 1: Estado actual del corte ───────────────────── -->
+        <section class="dash-section" aria-labelledby="status-section-title">
+          <div class="dash-section-header">
+            <div class="dash-section-icon" aria-hidden="true">📡</div>
+            <div>
+              <h2 class="dash-section-title" id="status-section-title">Estado actual del corte</h2>
+            </div>
+            <span class="dash-section-subtitle">Obligatorio</span>
+          </div>
+          <div class="dash-section-body">
+            <div class="status-grid" role="group" aria-label="Selecciona el estado actual">
+
+              <div class="status-option">
+                <input type="radio" name="field-status" id="status-en-ruta" value="en_route" />
+                <label class="status-option-label" for="status-en-ruta">
+                  <span class="status-option-emoji">🚐</span>
+                  <span class="status-option-text">En ruta al sector</span>
+                </label>
+              </div>
+
+              <div class="status-option">
+                <input type="radio" name="field-status" id="status-en-lugar" value="on_site" />
+                <label class="status-option-label" for="status-en-lugar">
+                  <span class="status-option-emoji">📍</span>
+                  <span class="status-option-text">Llegué al lugar</span>
+                </label>
+              </div>
+
+              <div class="status-option">
+                <input type="radio" name="field-status" id="status-trabajando" value="working" />
+                <label class="status-option-label" for="status-trabajando">
+                  <span class="status-option-emoji">🔧</span>
+                  <span class="status-option-text">Trabajando en la falla</span>
+                </label>
+              </div>
+
+              <div class="status-option">
+                <input type="radio" name="field-status" id="status-resuelto" value="resolved" />
+                <label class="status-option-label" for="status-resuelto">
+                  <span class="status-option-emoji">✅</span>
+                  <span class="status-option-text">Servicio repuesto</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── FORMULARIO DE REPORTE ─────────────────────────────────── -->
+        <form id="report-form" novalidate>
+
+          <!-- ─── SECCIÓN 2: Diagnóstico de la falla ────────────────── -->
+          <section class="dash-section" aria-labelledby="diagnosis-section-title">
+            <div class="dash-section-header">
+              <div class="dash-section-icon" aria-hidden="true">🔍</div>
+              <div>
+                <h2 class="dash-section-title" id="diagnosis-section-title">Diagnóstico de la falla</h2>
+              </div>
+            </div>
+            <div class="dash-section-body">
+
+              <!-- Causa confirmada -->
+              <div class="dash-form-group">
+                <label class="dash-label" for="confirmed-cause">
+                  Causa confirmada en terreno
+                  <span class="required-dot" aria-hidden="true"></span>
+                </label>
+                <select id="confirmed-cause" class="dash-select">
+                  <option value="">— Seleccionar causa —</option>
+                  <option value="VEGETATION">🌿 Caída de vegetación sobre tendido</option>
+                  <option value="COLLISION">🚗 Choque de vehículo en poste</option>
+                  <option value="EQUIPMENT_FAILURE">⚙️  Falla de equipo / transformador</option>
+                  <option value="STORM">⛈️  Daño por temporal / viento</option>
+                  <option value="VANDALISM">🚨 Vandalismo o robo de cable</option>
+                  <option value="ANIMAL">🦅 Animal en tendido (ave, roedor)</option>
+                  <option value="OVERLOAD">⚡ Sobrecarga de red</option>
+                  <option value="EXCAVATION">⛏️  Daño por excavación</option>
+                  <option value="OTHER">❓ Otra causa</option>
+                </select>
+              </div>
+
+              <!-- Descripción libre -->
+              <div class="dash-form-group">
+                <label class="dash-label" for="field-description">
+                  Descripción detallada de lo encontrado
+                  <span class="required-dot" aria-hidden="true"></span>
+                </label>
+                <textarea id="field-description"
+                          class="dash-textarea"
+                          placeholder="Ej: Se encontró rama de árbol nativo de aprox. 8 metros caída sobre el conductor de fase A. El aislador quedó fracturado. Zona de acceso con barro, se requirió ingreso a pie."
+                          maxlength="1000"
+                          aria-required="true"
+                          rows="4"></textarea>
+                <div style="text-align:right;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                  Máx. 1000 caracteres
+                </div>
+              </div>
+
+              <!-- Tiempo estimado de reparación -->
+              <div class="dash-form-group">
+                <label class="dash-label">Tiempo estimado para reponer el servicio</label>
+                <div class="time-grid">
+                  <div>
+                    <select id="eta-hours" class="dash-select" aria-label="Horas">
+                      <option value="0">0 horas</option>
+                      <option value="1">1 hora</option>
+                      <option value="2">2 horas</option>
+                      <option value="3">3 horas</option>
+                      <option value="4">4 horas</option>
+                      <option value="5">5+ horas</option>
+                    </select>
+                  </div>
+                  <div>
+                    <select id="eta-minutes" class="dash-select" aria-label="Minutos">
+                      <option value="0">0 minutos</option>
+                      <option value="15">15 minutos</option>
+                      <option value="30" selected>30 minutos</option>
+                      <option value="45">45 minutos</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Materiales requeridos -->
+              <div class="dash-form-group">
+                <label class="dash-label" for="materials-needed">
+                  Materiales o equipos requeridos
+                </label>
+                <input type="text"
+                       id="materials-needed"
+                       class="dash-input"
+                       placeholder="Ej: 1 aislador tipo pin, 15m cable CU 35mm²"
+                       maxlength="200" />
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ─── SECCIÓN 3: Evidencia fotográfica ──────────────────── -->
+          <section class="dash-section" aria-labelledby="photos-section-title">
+            <div class="dash-section-header">
+              <div class="dash-section-icon" aria-hidden="true">📷</div>
+              <div>
+                <h2 class="dash-section-title" id="photos-section-title">Evidencia fotográfica</h2>
+              </div>
+              <span class="dash-section-subtitle">Hasta 8 fotos</span>
+            </div>
+            <div class="dash-section-body">
+
+              <!-- Zona de arrastrar / drop -->
+              <div class="photo-drop-zone"
+                   id="photo-drop-zone"
+                   role="button"
+                   tabindex="0"
+                   aria-label="Zona de carga de fotos — click o arrastrar imágenes aquí">
+                <input type="file"
+                       id="photo-input"
+                       class="photo-drop-input"
+                       accept="image/*"
+                       multiple
+                       aria-hidden="true" />
+                <div class="photo-drop-icon" aria-hidden="true">📸</div>
+                <div class="photo-drop-text">Arrastra fotos aquí o toca para seleccionar</div>
+                <div class="photo-drop-hint">JPG, PNG o HEIC — máx. 8 fotos</div>
+              </div>
+
+              <!-- Grid de preview de fotos -->
+              <div class="photo-preview-grid" id="photo-preview-grid" role="list" aria-label="Fotos adjuntas"></div>
+
+              <!-- Contador -->
+              <div class="photo-count-badge" id="photo-count">Sin fotos adjuntas</div>
+
+            </div>
+          </section>
+
+          <!-- ─── SECCIÓN 4: Notas adicionales ──────────────────────── -->
+          <section class="dash-section" aria-labelledby="notes-section-title">
+            <div class="dash-section-header">
+              <div class="dash-section-icon" aria-hidden="true">📝</div>
+              <h2 class="dash-section-title" id="notes-section-title">Notas adicionales</h2>
+            </div>
+            <div class="dash-section-body">
+              <textarea id="additional-notes"
+                        class="dash-textarea"
+                        placeholder="Cualquier información relevante para el despacho o la supervisión: condiciones de acceso, riesgos, coordinaciones con terceros, etc."
+                        rows="3"
+                        maxlength="500"></textarea>
+            </div>
+          </section>
+
+          <!-- ─── SECCIÓN 5: Confirmación de seguridad + Envío ──────── -->
+          <section class="dash-section" aria-labelledby="confirm-section-title">
+            <div class="dash-section-header">
+              <div class="dash-section-icon" aria-hidden="true">🛡️</div>
+              <h2 class="dash-section-title" id="confirm-section-title">Confirmación y envío</h2>
+            </div>
+            <div class="dash-section-body">
+
+              <!-- Check de seguridad obligatorio -->
+              <label class="safety-check">
+                <input type="checkbox" id="safety-check" aria-required="true" />
+                <div class="safety-check-text">
+                  <strong>⚠️ Declaración de seguridad</strong>
+                  Confirmo que el trabajo se está realizando con los EPP correspondientes, con el protocolo de corte y bloqueo (LOTO) aplicado, y que la información reportada es verídica.
+                </div>
+              </label>
+
+              <!-- Botón de envío -->
+              <button type="submit"
+                      class="submit-report-btn"
+                      id="submit-report-btn"
+                      disabled
+                      style="margin-top:16px;"
+                      aria-label="Enviar reporte de terreno">
+                <span class="btn-label">📤 Enviar reporte al despacho</span>
+                <div class="btn-spinner" aria-hidden="true"></div>
+              </button>
+
+            </div>
+          </section>
+
+        </form><!-- /report-form -->
+
+      </div><!-- /report-form-container -->
+
+      <!-- ─── PANTALLA DE ÉXITO POST-ENVÍO ──────────────────────────────── -->
+      <div class="success-screen" id="success-screen" role="status" aria-live="polite">
+        <div class="success-icon" aria-hidden="true">✅</div>
+        <h2 class="success-title">¡Reporte enviado!</h2>
+        <p class="success-subtitle">
+          Tu informe de terreno fue recibido correctamente por el centro de despacho.
+          El equipo de supervisión tomará las acciones necesarias.
+        </p>
+        <div class="success-case-pill" id="success-case-ref">CRT-2026-00847</div>
+        <button class="new-report-btn" id="new-report-btn">
+          ↺ Enviar otro reporte
+        </button>
+      </div>
+
+    </div><!-- /dash-body -->
+  </div><!-- /dashboard-screen -->
+
+</div><!-- /brigadista-app -->
+
+<!-- Toast del portal -->
+<div id="portal-toast-container" class="toast-container" role="alert" aria-live="assertive" aria-atomic="true"
+     style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:9999;pointer-events:none;"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SCRIPTS — Orden: config → theme → auth → portal
+════════════════════════════════════════════════════════════════════════ -->
+<script src="js/config.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/brigadista-auth.js"></script>
+<script src="js/brigadista-portal.js"></script>
+
+</body>
+</html>
