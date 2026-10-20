@@ -3,337 +3,348 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Plataforma de trazabilidad de cortes eléctricos en tiempo real. Seguimiento de brigadas y estado de reposición para clientes residenciales." />
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0A0F1A" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="Plataforma de Desconexiones Eléctricas en Línea y Trazabilidad en Tiempo Real — Grupo Saesa y Crell." />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#171a20" media="(prefers-color-scheme: dark)" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Trazabilidad de Cortes Eléctricos" />
-  <meta property="og:description" content="Seguimiento en tiempo real de tu corte eléctrico y brigada asignada." />
-  <meta property="og:type" content="website" />
+  <title>Mapa de Desconexiones Eléctricas — Grupo Saesa</title>
 
-  <title>Corte Eléctrico — Seguimiento en Tiempo Real</title>
-
-  <!-- Leaflet CSS (CDN) -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin="" />
 
-  <!-- Estilos propios -->
+  <!-- Estilos del Sistema de Diseño (DESIGN.md) -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/map.css" />
 </head>
 
 <body>
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       LAYOUT PRINCIPAL
-  ════════════════════════════════════════════════════════════════════════ -->
-  <div class="app-layout" role="application" aria-label="Plataforma de trazabilidad eléctrica">
+  <div class="app-layout" role="application">
 
     <!-- ───────────────────────────────────────────────────────────────────
-         ENCABEZADO / HEADER
+         HEADER MINIMALISTA (Chrome no intrusivo)
     ──────────────────────────────────────────────────────────────────── -->
     <header class="app-header" role="banner">
-
-      <!-- Branding / Logo -->
       <div class="header-brand">
-        <div class="logo-container" aria-label="Logo empresa distribuidora">
+        <div class="logo-container" aria-label="Grupo Saesa">
           <div class="logo-icon-wrap" aria-hidden="true">
             <span id="company-logo-icon">⚡</span>
           </div>
           <div class="logo-text-group">
-            <span class="logo-text" id="company-logo-text">SAESA</span>
-            <span class="logo-subtitle" id="company-full-name">Grupo Saesa</span>
+            <span class="logo-text" id="company-logo-text">GRUPO SAESA</span>
+            <span class="logo-subtitle" id="company-full-name">Desconexiones en línea</span>
           </div>
         </div>
 
-        <!-- Separador visual -->
-        <div style="width:1px; height:32px; background:var(--border-color); margin: 0 8px;" aria-hidden="true"></div>
+        <div class="brand-divider" aria-hidden="true"></div>
 
-        <!-- Selector de empresa distribuidora -->
+        <!-- Selector de Distribuidora -->
         <div class="company-selector" role="group" aria-label="Seleccionar empresa distribuidora">
-          <span class="company-selector-label">Empresa</span>
-          <button class="company-btn active"
-                  id="btn-saesa"
-                  data-company="saesa"
-                  aria-pressed="true"
-                  title="Grupo Saesa">
-            SAESA
+          <button class="company-btn active" data-company="saesa" id="btn-company-saesa">
+            Grupo Saesa
           </button>
-          <button class="company-btn"
-                  id="btn-crell"
-                  data-company="crell"
-                  aria-pressed="false"
-                  title="Crell S.A.">
-            CRELL
+          <button class="company-btn" data-company="crell" id="btn-company-crell">
+            Crell
           </button>
         </div>
       </div>
 
-      <!-- Centro: Badge de estado del servicio -->
-      <div id="status-badge" class="status-badge status--active" role="status" aria-live="polite">
-        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
-        <span id="status-badge-text">Corte inesperado en curso</span>
+      <!-- Estado en tiempo real de la red -->
+      <div class="status-pill" role="status">
+        <span class="status-dot-pulse" aria-hidden="true"></span>
+        <span id="header-status-text">Red de distribución operando con normalidad (99.4%)</span>
       </div>
 
-      <!-- Controles derecha -->
+      <!-- Controles de cabecera -->
       <div class="header-controls">
-        <!-- Acceso al portal del brigadista -->
-        <a href="brigadista.html"
-           id="brigadista-portal-link"
-           style="display:inline-flex;align-items:center;gap:7px;padding:8px 16px;background:linear-gradient(135deg,var(--color-brand-primary),var(--color-brand-accent));color:white;font-size:13px;font-weight:700;border-radius:var(--radius-full);text-decoration:none;transition:all 150ms ease;box-shadow:0 2px 8px color-mix(in srgb,var(--color-brand-primary) 35%,transparent);letter-spacing:0.2px;"
-           onmouseover="this.style.filter='brightness(1.1)';this.style.transform='translateY(-1px)'"
-           onmouseout="this.style.filter='';this.style.transform=''"
-           aria-label="Acceder al portal de brigadistas">
-          <span aria-hidden="true">🔧</span>
-          <span id="brigadista-link-label">Portal Brigadista</span>
+        <a href="brigadista.html" class="btn-secondary-ghost" style="padding: 5px 14px; font-size: 13px;" title="Acceso a cuadrillas en terreno">
+          <span>🔧 Portal Brigadas</span>
         </a>
 
-        <button class="theme-toggle-btn"
-                id="theme-toggle"
-                aria-label="Activar modo oscuro"
-                title="Cambiar tema">
-          <span id="theme-icon" aria-hidden="true">
-            <!-- SVG inyectado por theme.js -->
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </span>
-          <span id="theme-label">Modo oscuro</span>
+        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Cambiar tema">
+          <span aria-hidden="true">🌓</span>
         </button>
       </div>
     </header>
 
     <!-- ───────────────────────────────────────────────────────────────────
-         CUERPO PRINCIPAL
+         HERO / BARRA DE CONSULTA RÁPIDA ("¿Estás sin suministro?")
     ──────────────────────────────────────────────────────────────────── -->
-    <div class="app-body">
+    <section class="consultation-hero-bar" aria-label="Consulta de servicio eléctrico">
+      <div class="consultation-title-group">
+        <h1>Mapa de Desconexiones Eléctricas</h1>
+        <p>Revisa cortes imprevistos y trabajos programados en tiempo real con geolocalización</p>
+      </div>
 
-      <!-- ═══════════════════════════════════════════════════
-           ÁREA DEL MAPA (izquierda / área central)
-      ════════════════════════════════════════════════════ -->
-      <div id="map-container" role="region" aria-label="Mapa de trazabilidad del corte eléctrico">
-
-        <!-- Mapa Leaflet -->
-        <div id="map" aria-label="Mapa interactivo"></div>
-
-        <!-- Overlay de carga -->
-        <div class="map-loading-overlay" id="map-loading-overlay" aria-live="polite">
-          <div class="map-spinner" aria-hidden="true"></div>
-          <span class="map-loading-text">Cargando mapa…</span>
+      <div class="consultation-actions">
+        <!-- Input de búsqueda por N° de cliente o comuna -->
+        <div class="search-input-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text"
+                 id="search-service-input"
+                 placeholder="Ingresa tu N° de cliente (ej. 1204859) o Comuna"
+                 aria-label="Buscar por número de cliente o comuna" />
         </div>
 
-        <!-- Badge flotante superior izquierda -->
-        <div class="map-info-badge" aria-hidden="true">
-          <div class="map-badge-dot">Zona sin suministro</div>
-          <div class="map-badge-title" id="map-badge-case">Caso #CRT-2026-00847</div>
-          <div class="map-badge-subtitle">
-            Camioneta en ruta — actualiza cada 15s
-          </div>
-        </div>
+        <!-- Botón Primario CTA (Tesla Blue) -->
+        <button class="btn-primary-cta" id="search-service-btn">
+          Consultar
+        </button>
 
-        <!-- Leyenda -->
-        <div class="map-legend" aria-label="Leyenda del mapa">
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--outage"></span>
-            Punto de falla
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--vehicle"></span>
-            Brigada asignada
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot legend-dot--zone"></span>
-            Zona afectada
-          </div>
-          <div class="legend-item">
-            <span class="legend-line"></span>
-            Ruta estimada
-          </div>
+        <!-- Botón Secundario Geolocalización ("Mi Ubicación") -->
+        <button class="btn-secondary-ghost" id="locate-user-btn" title="Detectar si tu sector cuenta con suministro">
+          <span>📍 Mi Ubicación</span>
+        </button>
+
+        <!-- Botón "Estoy sin luz / Reportar" -->
+        <button class="btn-secondary-ghost" id="open-report-modal-btn" style="border-color: var(--color-danger); color: var(--color-danger);">
+          <span>⚠️ Estoy sin luz</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────────────────────────────────────
+         PLAQUES DE KPI / MÉTRICAS DE RED
+    ──────────────────────────────────────────────────────────────────── -->
+    <section class="kpi-row" aria-label="Estadísticas de la red eléctrica">
+      <div class="kpi-plaque">
+        <span class="kpi-label">Red en Operación</span>
+        <div class="kpi-value-group">
+          <span class="kpi-value" id="kpi-operational">99.4%</span>
+          <span class="kpi-sub">normal</span>
         </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════════════
-           PANEL LATERAL DERECHO
-      ════════════════════════════════════════════════════ -->
-      <aside class="side-panel" id="side-panel" role="complementary" aria-label="Detalles del corte eléctrico">
+      <div class="kpi-plaque">
+        <span class="kpi-label">Desconexiones Activas</span>
+        <div class="kpi-value-group">
+          <span class="kpi-value" id="kpi-outages">5</span>
+          <span class="kpi-sub">sectores</span>
+        </div>
+      </div>
 
-        <!-- Toggle en mobile -->
-        <button class="panel-toggle-btn"
-                id="panel-toggle"
-                aria-expanded="true"
-                aria-controls="side-panel">
-          <span>Detalles del corte</span>
-          <span class="toggle-arrow arrow--up" aria-hidden="true">▲</span>
-        </button>
+      <div class="kpi-plaque">
+        <span class="kpi-label">Clientes sin Suministro</span>
+        <div class="kpi-value-group">
+          <span class="kpi-value" id="kpi-clients">1.482</span>
+          <span class="kpi-sub">en proceso de reposición</span>
+        </div>
+      </div>
 
-        <!-- ─── SECCIÓN 1: Detalles del corte ────────────────────── -->
-        <section class="panel-section" aria-labelledby="section-outage-title">
-          <div class="panel-section-header">
-            <h2 class="section-title" id="section-outage-title">Detalles del corte</h2>
-            <span class="text-xs text-muted font-mono skeleton" id="outage-id" style="min-width:120px">
-              CRT-2026-00847
-            </span>
-          </div>
+      <div class="kpi-plaque">
+        <span class="kpi-label">Brigadas en Terreno</span>
+        <div class="kpi-value-group">
+          <span class="kpi-value" id="kpi-brigades">8</span>
+          <span class="kpi-sub">cuadrillas desplegadas</span>
+        </div>
+      </div>
+    </section>
 
-          <!-- Motivo del corte -->
-          <div class="outage-header-row">
-            <div class="reason-icon-bubble" id="reason-icon" aria-hidden="true">🌿</div>
-            <div class="outage-title-group">
-              <div class="outage-reason-label skeleton" id="reason-label">Vegetación sobre tendido</div>
-              <div class="outage-reason-text skeleton" id="reason-text">
-                Caída de rama sobre tendido eléctrico en sector Los Notros
-              </div>
-            </div>
-          </div>
+    <!-- ───────────────────────────────────────────────────────────────────
+         CUERPO PRINCIPAL (Mapa + Panel Lateral Inspector)
+    ──────────────────────────────────────────────────────────────────── -->
+    <div class="app-body">
 
-          <!-- Cuenta regresiva -->
-          <div class="countdown-wrapper" role="timer" aria-label="Tiempo estimado de reposición">
-            <span class="countdown-label">Tiempo restante estimado</span>
-            <span id="countdown-display" class="skeleton" style="min-width:120px">--:--</span>
-            <span class="countdown-sublabel">
-              Reposición aprox. a las <strong id="eta-time" class="skeleton" style="min-width:48px">--:--</strong>
-            </span>
-          </div>
+      <!-- Contenedor del Mapa -->
+      <div id="map-container" role="region" aria-label="Mapa interactivo de desconexiones">
 
-          <!-- Meta info del corte -->
-          <div class="meta-row">
-            <span class="meta-icon" aria-hidden="true">📍</span>
-            <span class="meta-label">Zona</span>
-            <span class="meta-value skeleton" id="affected-area-text" style="min-width:160px">
-              Cargando zona afectada…
-            </span>
-          </div>
+        <!-- Barra flotante de filtros del mapa -->
+        <div class="map-filter-floating-bar" role="toolbar" aria-label="Filtros de desconexiones">
+          <button class="filter-pill-btn active" data-filter-type="all">Todas</button>
+          <button class="filter-pill-btn" data-filter-type="no_programada">⚡ Emergencias</button>
+          <button class="filter-pill-btn" data-filter-type="programada">🛠️ Programadas</button>
 
-          <div class="meta-row">
-            <span class="meta-icon" aria-hidden="true">🕐</span>
-            <span class="meta-label">Reportado</span>
-            <span class="meta-value skeleton" id="reported-at" style="min-width:60px">--:--</span>
-          </div>
-
-          <!-- Stats -->
-          <div class="stats-row">
-            <div class="stat-box">
-              <div class="stat-value skeleton" id="affected-users" style="min-width:40px">—</div>
-              <div class="stat-label">clientes afectados</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value" id="brigade-code" style="font-size:14px; font-weight:700">—</div>
-              <div class="stat-label">brigada asignada</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ─── SECCIÓN 2: Brigada asignada ───────────────────────── -->
-        <section class="panel-section" aria-labelledby="section-brigade-title">
-          <div class="panel-section-header">
-            <h2 class="section-title" id="section-brigade-title">Brigada asignada</h2>
-            <button id="view-brigade-on-map" aria-label="Ver posición de la brigada en el mapa">
-              <span aria-hidden="true">📍</span> Ver en mapa
-            </button>
-          </div>
-
-          <!-- Card del brigadista -->
-          <div class="brigade-card">
-            <div class="brigade-card-header">
-              <div class="brigade-avatar" id="brigade-avatar" aria-hidden="true">CF</div>
-              <div class="brigade-identity">
-                <div class="brigade-name skeleton" id="brigade-name" style="min-width:160px">
-                  Carlos Andrés Fuentes Molina
-                </div>
-                <div class="brigade-id-row">
-                  <span class="brigade-employee-id skeleton" id="brigade-id" style="min-width:80px">EMP-12483</span>
-                  <span class="brigade-status-badge brigade-status--route" id="brigade-status-badge">
-                    <span id="brigade-status-text">En ruta</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="brigade-card-body">
-              <!-- ETA de llegada -->
-              <div class="brigade-eta-row">
-                <span class="brigade-eta-label">⏱ Tiempo estimado de llegada</span>
-                <span class="eta-pill skeleton" id="brigade-eta" style="min-width:100px">~18 min</span>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Info del vehículo -->
-              <div class="vehicle-card">
-                <div class="vehicle-icon-wrap" aria-hidden="true">🚐</div>
-                <div class="vehicle-info">
-                  <div class="vehicle-plate skeleton" id="vehicle-plate" style="min-width:80px">RXLB-51</div>
-                  <div class="vehicle-model-text skeleton" id="vehicle-model" style="min-width:120px">Toyota Hilux 4WD</div>
-                  <div class="vehicle-meta">
-                    <span id="vehicle-color">Blanco</span> ·
-                    <span id="vehicle-year">2023</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Nota informativa -->
-              <div class="info-box" role="note">
-                <span class="info-box-icon" aria-hidden="true">ℹ️</span>
-                <span>Los datos de la brigada son verificados por la empresa distribuidora para tu seguridad.</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ─── SECCIÓN 3: Botón de actualización ─────────────────── -->
-        <div class="refresh-btn-wrapper">
-          <button id="refresh-btn"
-                  aria-label="Actualizar estado del corte eléctrico"
-                  type="button">
-            <span class="refresh-btn-icon" aria-hidden="true">↻</span>
-            <span id="refresh-btn-text">Actualizar estado</span>
-            <span id="refresh-progress" aria-hidden="true"></span>
-          </button>
-          <p class="refresh-hint">
-            Disponible cada 60 segundos · Evita llamadas innecesarias al call center
-          </p>
+          <select class="comuna-select" id="comuna-filter-select" aria-label="Filtrar por comuna">
+            <option value="all">Todas las comunas</option>
+            <option value="Temuco">Temuco</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Puerto Montt">Puerto Montt</option>
+            <option value="Puerto Varas">Puerto Varas</option>
+          </select>
         </div>
 
-      </aside><!-- /side-panel -->
+        <!-- Lienzo de Leaflet -->
+        <div id="map"></div>
+      </div>
 
-    </div><!-- /app-body -->
-  </div><!-- /app-layout -->
+      <!-- Panel Inspector Lateral -->
+      <aside class="side-panel" id="side-panel" role="complementary" aria-label="Inspector de corte eléctrico">
 
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       CONTENEDOR DE NOTIFICACIONES (Toast)
-  ════════════════════════════════════════════════════════════════════════ -->
-  <div id="toast-container" role="alert" aria-live="assertive" aria-atomic="true"></div>
+        <!-- Pestañas del Panel -->
+        <div class="panel-tabs" role="tablist">
+          <button class="panel-tab-btn active" data-tab-target="tab-details" role="tab" aria-selected="true">
+            Detalle del Corte
+          </button>
+          <button class="panel-tab-btn" data-tab-target="tab-feed" role="tab" aria-selected="false">
+            Desconexiones <span id="outages-count-tab">(5)</span>
+          </button>
+        </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════════════
-       SCRIPTS
-       Orden de carga: config → api → theme → map → ui → main
-  ════════════════════════════════════════════════════════════════════════ -->
+        <!-- PESTAÑA 1: Ficha del Corte Seleccionado -->
+        <div class="panel-content-tab active" id="tab-details" role="tabpanel">
 
-  <!-- Leaflet JS (CDN) -->
+          <div class="outage-plaque">
+            <div class="outage-badge-row">
+              <span class="badge-tag tag--emergency" id="outage-type-tag">Emergencia / No programada</span>
+              <span class="outage-ticket-id" id="outage-ticket-id">#CRT-2026-00847</span>
+            </div>
+
+            <h2 class="outage-headline" id="outage-title">Temuco — Los Notros</h2>
+
+            <!-- Caja con motivo del corte -->
+            <div class="outage-reason-box">
+              <span class="reason-icon" id="outage-reason-icon" aria-hidden="true">🌿</span>
+              <p class="reason-text" id="outage-reason">
+                Caída de rama sobre tendido de media tensión en sector Los Notros
+              </p>
+            </div>
+
+            <!-- Cuenta regresiva de reposición -->
+            <div class="countdown-box" role="timer" aria-label="Tiempo restante estimado">
+              <span class="countdown-label">Tiempo estimado de reposición</span>
+              <span class="countdown-number" id="countdown-display">~1h 05m</span>
+              <span class="countdown-subtext" id="countdown-eta-time">Hora estimada: 23:45 hrs</span>
+            </div>
+
+            <!-- Lista de metadatos técnicos -->
+            <div class="detail-meta-list">
+              <div class="meta-item">
+                <span class="meta-item-label">Comuna</span>
+                <span class="meta-item-value" id="meta-comuna">Temuco</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-item-label">Distribuidora / Filial</span>
+                <span class="meta-item-value" id="meta-filial">Saesa</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-item-label">Hora de inicio / reporte</span>
+                <span class="meta-item-value" id="meta-reported">20:30 hrs</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-item-label">Clientes afectados en zona</span>
+                <span class="meta-item-value" id="meta-affected-users">234 clientes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ficha de la Brigada Asignada -->
+          <div class="brigade-plaque">
+            <div class="brigade-header">
+              <span class="brigade-title">Cuadrilla Asignada</span>
+              <span class="brigade-status-chip" id="brigade-status-chip">En ruta al punto</span>
+            </div>
+
+            <div class="brigade-profile">
+              <div class="brigade-avatar" id="brigade-avatar">CF</div>
+              <div class="brigade-info">
+                <h4 id="brigade-lead-name">Carlos Andrés Fuentes Molina</h4>
+                <p id="brigade-employee-id">ID: EMP-12483</p>
+              </div>
+            </div>
+
+            <div class="vehicle-row">
+              <span id="brigade-vehicle-model">Toyota Hilux 4WD</span>
+              <span class="vehicle-plate-pill" id="brigade-vehicle-plate">RXLB-51</span>
+            </div>
+          </div>
+
+          <!-- Botón de actualización de estado -->
+          <button class="btn-plaque" id="refresh-state-btn" style="justify-content: center; width: 100%;">
+            <span>↻ Actualizar estado del corte</span>
+          </button>
+        </div>
+
+        <!-- PESTAÑA 2: Listado de Desconexiones Activas -->
+        <div class="panel-content-tab" id="tab-feed" role="tabpanel">
+          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: var(--spacing-8);">
+            Haz clic en cualquier sector para enfocar en el mapa:
+          </p>
+          <div class="outages-feed-list" id="outages-list-container">
+            <!-- Rellenado dinámicamente por UIManager -->
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────────────────────────
+       MODAL: "Reportar Corte / Estoy sin Luz"
+  ──────────────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-report-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-report-title">Reportar Corte de Suministro</h3>
+        <button class="modal-close-btn" id="close-report-modal-btn" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <form class="modal-form" id="report-outage-form">
+        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.4;">
+          Si estás sin energía eléctrica o detectas una falla en la red de Saesa o Crell, ingresa tu reporte aquí.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="report-client-number">Número de Cliente / Servicio</label>
+          <input type="text" class="form-input" id="report-client-number" placeholder="Ej: 1204859-1" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="report-comuna">Comuna</label>
+          <select class="form-select" id="report-comuna" required>
+            <option value="Temuco">Temuco</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Puerto Montt">Puerto Montt</option>
+            <option value="Puerto Varas">Puerto Varas</option>
+            <option value="Castro">Castro</option>
+            <option value="Coyhaique">Coyhaique</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="report-address">Calle, Número y Sector</label>
+          <input type="text" class="form-input" id="report-address" placeholder="Ej: Av. Las Encinas 420" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="report-reason">Causa aparente / Observación</label>
+          <select class="form-select" id="report-reason" required>
+            <option value="Corte general en todo el sector">Corte general en todo el sector</option>
+            <option value="Caída de árbol o ramas sobre cables">Caída de árbol o ramas sobre cables</option>
+            <option value="Poste chocado por vehículo">Poste chocado por vehículo</option>
+            <option value="Chispas, fuego o explosión en transformador">Chispas, fuego o explosión en transformador</option>
+            <option value="Corte solo en mi domicilio">Corte solo en mi domicilio</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary-ghost" id="cancel-report-btn">Cancelar</button>
+          <button type="submit" class="btn-primary-cta">Ingresar Reporte</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Contenedor de Toasts -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs="
           crossorigin=""></script>
 
-  <!-- Módulos propios -->
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/map.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/main.js"></script>
-
-  <!-- Script inline: ocultar overlay del mapa una vez que Leaflet cargue -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Ocultar overlay de carga del mapa después de init
-      setTimeout(() => {
-        const overlay = document.getElementById('map-loading-overlay');
-        if (overlay) overlay.classList.add('hidden');
-      }, 1200);
-    });
-  </script>
 </body>
 </html>

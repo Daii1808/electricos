@@ -23,19 +23,19 @@ const ThemeManager = (() => {
   function applyTheme(isDark) {
     document.documentElement.classList.toggle(DARK_CLASS, isDark);
 
-    const btn  = document.getElementById('theme-toggle');
-    const icon = document.getElementById('theme-icon');
+    const btn  = document.getElementById('theme-toggle-btn') || document.getElementById('theme-toggle') || document.getElementById('login-theme-toggle');
+    const icon = document.getElementById('theme-icon') || document.getElementById('login-theme-icon');
     const label = document.getElementById('theme-label');
 
     if (!btn) return;
 
     if (isDark) {
-      icon && (icon.innerHTML  = getSunSVG());
-      label && (label.textContent = 'Modo claro');
+      if (icon) icon.innerHTML = getSunSVG();
+      if (label) label.textContent = 'Modo claro';
       btn.setAttribute('aria-label', 'Activar modo claro');
     } else {
-      icon && (icon.innerHTML  = getMoonSVG());
-      label && (label.textContent = 'Modo oscuro');
+      if (icon) icon.innerHTML = getMoonSVG();
+      if (label) label.textContent = 'Modo oscuro';
       btn.setAttribute('aria-label', 'Activar modo oscuro');
     }
   }

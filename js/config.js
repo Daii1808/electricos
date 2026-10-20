@@ -1,74 +1,84 @@
 /**
  * ─────────────────────────────────────────────────────
- *  config.js — Configuración global y endpoints API
- *  NOTA: Reemplazar BASE_URL y rutas con los del backend real.
+ *  config.js — Configuración global, tokens y endpoints
+ *  Inspirado en tokens de DESIGN.md (Tesla Minimalist Showroom)
+ *  y mapa de desconexiones de Grupo Saesa / Crell.
  * ─────────────────────────────────────────────────────
  */
 
 const CONFIG = {
-  /** Versión de la aplicación */
-  APP_VERSION: '1.0.0',
+  APP_VERSION: '2.0.0',
+  APP_NAME: 'Plataforma de Desconexiones Eléctricas',
 
-  /**
-   * Base URL del backend.
-   * ⚙️  BACKEND: Cambiar por la URL real del servidor.
-   * Ejemplo: 'https://api.saesa.cl/trazabilidad'
-   */
+  /** Base URL del backend */
   BASE_URL: 'http://localhost:3000',
 
   /** Endpoints REST */
   API: {
-    outageDetails:   '/api/v1/outage/current',     // GET — detalles del corte activo
-    brigadeInfo:     '/api/v1/brigade/assigned',   // GET — info de la brigada asignada
-    vehicleLocation: '/api/v1/vehicle/location',   // GET — posición GPS del vehículo (polling)
-    refreshStatus:   '/api/v1/outage/refresh',     // POST — forzar actualización de estado
-    affectedArea:    '/api/v1/outage/area',        // GET — polígono GeoJSON de zona afectada
+    outagesList:      '/api/v1/outages',
+    outageDetails:    '/api/v1/outage/current',
+    brigadeInfo:      '/api/v1/brigade/assigned',
+    vehicleLocation:  '/api/v1/vehicle/location',
+    refreshStatus:    '/api/v1/outage/refresh',
+    affectedArea:     '/api/v1/outage/area',
+    reportOutage:     '/api/v1/outage/report',
+    searchClient:     '/api/v1/client/search',
   },
 
   /** Intervalo de polling para posición del vehículo (ms) */
-  VEHICLE_POLL_INTERVAL_MS: 15000,
+  VEHICLE_POLL_INTERVAL_MS: 12000,
+  REFRESH_COOLDOWN_MS: 30000,
 
-  /** Cooldown del botón "Actualizar" para evitar spam (ms) */
-  REFRESH_COOLDOWN_MS: 60000,
-
-  /** Configuración del mapa */
+  /** Configuración del mapa (CartoDB Positron: limpio, minimalista, técnico) */
   MAP: {
-    /** Centro inicial del mapa — ⚙️  BACKEND: sobrescribir con coordenadas del corte */
-    defaultCenter: [-38.7359, -72.5904], // Temuco, Región de La Araucanía
-    defaultZoom: 14,
-    minZoom: 10,
+    defaultCenter: [-39.8142, -73.2459], // Los Ríos / Araucanía / Los Lagos
+    defaultZoom: 10,
+    minZoom: 6,
     maxZoom: 18,
-    tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    tileAttribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    // CartoDB Positron — Estilo minimalista showroom acorde a DESIGN.md
+    tileUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    // Fallback estándar OSM
+    fallbackTileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 
-  /** Empresas distribuidoras disponibles */
+  /** Empresas distribuidoras */
   COMPANIES: {
     saesa: {
       id: 'saesa',
       name: 'Grupo Saesa',
-      shortName: 'SAESA',
-      primaryColor: '#E8A000',
-      accentColor:  '#FF6B00',
-      logoText: 'SAESA',
+      shortName: 'GRUPO SAESA',
+      filiales: ['Saesa', 'Frontel', 'Luz Osorno', 'Edelaysen'],
+      primaryColor: '#3e6ae1', // Tesla Blue CTA
+      accentColor: '#171a20',  // Onyx
+      logoText: 'GRUPO SAESA',
       logoIcon: '⚡',
+      phone: '800 600 801',
     },
     crell: {
       id: 'crell',
       name: 'Crell S.A.',
       shortName: 'CRELL',
-      primaryColor: '#0066CC',
-      accentColor:  '#004499',
+      filiales: ['Crell Distribución'],
+      primaryColor: '#3e6ae1',
+      accentColor: '#171a20',
       logoText: 'CRELL',
       logoIcon: '🔌',
+      phone: '800 600 802',
     },
   },
 
-  /** Empresa activa por defecto */
   DEFAULT_COMPANY: 'saesa',
+
+  /** KPIs de red eléctrica */
+  NETWORK_STATS: {
+    operationalPercentage: 99.4,
+    totalActiveOutages: 5,
+    totalAffectedClients: 1482,
+    activeBrigades: 8,
+  },
 };
 
-// Congelar el objeto para evitar mutaciones accidentales
 Object.freeze(CONFIG);
 Object.freeze(CONFIG.API);
 Object.freeze(CONFIG.MAP);

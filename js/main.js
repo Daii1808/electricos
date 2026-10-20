@@ -1,7 +1,7 @@
 /**
  * ─────────────────────────────────────────────────────
- *  main.js — Bootstrap de la aplicación
- *  Orquesta la inicialización y el ciclo de vida de la app.
+ *  main.js — Orquestador de la aplicación
+ *  Conecta el mapa, la API, los filtros, búsqueda y geolocalización
  * ─────────────────────────────────────────────────────
  */
 
@@ -9,162 +9,293 @@
 
 const App = (() => {
 
-  let _vehiclePollingTimer = null;
+  let _currentFilter = {
+    type: 'all',       // 'all' | 'no_programada' | 'programada'
+    company: 'saesa',  // 'all' | 'saesa' | 'crell'
+    comuna: 'all',
+  };
 
-  // ─── Inicialización ────────────────────────────────────────────────────────
+  let _activeOutages = [];
+  let _vehicleTimer = null;
 
   async function init() {
-    // 1. Aplicar tema (oscuro/claro según preferencia del sistema)
-    ThemeManager.init();
+    // 1. Inicializar tema y branding
+    if (typeof ThemeManager !== 'undefined') ThemeManager.init();
+    UIManager.applyCompanyBranding(CONFIG.DEFAULT_COMPANY);
+    UIManager.updateKPIs(CONFIG.NETWORK_STATS);
 
-    // 2. Aplicar branding de empresa por defecto o la guardada
-    const savedCompany = localStorage.getItem('selected-company') || CONFIG.DEFAULT_COMPANY;
-    UIManager.applyCompanyBranding(savedCompany);
+    // 2. Inicializar mapa con callback de selección
+    MapManager.init((outageId) => {
+      selectOutage(outageId);
+    });
 
-    // 3. Mostrar skeleton loaders mientras cargan los datos
-    UIManager.showSkeleton(true);
+    // Permitir callback global para popups de Leaflet
+    window.selectOutageFromMap = (id) => selectOutage(id);
 
-    // 4. Inicializar mapa
-    MapManager.init();
+    // 3. Cargar datos iniciales
+    await reloadOutages(true);
 
-    // 5. Cargar datos iniciales en paralelo
-    try {
-      const [outage, brigade, areaData] = await Promise.all([
-        API.getOutageDetails(),
-        API.getBrigadeInfo(),
-        API.getAffectedArea(),
-      ]);
+    // 4. Iniciar telemetría de vehículo
+    startVehicleTelemetry();
 
-      // Renderizar UI con datos
-      UIManager.showSkeleton(false);
-      UIManager.renderOutageDetails(outage);
-      UIManager.renderBrigadeInfo(brigade);
-
-      // Renderizar mapa
-      MapManager.renderAffectedArea(areaData.polygon);
-      MapManager.renderOutagePoint(areaData.outagePoint, outage.reason);
-
-      // Cargar posición inicial del vehículo
-      const vehiclePos = await API.getVehicleLocation();
-      MapManager.renderVehicle(vehiclePos, brigade.leadName);
-
-      // 6. Iniciar polling de posición del vehículo
-      startVehiclePolling(brigade.leadName);
-
-    } catch (err) {
-      console.error('[App] Error cargando datos iniciales:', err);
-      UIManager.showSkeleton(false);
-      UIManager.showToast('Error al cargar información. Intente nuevamente.', 'error');
-    }
-
-    // 7. Registrar eventos de UI
+    // 5. Registrar eventos de UI
     registerEventListeners();
   }
 
-  // ─── Polling del vehículo ────────────────────────────────────────────────
+  // ─── Carga y filtrado de cortes ───────────────────────────────────────────
 
-  /**
-   * Inicia el polling periódico de la ubicación del vehículo.
-   * El backend puede reemplazar esto con WebSockets:
-   * ⚙️  BACKEND: ws://tu-servidor/vehicle-location-stream
-   */
-  function startVehiclePolling(brigadeName) {
-    if (_vehiclePollingTimer) clearInterval(_vehiclePollingTimer);
+  async function reloadOutages(isFirstLoad = false) {
+    try {
+      _activeOutages = await API.getAllOutages(_currentFilter);
 
-    _vehiclePollingTimer = setInterval(async () => {
+      const currentSelectedId = API.getCurrentOutageId();
+      // Si el corte seleccionado ya no está en el filtro, tomar el primero disponible
+      let activeOutage = _activeOutages.find(o => o.id === currentSelectedId);
+      if (!activeOutage && _activeOutages.length > 0) {
+        activeOutage = _activeOutages[0];
+        API.setCurrentOutageId(activeOutage.id);
+      }
+
+      // Renderizar mapa
+      MapManager.renderOutages(_activeOutages, activeOutage ? activeOutage.id : null);
+
+      if (isFirstLoad && activeOutage) {
+        MapManager.focusOnOutage(activeOutage);
+      }
+
+      // Renderizar ficha de corte y listado
+      if (activeOutage) {
+        UIManager.renderOutageDetails(activeOutage);
+      }
+
+      UIManager.renderOutagesList(_activeOutages, activeOutage ? activeOutage.id : null, (id) => {
+        selectOutage(id);
+      });
+
+    } catch (err) {
+      console.error('[App] Error cargando cortes:', err);
+      UIManager.showToast('Error cargando información de la red eléctrica.', 'error');
+    }
+  }
+
+  // ─── Selección de un corte ─────────────────────────────────────────────────
+
+  async function selectOutage(outageId) {
+    API.setCurrentOutageId(outageId);
+    const outage = await API.getOutageDetails(outageId);
+    if (!outage) return;
+
+    // Actualizar inspector
+    UIManager.renderOutageDetails(outage);
+
+    // Actualizar capas en el mapa y enfocar
+    MapManager.renderOutages(_activeOutages, outage.id);
+    MapManager.focusOnOutage(outage);
+
+    // Actualizar selección en listado
+    UIManager.renderOutagesList(_activeOutages, outage.id, (id) => selectOutage(id));
+
+    // Si estaba en pestaña de listado en mobile, cambiar a detalles
+    switchTab('tab-details');
+  }
+
+  // ─── Telemetría periódica del móvil ───────────────────────────────────────
+
+  function startVehicleTelemetry() {
+    if (_vehicleTimer) clearInterval(_vehicleTimer);
+
+    _vehicleTimer = setInterval(async () => {
       try {
-        const pos = await API.getVehicleLocation();
-        MapManager.renderVehicle(pos, brigadeName);
+        const currentId = API.getCurrentOutageId();
+        const outage = await API.getOutageDetails(currentId);
+        if (outage && outage.brigade) {
+          const loc = await API.getVehicleLocation(currentId);
+          outage.brigade.location = loc;
+          MapManager.renderBrigadeVehicle(outage.brigade, outage.center);
+        }
       } catch (err) {
-        console.warn('[App] Error actualizando posición del vehículo:', err);
+        console.warn('[App] Telemetría temporalmente pausada:', err);
       }
     }, CONFIG.VEHICLE_POLL_INTERVAL_MS);
   }
 
-  // ─── Event Listeners ─────────────────────────────────────────────────────
+  // ─── Eventos de Interfaz ───────────────────────────────────────────────────
 
   function registerEventListeners() {
 
-    // Toggle de modo oscuro/claro
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => ThemeManager.toggle());
-    }
-
-    // Selector de empresa distribuidora
+    // 1. Selector de Empresa / Filial
     document.querySelectorAll('.company-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        UIManager.applyCompanyBranding(btn.dataset.company);
-        UIManager.showToast(`Empresa cambiada a ${CONFIG.COMPANIES[btn.dataset.company]?.name}`, 'info');
+      btn.addEventListener('click', async () => {
+        const companyId = btn.dataset.company;
+        _currentFilter.company = companyId;
+        UIManager.applyCompanyBranding(companyId);
+        await reloadOutages();
+        UIManager.showToast(`Visualizando red de ${CONFIG.COMPANIES[companyId]?.name}`, 'info');
       });
     });
 
-    // Botón de actualización de estado
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', handleRefresh);
-    }
+    // 2. Filtros de Tipo (Todas / Emergencia / Programadas)
+    document.querySelectorAll('.filter-pill-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        _currentFilter.type = btn.dataset.filterType;
+        await reloadOutages();
+      });
+    });
 
-    // Botón "Ver en mapa" en la tarjeta de brigada
-    const viewMapBtn = document.getElementById('view-brigade-on-map');
-    if (viewMapBtn) {
-      viewMapBtn.addEventListener('click', () => {
-        const map = MapManager.getMap();
-        if (map) {
-          map.setView(CONFIG.MAP.defaultCenter, 15, { animate: true });
-        }
-        // En mobile: hacer scroll al mapa
-        document.getElementById('map-container')?.scrollIntoView({ behavior: 'smooth' });
+    // 3. Filtro por Comuna
+    const comunaSelect = document.getElementById('comuna-filter-select');
+    if (comunaSelect) {
+      comunaSelect.addEventListener('change', async (e) => {
+        _currentFilter.comuna = e.target.value;
+        await reloadOutages();
       });
     }
 
-    // Expandir/colapsar panel en mobile
-    const panelToggle = document.getElementById('panel-toggle');
-    if (panelToggle) {
-      panelToggle.addEventListener('click', () => {
-        const panel = document.getElementById('side-panel');
-        panel?.classList.toggle('panel--collapsed');
-        const isCollapsed = panel?.classList.contains('panel--collapsed');
-        panelToggle.setAttribute('aria-expanded', !isCollapsed);
-        panelToggle.querySelector('.toggle-arrow')?.classList.toggle('arrow--up', !isCollapsed);
-      });
-    }
-  }
+    // 4. Búsqueda por N° de Cliente o Comuna
+    const searchBtn = document.getElementById('search-service-btn');
+    const searchInput = document.getElementById('search-service-input');
 
-  // ─── Manejador de actualización ──────────────────────────────────────────
-
-  async function handleRefresh() {
-    const btnText = document.getElementById('refresh-btn-text');
-    if (btnText) btnText.textContent = 'Actualizando...';
-
-    try {
-      const result = await API.refreshStatus();
-
-      if (result.success) {
-        // Recargar todos los datos
-        const [outage, brigade] = await Promise.all([
-          API.getOutageDetails(),
-          API.getBrigadeInfo(),
-        ]);
-        UIManager.renderOutageDetails(outage);
-        UIManager.renderBrigadeInfo(brigade);
-        UIManager.showToast('Estado actualizado correctamente.', 'success');
-      } else {
-        UIManager.showToast('No hay cambios nuevos disponibles.', 'info');
+    async function executeSearch() {
+      const query = (searchInput?.value || '').trim();
+      if (!query) {
+        UIManager.showToast('Ingresa un N° de cliente o comuna para consultar', 'info');
+        return;
       }
-    } catch (err) {
-      console.error('[App] Error al actualizar:', err);
-      UIManager.showToast('Error al conectar con el servidor.', 'error');
+
+      const result = await API.searchByClientOrComuna(query);
+      if (result) {
+        const targetOutage = result.outage || result.primary;
+        if (targetOutage) {
+          await selectOutage(targetOutage.id);
+          UIManager.showToast(`Corte detectado en ${targetOutage.comuna} (#${targetOutage.id})`, 'info');
+        }
+      } else {
+        UIManager.showToast(`No se registran cortes asociados a "${query}". Servicio operando normal.`, 'success');
+      }
     }
 
-    // Iniciar cooldown de 60 segundos
-    UIManager.startRefreshCooldown(CONFIG.REFRESH_COOLDOWN_MS);
+    if (searchBtn) searchBtn.addEventListener('click', executeSearch);
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') executeSearch();
+      });
+    }
+
+    // 5. Geolocalización "Mi Ubicación"
+    const locateBtn = document.getElementById('locate-user-btn');
+    if (locateBtn) {
+      locateBtn.addEventListener('click', async () => {
+        UIManager.showToast('Detectando coordenadas de tu ubicación GPS...', 'info');
+        const assessment = await MapManager.locateUser(_activeOutages);
+
+        if (assessment.success) {
+          if (assessment.inAffectedZone) {
+            UIManager.showToast(`⚠️ Tu ubicación está dentro del área de corte #${assessment.outage.id}`, 'error');
+            await selectOutage(assessment.outage.id);
+          } else {
+            UIManager.showToast('✓ Tu ubicación se encuentra fuera de sectores con corte activo.', 'success');
+          }
+        }
+      });
+    }
+
+    // 6. Tabs de Panel Lateral
+    document.querySelectorAll('.panel-tab-btn').forEach(tabBtn => {
+      tabBtn.addEventListener('click', () => {
+        const targetId = tabBtn.dataset.tabTarget;
+        switchTab(targetId);
+      });
+    });
+
+    // 7. Modal de Reportar Corte ("Estoy sin Luz")
+    const openReportBtn = document.getElementById('open-report-modal-btn');
+    const modalOverlay = document.getElementById('report-modal');
+    const closeReportBtn = document.getElementById('close-report-modal-btn');
+    const cancelReportBtn = document.getElementById('cancel-report-btn');
+    const reportForm = document.getElementById('report-outage-form');
+
+    function openModal() {
+      if (modalOverlay) modalOverlay.classList.add('active');
+    }
+    function closeModal() {
+      if (modalOverlay) modalOverlay.classList.remove('active');
+    }
+
+    if (openReportBtn) openReportBtn.addEventListener('click', openModal);
+    if (closeReportBtn) closeReportBtn.addEventListener('click', closeModal);
+    if (cancelReportBtn) cancelReportBtn.addEventListener('click', closeModal);
+
+    if (modalOverlay) {
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+    }
+
+    // Envío del reporte
+    if (reportForm) {
+      reportForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const clientNumber = document.getElementById('report-client-number')?.value;
+        const comuna = document.getElementById('report-comuna')?.value;
+        const address = document.getElementById('report-address')?.value;
+        const reason = document.getElementById('report-reason')?.value;
+
+        UIManager.showToast('Ingresando reporte a despacho de emergencias...', 'info');
+
+        const newOutage = await API.reportOutage({
+          clientNumber,
+          comuna,
+          address,
+          reason,
+        });
+
+        closeModal();
+        reportForm.reset();
+
+        await reloadOutages();
+        await selectOutage(newOutage.id);
+
+        UIManager.showToast(`Reporte creado exitosamente. Ticket #${newOutage.id}`, 'success');
+      });
+    }
+
+    // 8. Toggle de Tema
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (themeBtn && typeof ThemeManager !== 'undefined') {
+      themeBtn.addEventListener('click', () => {
+        ThemeManager.toggle();
+      });
+    }
+
+    // 9. Botón Refrescar
+    const refreshBtn = document.getElementById('refresh-state-btn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', async () => {
+        UIManager.showToast('Sincronizando estado con centro de despacho...', 'info');
+        await reloadOutages();
+        UIManager.showToast('Datos de red eléctrica actualizados.', 'success');
+      });
+    }
   }
 
-  // ─── API pública ──────────────────────────────────────────────────────────
+  function switchTab(tabId) {
+    document.querySelectorAll('.panel-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tabTarget === tabId);
+    });
+    document.querySelectorAll('.panel-content-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.id === tabId);
+    });
+  }
 
-  return { init };
+  return {
+    init,
+    selectOutage,
+  };
 })();
 
-// ─── Arranque cuando el DOM esté listo ───────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => App.init());
+document.addEventListener('DOMContentLoaded', () => {
+  App.init();
+});
