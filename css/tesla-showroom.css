@@ -74,6 +74,10 @@
   list-style: none;
 }
 
+.tesla-nav-item {
+  position: relative;
+}
+
 .tesla-nav-item a {
   text-decoration: none;
   font-size: 13px;
@@ -83,6 +87,9 @@
   padding: 6px 12px;
   border-radius: var(--radius-buttons);
   transition: all 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .tesla-nav-item a:hover {
@@ -90,10 +97,74 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.tesla-nav-item.active a {
+.tesla-nav-item.active > a {
   color: var(--color-pure-white);
   background: rgba(255, 255, 255, 0.18);
   font-weight: 600;
+}
+
+/* Dropdown de Distribución (Filiales Saesa, Frontel, Edelaysen, Luz Osorno) */
+.tesla-dropdown:hover .tesla-dropdown-menu,
+.tesla-dropdown:focus-within .tesla-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tesla-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  min-width: 260px;
+  background: rgba(23, 26, 32, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-cards);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  padding: var(--spacing-8);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1100;
+}
+
+.dropdown-link {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 2px !important;
+  padding: 8px 12px !important;
+  border-radius: var(--radius-buttons) !important;
+  text-decoration: none !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  transition: background-color 120ms ease !important;
+}
+
+.dropdown-link:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: var(--color-pure-white) !important;
+}
+
+.dropdown-link-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+}
+
+.dropdown-link-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 0;
 }
 
 /* Acciones derecha */
