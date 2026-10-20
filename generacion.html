@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Saesa Generación — Centrales hidroeléctricas de pasada y parque fotovoltaico más austral del mundo en Aysén." />
-  <meta name="theme-color" content="#06080D" />
+  <meta name="theme-color" content="#171a20" />
 
   <title>Saesa Generación — Energía Limpia del Sur</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/tesla-showroom.css" />
@@ -18,70 +18,64 @@
 
 <body>
 
-  <!-- Navbar Flotante Glassmorphism -->
-  <div class="tesla-navbar-wrapper">
-    <header class="tesla-navbar" role="banner">
-      <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
-        <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
-        <span class="tesla-brand-name">GRUPO SAESA</span>
+  <!-- Header Minimalista Ancho Completo -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item active"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item tesla-dropdown">
+          <a href="distribucion.html">Distribución</a>
+          <div class="tesla-dropdown-menu">
+            <a href="distribucion.html" class="dropdown-link">
+              <span class="dropdown-link-title">Todas las Distribuidoras</span>
+              <span class="dropdown-link-sub">Resumen general del área</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="saesa.html" class="dropdown-link">
+              <span class="dropdown-link-title">Saesa</span>
+              <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+            </a>
+            <a href="frontel.html" class="dropdown-link">
+              <span class="dropdown-link-title">Frontel</span>
+              <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+            </a>
+            <a href="edelaysen.html" class="dropdown-link">
+              <span class="dropdown-link-title">Edelaysen</span>
+              <span class="dropdown-link-sub">Región de Aysén</span>
+            </a>
+            <a href="luz-osorno.html" class="dropdown-link">
+              <span class="dropdown-link-title">Luz Osorno</span>
+              <span class="dropdown-link-sub">Provincia de Osorno</span>
+            </a>
+          </div>
+        </li>
+        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
       </a>
+      <a href="brigadista.html" class="nav-btn-ghost">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
 
-      <nav class="tesla-nav-center" aria-label="Navegación principal">
-        <ul class="tesla-nav-links">
-          <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
-          <li class="tesla-nav-item active"><a href="generacion.html">Generación</a></li>
-          <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
-          <li class="tesla-nav-item tesla-dropdown">
-            <a href="distribucion.html">Distribución ▾</a>
-            <div class="tesla-dropdown-menu">
-              <a href="distribucion.html" class="dropdown-link">
-                <span class="dropdown-link-title">Todas las Distribuidoras</span>
-                <span class="dropdown-link-sub">Resumen general del área</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="saesa.html" class="dropdown-link">
-                <span class="dropdown-link-title">Saesa <span>→</span></span>
-                <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
-              </a>
-              <a href="frontel.html" class="dropdown-link">
-                <span class="dropdown-link-title">Frontel <span>→</span></span>
-                <span class="dropdown-link-sub">Biobío y La Araucanía</span>
-              </a>
-              <a href="edelaysen.html" class="dropdown-link">
-                <span class="dropdown-link-title">Edelaysen <span>→</span></span>
-                <span class="dropdown-link-sub">Región de Aysén</span>
-              </a>
-              <a href="luz-osorno.html" class="dropdown-link">
-                <span class="dropdown-link-title">Luz Osorno <span>→</span></span>
-                <span class="dropdown-link-sub">Provincia de Osorno</span>
-              </a>
-            </div>
-          </li>
-          <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-        </ul>
-      </nav>
-
-      <div class="tesla-nav-actions">
-        <a href="mapa-desconexiones.html" class="nav-cta-blue">
-          <span>⚡</span> Mapa en Vivo
-        </a>
-        <a href="brigadista.html" class="nav-btn-ghost">
-          Portal Brigadas
-        </a>
-      </div>
-    </header>
-  </div>
-
-  <main class="tesla-snap-container">
+  <main class="tesla-snap-container" id="showroom-container">
 
     <!-- SLIDE 1: OVERVIEW GENERACIÓN -->
     <section class="tesla-hero-section" id="gen-overview"
              style="background-image: url('https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          MATRIZ GENERADORA RENOVABLE Y SOSTENIBLE
-        </div>
+        <span class="hero-tag-badge">MATRIZ GENERADORA RENOVABLE Y SOSTENIBLE</span>
         <h1 class="hero-title">Saesa Generación</h1>
         <p class="hero-subtext">
           Más de 275 MW de capacidad instalada con tecnología hidroeléctrica de pasada y radiación solar en los rincones más australes del país.
@@ -116,22 +110,17 @@
             Parque Solar El Blanco
           </a>
           <a href="transmision.html" class="btn-premium-ghost">
-            Ver Transmisión →
+            Ver Transmisión
           </a>
         </div>
       </div>
-
-      <a href="#gen-solar" class="scroll-arrow-link" aria-label="Siguiente slide">↓</a>
     </section>
 
     <!-- SLIDE 2: PARQUE FOTOVOLTAICO EL BLANCO (AYSÉN) -->
     <section class="tesla-hero-section" id="gen-solar"
              style="background-image: url('https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          HITO DE INGENIERÍA EN LA PATAGONIA
-        </div>
+        <span class="hero-tag-badge">HITO DE INGENIERÍA EN LA PATAGONIA</span>
         <h2 class="hero-title">Parque Solar El Blanco</h2>
         <p class="hero-subtext">
           La planta de generación solar fotovoltaica más austral del mundo. Diseñada para operar bajo nevadas intensas y vientos patagónicos extremos.
@@ -165,18 +154,13 @@
           </a>
         </div>
       </div>
-
-      <a href="#gen-hidro" class="scroll-arrow-link" aria-label="Siguiente slide">↓</a>
     </section>
 
     <!-- SLIDE 3: CENTRALES HIDROELÉCTRICAS DE PASADA -->
     <section class="tesla-hero-section" id="gen-hidro"
              style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          ENERGÍA FLUVIOMÉTRICA CON MÍNIMO IMPACTO
-        </div>
+        <span class="hero-tag-badge">ENERGÍA FLUVIOMÉTRICA CON MÍNIMO IMPACTO</span>
         <h2 class="hero-title">Hidroelectricidad de Pasada</h2>
         <p class="hero-subtext">
           Generación sustentable que aprovecha el desnivel y caudal natural de los ríos sureños sin inundar valles ni alterar el ecosistema hídrico.

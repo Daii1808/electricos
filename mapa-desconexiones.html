@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Plataforma de Desconexiones Eléctricas en Línea y Trazabilidad en Tiempo Real — Grupo Saesa y Crell." />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#171a20" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#171a20" />
 
   <title>Mapa de Desconexiones Eléctricas — Grupo Saesa</title>
 
@@ -29,15 +28,12 @@
     ──────────────────────────────────────────────────────────────────── -->
     <header class="app-header" role="banner">
       <div class="header-brand">
-        <div class="logo-container" aria-label="Grupo Saesa">
-          <div class="logo-icon-wrap" aria-hidden="true">
-            <span id="company-logo-icon">⚡</span>
-          </div>
+        <a href="index.html" class="logo-container" aria-label="Ir a Inicio Grupo Saesa" style="text-decoration:none; color:inherit;">
           <div class="logo-text-group">
             <span class="logo-text" id="company-logo-text">GRUPO SAESA</span>
             <span class="logo-subtitle" id="company-full-name">Desconexiones en línea</span>
           </div>
-        </div>
+        </a>
 
         <div class="brand-divider" aria-hidden="true"></div>
 
@@ -46,7 +42,7 @@
           <a href="index.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Inicio</a>
           <a href="generacion.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Generación</a>
           <a href="transmision.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Transmisión</a>
-          <a href="distribucion.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Distribución ▾</a>
+          <a href="distribucion.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Distribución</a>
         </nav>
 
         <!-- Selector de Distribuidora -->
@@ -68,12 +64,16 @@
 
       <!-- Controles de cabecera -->
       <div class="header-controls">
-        <a href="brigadista.html" class="btn-secondary-ghost" style="padding: 5px 14px; font-size: 13px;" title="Acceso a cuadrillas en terreno">
-          <span>🔧 Portal Brigadas</span>
+        <a href="brigadista.html" class="btn-secondary-ghost" style="padding: 6px 14px; font-size: 13px;" title="Acceso a cuadrillas en terreno">
+          Portal Brigadas
         </a>
 
         <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Cambiar tema">
-          <span aria-hidden="true">🌓</span>
+          <span aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </span>
         </button>
       </div>
     </header>
@@ -107,12 +107,12 @@
 
         <!-- Botón Secundario Geolocalización ("Mi Ubicación") -->
         <button class="btn-secondary-ghost" id="locate-user-btn" title="Detectar si tu sector cuenta con suministro">
-          <span>📍 Mi Ubicación</span>
+          Mi Ubicación
         </button>
 
         <!-- Botón "Estoy sin luz / Reportar" -->
         <button class="btn-secondary-ghost" id="open-report-modal-btn" style="border-color: var(--color-danger); color: var(--color-danger);">
-          <span>⚠️ Estoy sin luz</span>
+          Estoy sin luz
         </button>
       </div>
     </section>
@@ -165,8 +165,8 @@
         <!-- Barra flotante de filtros del mapa -->
         <div class="map-filter-floating-bar" role="toolbar" aria-label="Filtros de desconexiones">
           <button class="filter-pill-btn active" data-filter-type="all">Todas</button>
-          <button class="filter-pill-btn" data-filter-type="no_programada">⚡ Emergencias</button>
-          <button class="filter-pill-btn" data-filter-type="programada">🛠️ Programadas</button>
+          <button class="filter-pill-btn" data-filter-type="no_programada">Emergencias</button>
+          <button class="filter-pill-btn" data-filter-type="programada">Programadas</button>
 
           <select class="comuna-select" id="comuna-filter-select" aria-label="Filtrar por comuna">
             <option value="all">Todas las comunas</option>
@@ -208,7 +208,7 @@
 
             <!-- Caja con motivo del corte -->
             <div class="outage-reason-box">
-              <span class="reason-icon" id="outage-reason-icon" aria-hidden="true">🌿</span>
+              <span class="reason-icon" id="outage-reason-icon" aria-hidden="true"></span>
               <p class="reason-text" id="outage-reason">
                 Caída de rama sobre tendido de media tensión en sector Los Notros
               </p>
@@ -265,7 +265,7 @@
 
           <!-- Botón de actualización de estado -->
           <button class="btn-plaque" id="refresh-state-btn" style="justify-content: center; width: 100%;">
-            <span>↻ Actualizar estado del corte</span>
+            Actualizar estado del corte
           </button>
         </div>
 

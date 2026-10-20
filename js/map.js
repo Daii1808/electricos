@@ -33,14 +33,16 @@ const MapManager = (() => {
     const isEmergency = type === 'no_programada';
     const bgColor = isEmergency ? '#171a20' : '#3e6ae1'; // Onyx vs Tesla Blue
     const badgeColor = isEmergency ? '#DC2626' : '#3e6ae1';
-    const symbol = isEmergency ? '⚡' : '🛠️';
+    const symbolSvg = isEmergency
+      ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M13 2L3 14h7v8l10-12h-7z"/></svg>'
+      : '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.5 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.4-2.4c.4-.3.4-1 0-1.3z"/></svg>';
     const scale = isSelected ? 'transform: scale(1.15);' : '';
 
     const html = `
       <div class="map-outage-marker ${isSelected ? 'marker-selected' : ''}" style="${scale}">
         <div class="map-marker-pulse" style="background-color: ${badgeColor};"></div>
-        <div class="map-marker-pin" style="background-color: ${bgColor}; border: 2px solid ${badgeColor};">
-          <span class="marker-symbol">${symbol}</span>
+        <div class="map-marker-pin" style="background-color: ${bgColor}; border: 2px solid ${badgeColor}; color: #ffffff;">
+          <span class="marker-symbol">${symbolSvg}</span>
         </div>
       </div>
     `;
@@ -194,7 +196,7 @@ const MapManager = (() => {
             <span>${outage.brigade?.statusText || 'En atención'}</span>
           </div>
           <button class="popup-cta-btn" onclick="window.selectOutageFromMap('${outage.id}')">
-            Inspeccionar en detalle →
+            Inspeccionar en detalle
           </button>
         </div>
       `;

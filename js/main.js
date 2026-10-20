@@ -192,10 +192,10 @@ const App = (() => {
 
         if (assessment.success) {
           if (assessment.inAffectedZone) {
-            UIManager.showToast(`⚠️ Tu ubicación está dentro del área de corte #${assessment.outage.id}`, 'error');
+            UIManager.showToast(`Tu ubicación está dentro del área de corte #${assessment.outage.id}`, 'error');
             await selectOutage(assessment.outage.id);
           } else {
-            UIManager.showToast('✓ Tu ubicación se encuentra fuera de sectores con corte activo.', 'success');
+            UIManager.showToast('Tu ubicación se encuentra fuera de sectores con corte activo.', 'success');
           }
         }
       });

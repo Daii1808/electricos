@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Grupo Saesa — Infraestructura energética, generación limpia, transmisión y distribución eléctrica en el sur de Chile." />
-  <meta name="theme-color" content="#06080D" />
+  <meta name="theme-color" content="#171a20" />
 
-  <title>Grupo Saesa — Energía que Conecta el Sur</title>
+  <title>Grupo Saesa — Infraestructura Eléctrica del Sur</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/tesla-showroom.css" />
@@ -18,71 +18,65 @@
 
 <body>
 
-  <!-- Navbar Flotante Glassmorphism -->
-  <div class="tesla-navbar-wrapper">
-    <header class="tesla-navbar" role="banner">
-      <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
-        <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
-        <span class="tesla-brand-name">GRUPO SAESA</span>
+  <!-- Header Minimalista Ancho Completo -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item active"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item tesla-dropdown">
+          <a href="distribucion.html">Distribución</a>
+          <div class="tesla-dropdown-menu">
+            <a href="distribucion.html" class="dropdown-link">
+              <span class="dropdown-link-title">Todas las Distribuidoras</span>
+              <span class="dropdown-link-sub">Resumen general del área</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="saesa.html" class="dropdown-link">
+              <span class="dropdown-link-title">Saesa</span>
+              <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+            </a>
+            <a href="frontel.html" class="dropdown-link">
+              <span class="dropdown-link-title">Frontel</span>
+              <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+            </a>
+            <a href="edelaysen.html" class="dropdown-link">
+              <span class="dropdown-link-title">Edelaysen</span>
+              <span class="dropdown-link-sub">Región de Aysén</span>
+            </a>
+            <a href="luz-osorno.html" class="dropdown-link">
+              <span class="dropdown-link-title">Luz Osorno</span>
+              <span class="dropdown-link-sub">Provincia de Osorno</span>
+            </a>
+          </div>
+        </li>
+        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
       </a>
+      <a href="brigadista.html" class="nav-btn-ghost">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
 
-      <nav class="tesla-nav-center" aria-label="Navegación principal">
-        <ul class="tesla-nav-links">
-          <li class="tesla-nav-item active"><a href="index.html">Inicio</a></li>
-          <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
-          <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
-          <li class="tesla-nav-item tesla-dropdown">
-            <a href="distribucion.html">Distribución ▾</a>
-            <div class="tesla-dropdown-menu">
-              <a href="distribucion.html" class="dropdown-link">
-                <span class="dropdown-link-title">Todas las Distribuidoras</span>
-                <span class="dropdown-link-sub">Resumen general del área</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="saesa.html" class="dropdown-link">
-                <span class="dropdown-link-title">Saesa <span>→</span></span>
-                <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
-              </a>
-              <a href="frontel.html" class="dropdown-link">
-                <span class="dropdown-link-title">Frontel <span>→</span></span>
-                <span class="dropdown-link-sub">Biobío y La Araucanía</span>
-              </a>
-              <a href="edelaysen.html" class="dropdown-link">
-                <span class="dropdown-link-title">Edelaysen <span>→</span></span>
-                <span class="dropdown-link-sub">Región de Aysén</span>
-              </a>
-              <a href="luz-osorno.html" class="dropdown-link">
-                <span class="dropdown-link-title">Luz Osorno <span>→</span></span>
-                <span class="dropdown-link-sub">Provincia de Osorno</span>
-              </a>
-            </div>
-          </li>
-          <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-        </ul>
-      </nav>
-
-      <div class="tesla-nav-actions">
-        <a href="mapa-desconexiones.html" class="nav-cta-blue">
-          <span>⚡</span> Mapa en Vivo
-        </a>
-        <a href="brigadista.html" class="nav-btn-ghost">
-          Portal Brigadas
-        </a>
-      </div>
-    </header>
-  </div>
-
-  <!-- Contenedor Showroom Vertical Snapping -->
+  <!-- Contenedor Showroom Vertical -->
   <main class="tesla-snap-container" id="showroom-container">
 
     <!-- SLIDE 1: GRUPO SAESA HUB -->
     <section class="tesla-hero-section" id="hero-inicio"
              style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          INFRAESTRUCTURA ENERGÉTICA DEL SUR DE CHILE
-        </div>
+        <span class="hero-tag-badge">INFRAESTRUCTURA ENERGÉTICA DEL SUR DE CHILE</span>
         <h1 class="hero-title">Grupo Saesa</h1>
         <p class="hero-subtext">
           Generación sustentable, transmisión de alta tensión y distribución continua para más de un millón de hogares y empresas desde el Biobío hasta la Patagonia.
@@ -114,25 +108,20 @@
 
         <div class="hero-action-buttons">
           <a href="mapa-desconexiones.html" class="btn-premium-primary">
-            <span>⚡</span> Mapa de Desconexiones
+            Mapa de Desconexiones
           </a>
           <a href="generacion.html" class="btn-premium-ghost">
             Explorar Generación
           </a>
         </div>
       </div>
-
-      <a href="#hero-generacion" class="scroll-arrow-link" aria-label="Ir a Generación">↓</a>
     </section>
 
     <!-- SLIDE 2: SAESA GENERACIÓN -->
     <section class="tesla-hero-section" id="hero-generacion"
              style="background-image: url('https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          MATRIZ LIMPIA Y TRANSICIÓN ENERGÉTICA
-        </div>
+        <span class="hero-tag-badge">MATRIZ LIMPIA Y TRANSICIÓN ENERGÉTICA</span>
         <h2 class="hero-title">Saesa Generación</h2>
         <p class="hero-subtext">
           Centrales hidroeléctricas de pasada con mínimo impacto ambiental y el parque fotovoltaico más austral del mundo en la Región de Aysén.
@@ -167,25 +156,20 @@
             Conocer Saesa Generación
           </a>
           <a href="transmision.html" class="btn-premium-ghost">
-            Ver Transmisión →
+            Ver Transmisión
           </a>
         </div>
       </div>
-
-      <a href="#hero-transmision" class="scroll-arrow-link" aria-label="Ir a Transmisión">↓</a>
     </section>
 
     <!-- SLIDE 3: SAESA TRANSMISIÓN -->
     <section class="tesla-hero-section" id="hero-transmision"
              style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          SISTEMA TRONCAL Y ZONAL DE ALTA TENSIÓN
-        </div>
+        <span class="hero-tag-badge">SISTEMA TRONCAL Y ZONAL DE ALTA TENSIÓN</span>
         <h2 class="hero-title">Saesa Transmisión</h2>
         <p class="hero-subtext">
-          3.264 kilómetros de circuitos de 66 a 220 kV desde Antofagasta a Los Lagos con 110 subestaciones digitales y almacenamiento de baterías BESS.
+          3.264 kilómetros de circuitos de 66 a 220 kV desde Antofagasta a Los Lagos con 110 subestaciones y almacenamiento en baterías BESS.
         </p>
       </div>
 
@@ -217,22 +201,17 @@
             Explorar Transmisión
           </a>
           <a href="distribucion.html" class="btn-premium-ghost">
-            Ver Distribución →
+            Ver Distribución
           </a>
         </div>
       </div>
-
-      <a href="#hero-distribucion" class="scroll-arrow-link" aria-label="Ir a Distribución">↓</a>
     </section>
 
     <!-- SLIDE 4: DISTRIBUCIÓN -->
     <section class="tesla-hero-section" id="hero-distribucion"
              style="background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          FILIALES DE DISTRIBUCIÓN RESIDENCIAL E INDUSTRIAL
-        </div>
+        <span class="hero-tag-badge">FILIALES DE DISTRIBUCIÓN RESIDENCIAL E INDUSTRIAL</span>
         <h2 class="hero-title">Distribución Austral</h2>
         <p class="hero-subtext">
           Cuatro empresas dedicadas al suministro continuo de energía: Saesa, Frontel, Edelaysen y Luz Osorno.
@@ -271,18 +250,13 @@
           </a>
         </div>
       </div>
-
-      <a href="#hero-mapa" class="scroll-arrow-link" aria-label="Ir a Mapa">↓</a>
     </section>
 
     <!-- SLIDE 5: MAPA DE DESCONEXIONES -->
     <section class="tesla-hero-section" id="hero-mapa"
              style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          TRAZABILIDAD EN TIEMPO REAL Y GEOLOCALIZACIÓN
-        </div>
+        <span class="hero-tag-badge">TRAZABILIDAD EN TIEMPO REAL Y GEOLOCALIZACIÓN</span>
         <h2 class="hero-title">Mapa de Desconexiones</h2>
         <p class="hero-subtext">
           Revisa en tiempo real zonas sin suministro, tiempos estimados de reposición (ETR), geolocalización de cuadrillas técnicas y reportes ciudadanos inmediatos.
@@ -303,21 +277,21 @@
           <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Radar GPS</span>
-            <span class="spec-label">Detección "Mi Ubicación"</span>
+            <span class="spec-label">Detección Mi Ubicación</span>
           </div>
           <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">100% Digital</span>
-            <span class="spec-label">Reporte "Estoy sin luz"</span>
+            <span class="spec-label">Reporte Estoy sin Luz</span>
           </div>
         </div>
 
         <div class="hero-action-buttons">
           <a href="mapa-desconexiones.html" class="btn-premium-primary">
-            <span>⚡</span> Abrir Mapa en Tiempo Real
+            Abrir Mapa en Tiempo Real
           </a>
           <a href="mapa-desconexiones.html" class="btn-premium-ghost">
-            Consultar N° de Cliente
+            Consultar Servicio
           </a>
         </div>
       </div>

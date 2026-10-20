@@ -47,7 +47,7 @@ const BrigadistaPortal = (() => {
       pwToggle.addEventListener('click', () => {
         const isText = pwInput.type === 'text';
         pwInput.type = isText ? 'password' : 'text';
-        pwToggle.textContent = isText ? '👁️' : '🙈';
+        pwToggle.textContent = isText ? 'Ver' : 'Ocultar';
       });
     }
 
@@ -172,7 +172,7 @@ const BrigadistaPortal = (() => {
   }
 
   function updateCaseBannerReason() {
-    // ⚙️  BACKEND: Obtener detalles del caso desde el servidor
+    // BACKEND: Obtener detalles del caso desde el servidor
     // Por ahora usa datos hardcodeados para la demo
     setText('dash-case-reason', 'Caída de rama sobre tendido eléctrico — Sector Los Notros');
   }
@@ -286,7 +286,7 @@ const BrigadistaPortal = (() => {
 
       const removeBtn = document.createElement('button');
       removeBtn.className = 'photo-remove-btn';
-      removeBtn.textContent = '✕';
+      removeBtn.textContent = 'x';
       removeBtn.setAttribute('aria-label', `Eliminar foto ${i + 1}`);
       removeBtn.addEventListener('click', () => removePhoto(i));
 
@@ -394,7 +394,7 @@ const BrigadistaPortal = (() => {
 
   /**
    * Envía el reporte al backend.
-   * ⚙️  BACKEND: POST /api/v1/outage/field-report
+   * BACKEND: POST /api/v1/outage/field-report
    * @param {Object} data
    * @returns {Promise<{ success: boolean, reportId?: string, error?: string }>}
    */
@@ -430,7 +430,7 @@ const BrigadistaPortal = (() => {
     const response = await fetch(`${CONFIG.BASE_URL}/api/v1/outage/field-report`, {
       method: 'POST',
       headers: {
-        // ⚙️  BACKEND: Incluir el token de auth
+        // BACKEND: Incluir el token de auth
         'Authorization': `Bearer ${session.token}`,
         // NO incluir Content-Type aquí — fetch lo setea automáticamente con boundary para FormData
       },
@@ -518,7 +518,7 @@ const BrigadistaPortal = (() => {
     const toast = document.createElement('div');
     toast.className = `toast toast--${type}`;
     toast.innerHTML = `
-      <span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+      <span class="toast-icon">${type === 'success' ? 'OK' : type === 'error' ? '!' : 'i'}</span>
       <span class="toast-text">${message}</span>
     `;
 

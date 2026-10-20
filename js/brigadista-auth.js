@@ -17,11 +17,11 @@ const AuthManager = (() => {
   const SESSION_KEY = 'brigadista-session';
 
   // ─── Usuarios mock de demostración ────────────────────────────────────────
-  // ⚙️  BACKEND: Eliminar este objeto — la validación será en el servidor.
+  // BACKEND: Eliminar este objeto — la validación será en el servidor.
   const MOCK_USERS = [
     {
       employeeId: 'EMP-12483',
-      password:   'saesa2026',       // ⚠️  Solo para demo — nunca hardcodear en producción
+      password:   'saesa2026',       // Solo para demo — nunca hardcodear en producción
       name:       'Carlos Andrés Fuentes Molina',
       role:       'Brigadista Eléctrico',
       brigade:    'BRG-045',
@@ -69,7 +69,7 @@ const AuthManager = (() => {
       companyId:  user.companyId,
       assignedCase: user.assignedCase,
       loginAt:    new Date().toISOString(),
-      // ⚙️  BACKEND: aquí iría el token JWT devuelto por el servidor
+      // BACKEND: aquí iría el token JWT devuelto por el servidor
       // token: response.token,
     };
 

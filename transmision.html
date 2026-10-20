@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Saesa Transmisión — Redes troncales y zonales de alta tensión, subestaciones digitales y sistemas BESS en Chile." />
-  <meta name="theme-color" content="#06080D" />
+  <meta name="theme-color" content="#171a20" />
 
   <title>Saesa Transmisión — Red Troncal y Alta Tensión</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/tesla-showroom.css" />
@@ -18,70 +18,64 @@
 
 <body>
 
-  <!-- Navbar Flotante Glassmorphism -->
-  <div class="tesla-navbar-wrapper">
-    <header class="tesla-navbar" role="banner">
-      <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
-        <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
-        <span class="tesla-brand-name">GRUPO SAESA</span>
+  <!-- Header Minimalista Ancho Completo -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item active"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item tesla-dropdown">
+          <a href="distribucion.html">Distribución</a>
+          <div class="tesla-dropdown-menu">
+            <a href="distribucion.html" class="dropdown-link">
+              <span class="dropdown-link-title">Todas las Distribuidoras</span>
+              <span class="dropdown-link-sub">Resumen general del área</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="saesa.html" class="dropdown-link">
+              <span class="dropdown-link-title">Saesa</span>
+              <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+            </a>
+            <a href="frontel.html" class="dropdown-link">
+              <span class="dropdown-link-title">Frontel</span>
+              <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+            </a>
+            <a href="edelaysen.html" class="dropdown-link">
+              <span class="dropdown-link-title">Edelaysen</span>
+              <span class="dropdown-link-sub">Región de Aysén</span>
+            </a>
+            <a href="luz-osorno.html" class="dropdown-link">
+              <span class="dropdown-link-title">Luz Osorno</span>
+              <span class="dropdown-link-sub">Provincia de Osorno</span>
+            </a>
+          </div>
+        </li>
+        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
       </a>
+      <a href="brigadista.html" class="nav-btn-ghost">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
 
-      <nav class="tesla-nav-center" aria-label="Navegación principal">
-        <ul class="tesla-nav-links">
-          <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
-          <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
-          <li class="tesla-nav-item active"><a href="transmision.html">Transmisión</a></li>
-          <li class="tesla-nav-item tesla-dropdown">
-            <a href="distribucion.html">Distribución ▾</a>
-            <div class="tesla-dropdown-menu">
-              <a href="distribucion.html" class="dropdown-link">
-                <span class="dropdown-link-title">Todas las Distribuidoras</span>
-                <span class="dropdown-link-sub">Resumen general del área</span>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="saesa.html" class="dropdown-link">
-                <span class="dropdown-link-title">Saesa <span>→</span></span>
-                <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
-              </a>
-              <a href="frontel.html" class="dropdown-link">
-                <span class="dropdown-link-title">Frontel <span>→</span></span>
-                <span class="dropdown-link-sub">Biobío y La Araucanía</span>
-              </a>
-              <a href="edelaysen.html" class="dropdown-link">
-                <span class="dropdown-link-title">Edelaysen <span>→</span></span>
-                <span class="dropdown-link-sub">Región de Aysén</span>
-              </a>
-              <a href="luz-osorno.html" class="dropdown-link">
-                <span class="dropdown-link-title">Luz Osorno <span>→</span></span>
-                <span class="dropdown-link-sub">Provincia de Osorno</span>
-              </a>
-            </div>
-          </li>
-          <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-        </ul>
-      </nav>
-
-      <div class="tesla-nav-actions">
-        <a href="mapa-desconexiones.html" class="nav-cta-blue">
-          <span>⚡</span> Mapa en Vivo
-        </a>
-        <a href="brigadista.html" class="nav-btn-ghost">
-          Portal Brigadas
-        </a>
-      </div>
-    </header>
-  </div>
-
-  <main class="tesla-snap-container">
+  <main class="tesla-snap-container" id="showroom-container">
 
     <!-- SLIDE 1: TRANSMISIÓN OVERVIEW -->
     <section class="tesla-hero-section" id="trans-overview"
              style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          TRANSPORTE ELÉCTRICO DE ALTA TENSIÓN
-        </div>
+        <span class="hero-tag-badge">TRANSPORTE ELÉCTRICO DE ALTA TENSIÓN</span>
         <h1 class="hero-title">Saesa Transmisión</h1>
         <p class="hero-subtext">
           3.264 kilómetros de circuitos de alta tensión conectando desde Antofagasta hasta Los Lagos, garantizando la seguridad del Sistema Eléctrico Nacional (SEN).
@@ -116,22 +110,17 @@
             Subestaciones Digitales
           </a>
           <a href="distribucion.html" class="btn-premium-ghost">
-            Ver Distribución →
+            Ver Distribución
           </a>
         </div>
       </div>
-
-      <a href="#trans-subestaciones" class="scroll-arrow-link" aria-label="Siguiente slide">↓</a>
     </section>
 
     <!-- SLIDE 2: SUBESTACIONES DIGITALES -->
     <section class="tesla-hero-section" id="trans-subestaciones"
              style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          TELEMETRÍA Y PROTECCIÓN EN MILISEGUNDOS
-        </div>
+        <span class="hero-tag-badge">TELEMETRÍA Y PROTECCIÓN EN MILISEGUNDOS</span>
         <h2 class="hero-title">Subestaciones Digitales</h2>
         <p class="hero-subtext">
           Centros de transformación inteligentes con arquitectura IEC 61850 y fibra óptica que permiten aislar fallas de forma autónoma en fracciones de segundo.
@@ -165,18 +154,13 @@
           </a>
         </div>
       </div>
-
-      <a href="#trans-bess" class="scroll-arrow-link" aria-label="Siguiente slide">↓</a>
     </section>
 
     <!-- SLIDE 3: BESS NUEVA IMPERIAL -->
     <section class="tesla-hero-section" id="trans-bess"
              style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tag-badge">
-          <span class="badge-glow-dot"></span>
-          ALMACENAMIENTO ENERGÉTICO A GRAN ESCALA
-        </div>
+        <span class="hero-tag-badge">ALMACENAMIENTO ENERGÉTICO A GRAN ESCALA</span>
         <h2 class="hero-title">Sistema BESS Nueva Imperial</h2>
         <p class="hero-subtext">
           Bancos de almacenamiento con celdas de iones de litio de última tecnología integrados al sistema de transmisión para regular frecuencia y absorber excedentes de energía renovable.

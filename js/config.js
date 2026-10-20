@@ -52,7 +52,7 @@ const CONFIG = {
       primaryColor: '#3e6ae1', // Tesla Blue CTA
       accentColor: '#171a20',  // Onyx
       logoText: 'GRUPO SAESA',
-      logoIcon: '⚡',
+      logoIcon: '',
       phone: '800 600 801',
     },
     crell: {
@@ -63,7 +63,7 @@ const CONFIG = {
       primaryColor: '#3e6ae1',
       accentColor: '#171a20',
       logoText: 'CRELL',
-      logoIcon: '🔌',
+      logoIcon: '',
       phone: '800 600 802',
     },
   },

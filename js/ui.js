@@ -56,14 +56,7 @@ const UIManager = (() => {
 
     const reasonIcon = document.getElementById('outage-reason-icon');
     if (reasonIcon) {
-      const icons = {
-        VEGETATION: '🌿',
-        COLLISION: '🚗',
-        EQUIPMENT: '⚙️',
-        MAINTENANCE: '🛠️',
-        UNKNOWN: '⚡',
-      };
-      reasonIcon.textContent = icons[outage.reasonCode] || '⚡';
+      reasonIcon.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
     }
 
     // Meta datos
@@ -225,7 +218,7 @@ const UIManager = (() => {
     const toast = document.createElement('div');
     toast.className = `toast toast--${type}`;
 
-    const icons = { success: '✓', error: '✕', info: '⚡' };
+    const icons = { success: 'OK', error: '!', info: 'i' };
     toast.innerHTML = `<span>${icons[type] || '•'}</span> <span>${message}</span>`;
 
     container.appendChild(toast);
