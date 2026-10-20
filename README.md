@@ -1,69 +1,63 @@
-# electricos
+# electricos — Plataforma Grupo Saesa (Rediseño Tesla Showroom)
 
-Plataforma de visualización, mapa de desconexiones eléctricas en tiempo real y geolocalización inspirada en la sección oficial de **Grupo Saesa / Crell** ([web.gruposaesa.cl](https://web.gruposaesa.cl/web/saesa/mapa-desconexiones)) y construida bajo el sistema de diseño minimalista de alto impacto **Tesla Style Reference** (`DESIGN.md`).
-
----
-
-## ⚡ Novedades y Características
-
-### 1. Sistema de Diseño Técnico Minimalista (Tokens Tesla `DESIGN.md`)
-- **Paleta Acromática de Alta Fidelidad:**
-  - `Tesla Blue (#3e6ae1)`: Reservado de manera exclusiva para llamadas a la acción primarias (CTAs) como *Consultar servicio* e ingresar reportes.
-  - `Pure White (#ffffff)` y `Off-White (#eeeeee)`: Superficies de tarjetas y placas de información técnica.
-  - `Onyx (#171a20)` y `Charcoal (#393c41)`: Tipografía principal de alta legibilidad técnica.
-  - `Light Border (#cccccc)` y `Steel (#5c5e62)`: Líneas sutiles de delimitación sin sombras pesadas.
-- **Geometría y Rejilla:** Rejilla base de 4px, radios técnicos de 4px para botones e inputs, y 8px para placas y modales.
-- **Foco en el Producto:** La interfaz actúa como placas funcionales mínimas que ceden el protagonismo al mapa en vivo y a los datos de telemetría.
-
-### 2. Mapa de Desconexiones (Funcionalidades Grupo Saesa / Crell)
-- **Consulta Rápida por N° de Cliente o Comuna:** Input directo para consultar el estado del suministro ingresando el número de servicio o la comuna.
-- **Geolocalización en Vivo ("📍 Mi Ubicación"):**
-  - Detección GPS del usuario con efecto radar Tesla Blue.
-  - Algoritmo de punto en polígono (Ray Casting) para verificar en tiempo real si el usuario está dentro de una zona afectada o si cuenta con suministro normal.
-- **Filtro de Desconexiones:**
-  - **⚡ Emergencias (No programadas):** Caída de ramas, postes chocados, fallas imprevistas.
-  - **🛠️ Desconexiones Programadas:** Trabajos de mantenimiento preventivo y mejoras con aviso previo.
-  - **Filtro por Comuna:** Temuco, Valdivia, Osorno, Puerto Montt, Puerto Varas, Castro, Coyhaique.
-  - **Selector de Empresa / Filial:** Grupo Saesa (Saesa, Frontel, Luz Osorno, Edelaysen) y Crell.
-- **KPIs de Red en Tiempo Real:** Porcentaje de operatividad (99.4%), total de sectores con corte, clientes afectados y brigadas en terreno.
-- **Telemetría de Brigadas Móviles:** Cuadrilla asignada, patente del móvil técnico, velocidad, ruta calculada y tiempo estimado de llegada (ETA).
-- **Reporte "Estoy sin luz":** Modal de ingreso de reportes de interrupción en 2 pasos con geolocalización.
+Recreación integral del portal web corporativo y de servicios de **Grupo Saesa** y sus filiales, basada en la arquitectura de información oficial ([web.gruposaesa.cl](https://web.gruposaesa.cl)) e implementada bajo el sistema de diseño minimalista de alto impacto **Tesla Style Reference** (`DESIGN.md`).
 
 ---
 
-## 📁 Estructura del Proyecto
+## ⚡ Estructura y Secciones Recreadas
 
-```text
-├── css/
-│   ├── main.css              # Tokens DESIGN.md, reset, header, consultation bar, KPIs
-│   ├── components.css        # Placas de corte, cuenta regresiva, ficha brigada, modal
-│   ├── map.css               # Capas CartoDB/Leaflet, marcadores, radar GPS y popups
-│   └── brigadista.css        # Portal de cuadrillas en terreno
-├── js/
-│   ├── config.js             # Parámetros globales, endpoints, filiales y KPIs
-│   ├── api.js                # Gestión de datos, cortes múltiples, simulación y reportes
-│   ├── map.js                # Leaflet, trazado de polígonos, GPS de móvil y geolocalización
-│   ├── theme.js              # Selector de tema claro/oscuro
-│   ├── ui.js                 # Controladores de interfaz y notificaciones Toast
-│   └── main.js               # Bootstrap, filtros interactivos y búsqueda
-├── data/
-│   ├── cortes-ejemplo.json   # Datos de muestra de la red sur
-│   └── geojson/              # Polígonos GeoJSON de zonas afectadas
-├── index.html                # Plataforma pública y mapa interactivo
-├── brigadista.html           # Portal para técnicos en terreno
-├── Inspiracion_Diseño.md     # Guía y especificación de diseño Tesla (DESIGN.md)
-└── README.md
-```
+### 1. 🏠 Inicio (Hub Corporativo Grupo Saesa) — [`index.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/index.html)
+- Presentación vertical en pantalla completa (*full-bleed scrolling showroom* con snapping de scroll suave).
+- Visión integral de la infraestructura del sur: **1.094.000+ clientes**, **3.264 km de transmisión**, **275 MW de capacidad** y **99.4% de operatividad**.
+- Acceso directo a cada unidad de negocio y al mapa interactivo en tiempo real.
+
+### 2. 🌊 Saesa Generación — [`generacion.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/generacion.html)
+- **Parque Fotovoltaico El Blanco (Aysén):** La planta solar más austral del planeta.
+- **Centrales Hidroeléctricas de Pasada:** 14 centrales sustentables sin embalses de inundación en ríos del sur.
+- **Sistemas Medianos y Aislados:** Microrredes híbridas para Melinka, Chaitén, Puerto Cisnes y Caleta Tortel.
+
+### 3. ⚡ Saesa Transmisión — [`transmision.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/transmision.html)
+- **Red Troncal y Zonal:** 3.264 km de líneas de 66 a 220 kV conectando desde Antofagasta hasta Los Lagos.
+- **110 Subestaciones Eléctricas:** Automatización digital con protocolo IEC 61850 y telecontrol SCADA en milisegundos.
+- **BESS Nueva Imperial:** Banco de almacenamiento en baterías de iones de litio a gran escala para estabilidad del Sistema Eléctrico Nacional (SEN).
+
+### 4. 🔌 Distribución Austral — [`distribucion.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/distribucion.html)
+- **Saesa:** 480.000+ clientes en Los Ríos y Los Lagos (Valdivia, Puerto Montt, Chiloé).
+- **Frontel:** 360.000+ clientes en Biobío y La Araucanía; líder histórico en electrificación rural de comunidades.
+- **Edelaysen:** 40.000+ clientes en la Patagonia de Aysén; sistemas aislados extremos.
+- **Luz Osorno:** 90.000+ clientes en la Provincia de Osorno; redes urbanas blindadas y excelencia en continuidad.
+- Selector interactivo de filial en la barra superior.
+
+### 5. 🗺️ Mapa de Desconexiones en Vivo — [`mapa-desconexiones.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/mapa-desconexiones.html)
+- Herramienta interactiva con mapas CartoDB/Leaflet.
+- Consulta de suministro por **N° de Cliente** o **Comuna**.
+- Detección de **"📍 Mi Ubicación"** mediante radar GPS con verificación de afectación en polígonos.
+- Filtro entre *Emergencias / No Programadas* y *Trabajos Programados*.
+- Telemetría en tiempo real de móviles y cuadrillas técnicas.
+- Modal de reporte ciudadano *"⚠️ Estoy sin luz"*.
+
+### 6. 🔧 Portal del Brigadista — [`brigadista.html`](file:///c:/Users/lilsh/OneDrive/Escritorio/Proyectos/Corte-electrico-20261020T010442Z-1-001/brigadista.html)
+- Plataforma de acceso para técnicos en terreno, reporte de estado de faenas y cierre de tickets.
+
+---
+
+## 🎨 Sistema de Diseño (`DESIGN.md`)
+
+- **Paleta de Colores Tesla:**
+  - `Tesla Blue (#3e6ae1)`: Reservado para CTAs principales de interacción alta.
+  - `Pure White (#ffffff)` y `Off-White (#eeeeee)`: Tarjetas, textos e indicadores sobre fotos.
+  - `Onyx (#171a20)` y `Charcoal (#393c41)`: Tipografía neutra y técnica sin adornos.
+  - `Light Border (#cccccc)` y `Steel (#5c5e62)`: Líneas tenues de demarcación.
+- **Rejilla Base de 4px:** Radios de 4px para botones e inputs, 8px para placas y modales.
+- **Tipografía:** Universal Sans / Inter con pesos 400 y 500, escala visual jerárquica y strips de especificaciones técnicas.
 
 ---
 
 ## 🚀 Inicio Rápido
-
-Para iniciar el servidor de desarrollo local:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Visita `http://localhost:5173` en tu navegador.
+Abre `http://localhost:5173` para navegar por toda la plataforma showroom.

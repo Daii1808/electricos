@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Saesa Transmisión — Redes troncales y zonales de alta tensión, subestaciones digitales y sistemas BESS en Chile. Rediseño estilo Tesla Showroom." />
+  <meta name="theme-color" content="#171a20" />
+
+  <title>Saesa Transmisión — Red Troncal y Alta Tensión</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos principales y showroom de Tesla -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/tesla-showroom.css" />
+</head>
+
+<body>
+
+  <!-- Navbar Showroom -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item active"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item"><a href="distribucion.html">Distribución</a></li>
+        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
+      </a>
+      <a href="brigadista.html" class="btn-tesla-ghost" style="padding: 6px 14px; font-size: 12px; min-width: auto;">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenedor Showroom Vertical -->
+  <main class="tesla-snap-container">
+
+    <!-- SLIDE 1: INTRODUCCIÓN TRANSMISIÓN -->
+    <section class="tesla-hero-section" id="trans-overview"
+             style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">TRANSPORTE ELÉCTRICO DE ALTA TENSIÓN</div>
+        <h1 class="hero-title">Saesa Transmisión</h1>
+        <p class="hero-subtext">
+          3.264 kilómetros de circuitos de alta tensión conectando desde la Región de Antofagasta hasta Los Lagos, garantizando la seguridad del Sistema Eléctrico Nacional (SEN).
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">3.264 km</span>
+            <span class="spec-label">Líneas de Transporte</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">66 a 220 kV</span>
+            <span class="spec-label">Nivel de Voltaje</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">110</span>
+            <span class="spec-label">Subestaciones</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">99.98%</span>
+            <span class="spec-label">Confiabilidad Operativa</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="#trans-subestaciones" class="btn-tesla-primary">
+            Subestaciones Digitales
+          </a>
+          <a href="distribucion.html" class="btn-tesla-ghost">
+            Ver Distribución
+          </a>
+        </div>
+      </div>
+
+      <a href="#trans-subestaciones" class="scroll-indicator-arrow" aria-label="Siguiente slide">↓</a>
+    </section>
+
+    <!-- SLIDE 2: SUBESTACIONES DIGITALES Y SCADA -->
+    <section class="tesla-hero-section" id="trans-subestaciones"
+             style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">TELEMETRÍA Y PROTECCIÓN EN MILISEGUNDOS</div>
+        <h2 class="hero-title">Subestaciones Digitales</h2>
+        <p class="hero-subtext">
+          Centros de transformación inteligentes con arquitectura IEC 61850 y fibra óptica que permiten aislar fallas de forma autónoma en fracciones de segundo.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">&lt; 30 ms</span>
+            <span class="spec-label">Despeje de Perturbaciones</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">SCADA 24/7</span>
+            <span class="spec-label">Despacho Centralizado</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Fibra Óptica</span>
+            <span class="spec-label">Comunicaciones OPGW</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="#trans-bess" class="btn-tesla-primary">
+            Baterías BESS Nueva Imperial
+          </a>
+          <a href="index.html" class="btn-tesla-ghost">
+            Volver a Inicio
+          </a>
+        </div>
+      </div>
+
+      <a href="#trans-bess" class="scroll-indicator-arrow" aria-label="Siguiente slide">↓</a>
+    </section>
+
+    <!-- SLIDE 3: BESS NUEVA IMPERIAL (ALMACENAMIENTO DE BATERÍAS) -->
+    <section class="tesla-hero-section" id="trans-bess"
+             style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">ALMACENAMIENTO ENERGÉTICO A GRAN ESCALA</div>
+        <h2 class="hero-title">Sistema BESS Nueva Imperial</h2>
+        <p class="hero-subtext">
+          Bancos de almacenamiento con celdas de iones de litio de última tecnología integrados al sistema de transmisión para regular frecuencia y absorber energía renovable.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">Inyección Instantánea</span>
+            <span class="spec-label">Respaldo Dinámico</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Estabilidad SEN</span>
+            <span class="spec-label">Regulación de Voltaje</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">0 Emisiones</span>
+            <span class="spec-label">Operación Limpia</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="distribucion.html" class="btn-tesla-primary">
+            Ir a Distribución
+          </a>
+          <a href="mapa-desconexiones.html" class="btn-tesla-ghost">
+            Mapa de Red en Vivo
+          </a>
+        </div>
+      </div>
+
+      <footer class="tesla-footer" style="width: 100%; max-width: 900px; background: transparent; padding: var(--spacing-16) 0 0;">
+        <ul class="tesla-footer-links">
+          <li><a href="index.html">Grupo Saesa © 2026</a></li>
+          <li><a href="generacion.html">Generación</a></li>
+          <li><a href="transmision.html">Transmisión</a></li>
+          <li><a href="distribucion.html">Distribución</a></li>
+          <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        </ul>
+      </footer>
+    </section>
+
+  </main>
+
+</body>
+</html>

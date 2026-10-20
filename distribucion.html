@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Distribuidoras de Grupo Saesa — Saesa, Frontel, Edelaysen y Luz Osorno. Distribución eléctrica para más de un millón de clientes en el sur de Chile. Rediseño estilo Tesla Showroom." />
+  <meta name="theme-color" content="#171a20" />
+
+  <title>Distribución — Saesa, Frontel, Edelaysen, Luz Osorno</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos principales y showroom de Tesla -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/tesla-showroom.css" />
+</head>
+
+<body>
+
+  <!-- Navbar Showroom -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item active"><a href="distribucion.html">Distribución</a></li>
+        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
+      </a>
+      <a href="brigadista.html" class="btn-tesla-ghost" style="padding: 6px 14px; font-size: 12px; min-width: auto;">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
+
+  <!-- Barra flotante de selección rápida de filial -->
+  <div style="position: fixed; top: 68px; left: 50%; transform: translateX(-50%); z-index: 990; display: flex; gap: 8px; background: rgba(23, 26, 32, 0.7); backdrop-filter: blur(8px); padding: 4px; border-radius: var(--radius-buttons); border: 1px solid rgba(255,255,255,0.15);">
+    <a href="#dist-saesa" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">SAESA</a>
+    <a href="#dist-frontel" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">FRONTEL</a>
+    <a href="#dist-edelaysen" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">EDELAYSEN</a>
+    <a href="#dist-luz-osorno" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">LUZ OSORNO</a>
+  </div>
+
+  <!-- Contenedor Showroom Vertical -->
+  <main class="tesla-snap-container">
+
+    <!-- SLIDE 1: DISTRIBUIDORA SAESA (https://web.gruposaesa.cl/web/saesa) -->
+    <section class="tesla-hero-section" id="dist-saesa"
+             style="background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">DISTRIBUIDORA SAESA — LOS RÍOS Y LOS LAGOS</div>
+        <h1 class="hero-title">Saesa</h1>
+        <p class="hero-subtext">
+          Suministro eléctrico para más de 480.000 hogares y empresas desde Valdivia, Osorno y Puerto Montt hasta la Isla Grande de Chiloé.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">480.000+</span>
+            <span class="spec-label">Clientes Residenciales</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Los Ríos & Lagos</span>
+            <span class="spec-label">Área de Concesión</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">800 600 801</span>
+            <span class="spec-label">Línea de Emergencias 24/7</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">99.5%</span>
+            <span class="spec-label">Continuidad de Red</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
+            Ver Cortes en Saesa
+          </a>
+          <a href="#dist-frontel" class="btn-tesla-ghost">
+            Conocer Frontel
+          </a>
+        </div>
+      </div>
+
+      <a href="#dist-frontel" class="scroll-indicator-arrow" aria-label="Siguiente slide">↓</a>
+    </section>
+
+    <!-- SLIDE 2: DISTRIBUIDORA FRONTEL (https://web.gruposaesa.cl/web/frontel) -->
+    <section class="tesla-hero-section" id="dist-frontel"
+             style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">DISTRIBUIDORA FRONTEL — BIOBÍO Y LA ARAUCANÍA</div>
+        <h2 class="hero-title">Frontel</h2>
+        <p class="hero-subtext">
+          Líder histórico en electrificación rural y conectividad comunitaria. Energía confiable en valles, cordillera y costa de La Araucanía y Biobío.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">360.000+</span>
+            <span class="spec-label">Clientes Conectados</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">23.000 km</span>
+            <span class="spec-label">Líneas de Distribución</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">800 600 802</span>
+            <span class="spec-label">Atención Frontel</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Líder Rural</span>
+            <span class="spec-label">Electrificación de Comunidades</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
+            Mapa de Cortes Frontel
+          </a>
+          <a href="#dist-edelaysen" class="btn-tesla-ghost">
+            Conocer Edelaysen
+          </a>
+        </div>
+      </div>
+
+      <a href="#dist-edelaysen" class="scroll-indicator-arrow" aria-label="Siguiente slide">↓</a>
+    </section>
+
+    <!-- SLIDE 3: DISTRIBUIDORA EDELAYSEN (https://web.gruposaesa.cl/web/edelaysen) -->
+    <section class="tesla-hero-section" id="dist-edelaysen"
+             style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">DISTRIBUIDORA EDELAYSEN — PATAGONIA AUSTRAL</div>
+        <h2 class="hero-title">Edelaysen</h2>
+        <p class="hero-subtext">
+          Generación y distribución eléctrica en la desafiante geografía de Aysén: Coyhaique, Puerto Aysén, Cochrane, Chile Chico y fiordos aislados.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">40.000+</span>
+            <span class="spec-label">Clientes Patagónicos</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Aysén</span>
+            <span class="spec-label">Territorio Austral</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">800 600 803</span>
+            <span class="spec-label">Atención Edelaysen</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">100% Cobertura</span>
+            <span class="spec-label">Sistemas Aislados</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
+            Mapa de Cortes Edelaysen
+          </a>
+          <a href="#dist-luz-osorno" class="btn-tesla-ghost">
+            Conocer Luz Osorno
+          </a>
+        </div>
+      </div>
+
+      <a href="#dist-luz-osorno" class="scroll-indicator-arrow" aria-label="Siguiente slide">↓</a>
+    </section>
+
+    <!-- SLIDE 4: DISTRIBUIDORA LUZ OSORNO (https://web.gruposaesa.cl/web/luz-osorno) -->
+    <section class="tesla-hero-section" id="dist-luz-osorno"
+             style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <div class="hero-tagline">DISTRIBUIDORA LUZ OSORNO — PROVINCIA DE OSORNO</div>
+        <h2 class="hero-title">Luz Osorno</h2>
+        <p class="hero-subtext">
+          Calidad de servicio y modernización de redes subterráneas e inteligentes para la ciudad de Osorno, San Pablo y Puyehue.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">90.000+</span>
+            <span class="spec-label">Clientes Conectados</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Provincia Osorno</span>
+            <span class="spec-label">Zona Urbana y Rural</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">800 600 804</span>
+            <span class="spec-label">Emergencias Luz Osorno</span>
+          </div>
+          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-item">
+            <span class="spec-value">Subterráneo</span>
+            <span class="spec-label">Redes Blindadas</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
+            Lanzar Mapa en Tiempo Real
+          </a>
+          <a href="index.html" class="btn-tesla-ghost">
+            Volver a Inicio
+          </a>
+        </div>
+      </div>
+
+      <footer class="tesla-footer" style="width: 100%; max-width: 900px; background: transparent; padding: var(--spacing-16) 0 0;">
+        <ul class="tesla-footer-links">
+          <li><a href="index.html">Grupo Saesa © 2026</a></li>
+          <li><a href="generacion.html">Generación</a></li>
+          <li><a href="transmision.html">Transmisión</a></li>
+          <li><a href="distribucion.html">Distribución</a></li>
+          <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        </ul>
+      </footer>
+    </section>
+
+  </main>
+
+</body>
+</html>
