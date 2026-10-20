@@ -1,71 +1,90 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Distribuidoras de Grupo Saesa â€” Saesa, Frontel, Edelaysen y Luz Osorno. DistribuciÃ³n elÃ©ctrica para mÃ¡s de un millÃ³n de clientes en el sur de Chile. RediseÃ±o estilo Tesla Showroom." />
-  <meta name="theme-color" content="#171a20" />
+  <meta name="description" content="Distribución Grupo Saesa — Saesa, Frontel, Edelaysen y Luz Osorno. Suministro eléctrico continuo en el sur de Chile." />
+  <meta name="theme-color" content="#06080D" />
 
-  <title>DistribuciÃ³n â€” Saesa, Frontel, Edelaysen, Luz Osorno</title>
+  <title>Distribución Austral — Saesa, Frontel, Edelaysen, Luz Osorno</title>
 
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Estilos principales y showroom de Tesla -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/tesla-showroom.css" />
 </head>
 
 <body>
 
-  <!-- Navbar Showroom -->
-  <header class="tesla-navbar" role="banner">
-    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
-      <div class="tesla-brand-symbol" aria-hidden="true">âš¡</div>
-      <span class="tesla-brand-name">GRUPO SAESA</span>
-    </a>
-
-    <nav class="tesla-nav-center" aria-label="NavegaciÃ³n principal">
-      <ul class="tesla-nav-links">
-        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
-        <li class="tesla-nav-item"><a href="generacion.html">GeneraciÃ³n</a></li>
-        <li class="tesla-nav-item"><a href="transmision.html">TransmisiÃ³n</a></li>
-        <li class="tesla-nav-item active"><a href="distribucion.html">DistribuciÃ³n</a></li>
-        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-      </ul>
-    </nav>
-
-    <div class="tesla-nav-actions">
-      <a href="mapa-desconexiones.html" class="nav-cta-blue">
-        Mapa en Vivo
+  <!-- Navbar Flotante Glassmorphism -->
+  <div class="tesla-navbar-wrapper">
+    <header class="tesla-navbar" role="banner">
+      <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+        <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
+        <span class="tesla-brand-name">GRUPO SAESA</span>
       </a>
-      <a href="brigadista.html" class="btn-tesla-ghost" style="padding: 6px 14px; font-size: 12px; min-width: auto;">
-        Portal Brigadas
-      </a>
-    </div>
-  </header>
 
-  <!-- Barra flotante de selecciÃ³n rÃ¡pida de filial -->
-  <div style="position: fixed; top: 68px; left: 50%; transform: translateX(-50%); z-index: 990; display: flex; gap: 8px; background: rgba(23, 26, 32, 0.7); backdrop-filter: blur(8px); padding: 4px; border-radius: var(--radius-buttons); border: 1px solid rgba(255,255,255,0.15);">
-    <a href="#dist-saesa" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">SAESA</a>
-    <a href="#dist-frontel" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">FRONTEL</a>
-    <a href="#dist-edelaysen" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">EDELAYSEN</a>
-    <a href="#dist-luz-osorno" class="btn-tesla-ghost" style="padding: 4px 12px; font-size: 12px; min-width: auto; border: none; background: transparent;">LUZ OSORNO</a>
+      <nav class="tesla-nav-center" aria-label="Navegación principal">
+        <ul class="tesla-nav-links">
+          <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+          <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+          <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+          <li class="tesla-nav-item tesla-dropdown active">
+            <a href="distribucion.html">Distribución ▾</a>
+            <div class="tesla-dropdown-menu">
+              <a href="distribucion.html" class="dropdown-link active">
+                <span class="dropdown-link-title">Todas las Distribuidoras</span>
+                <span class="dropdown-link-sub">Resumen general del área</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="saesa.html" class="dropdown-link">
+                <span class="dropdown-link-title">Saesa <span>→</span></span>
+                <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+              </a>
+              <a href="frontel.html" class="dropdown-link">
+                <span class="dropdown-link-title">Frontel <span>→</span></span>
+                <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+              </a>
+              <a href="edelaysen.html" class="dropdown-link">
+                <span class="dropdown-link-title">Edelaysen <span>→</span></span>
+                <span class="dropdown-link-sub">Región de Aysén</span>
+              </a>
+              <a href="luz-osorno.html" class="dropdown-link">
+                <span class="dropdown-link-title">Luz Osorno <span>→</span></span>
+                <span class="dropdown-link-sub">Provincia de Osorno</span>
+              </a>
+            </div>
+          </li>
+          <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        </ul>
+      </nav>
+
+      <div class="tesla-nav-actions">
+        <a href="mapa-desconexiones.html" class="nav-cta-blue">
+          <span>⚡</span> Mapa en Vivo
+        </a>
+        <a href="brigadista.html" class="nav-btn-ghost">
+          Portal Brigadas
+        </a>
+      </div>
+    </header>
   </div>
 
-  <!-- Contenedor Showroom Vertical -->
   <main class="tesla-snap-container">
 
-    <!-- SLIDE 1: DISTRIBUIDORA SAESA (https://web.gruposaesa.cl/web/saesa) -->
+    <!-- SLIDE 1: DISTRIBUIDORA SAESA -->
     <section class="tesla-hero-section" id="dist-saesa"
              style="background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tagline">DISTRIBUIDORA SAESA â€” LOS RÃOS Y LOS LAGOS</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          DISTRIBUIDORA SAESA — LOS RÍOS Y LOS LAGOS
+        </div>
         <h1 class="hero-title">Saesa</h1>
         <p class="hero-subtext">
-          Suministro elÃ©ctrico para mÃ¡s de 480.000 hogares y empresas desde Valdivia, Osorno y Puerto Montt hasta la Isla Grande de ChiloÃ©.
+          Suministro eléctrico para más de 480.000 clientes desde Valdivia, Osorno y Puerto Montt hasta la Isla Grande de Chiloé.
         </p>
       </div>
 
@@ -73,19 +92,19 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">480.000+</span>
-            <span class="spec-label">Clientes Residenciales</span>
+            <span class="spec-label">Clientes</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
-            <span class="spec-value">Los RÃ­os & Lagos</span>
-            <span class="spec-label">Ãrea de ConcesiÃ³n</span>
+            <span class="spec-value">Los Ríos y Lagos</span>
+            <span class="spec-label">Zona de Concesión</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">800 600 801</span>
-            <span class="spec-label">LÃ­nea de Emergencias 24/7</span>
+            <span class="spec-label">Línea de Emergencia</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">99.5%</span>
             <span class="spec-label">Continuidad de Red</span>
@@ -93,26 +112,29 @@
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Ver Cortes en Saesa
+          <a href="saesa.html" class="btn-premium-primary">
+            Conocer Saesa en Detalle
           </a>
-          <a href="#dist-frontel" class="btn-tesla-ghost">
-            Conocer Frontel
+          <a href="#dist-frontel" class="btn-premium-ghost">
+            Siguiente: Frontel →
           </a>
         </div>
       </div>
 
-      <a href="#dist-frontel" class="scroll-indicator-arrow" aria-label="Siguiente slide">â†“</a>
+      <a href="#dist-frontel" class="scroll-arrow-link" aria-label="Ir a Frontel">↓</a>
     </section>
 
-    <!-- SLIDE 2: DISTRIBUIDORA FRONTEL (https://web.gruposaesa.cl/web/frontel) -->
+    <!-- SLIDE 2: DISTRIBUIDORA FRONTEL -->
     <section class="tesla-hero-section" id="dist-frontel"
              style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tagline">DISTRIBUIDORA FRONTEL â€” BIOBÃO Y LA ARAUCANÃA</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          DISTRIBUIDORA FRONTEL — BIOBÍO Y LA ARAUCANÍA
+        </div>
         <h2 class="hero-title">Frontel</h2>
         <p class="hero-subtext">
-          LÃ­der histÃ³rico en electrificaciÃ³n rural y conectividad comunitaria. EnergÃ­a confiable en valles, cordillera y costa de La AraucanÃ­a y BiobÃ­o.
+          Líder histórico en electrificación rural y comunitaria. Energía confiable en valles, cordillera y costa de La Araucanía y Biobío.
         </p>
       </div>
 
@@ -122,44 +144,47 @@
             <span class="spec-value">360.000+</span>
             <span class="spec-label">Clientes Conectados</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">23.000 km</span>
-            <span class="spec-label">LÃ­neas de DistribuciÃ³n</span>
+            <span class="spec-label">Líneas de Distribución</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">800 600 802</span>
-            <span class="spec-label">AtenciÃ³n Frontel</span>
+            <span class="spec-label">Atención Frontel</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
-            <span class="spec-value">LÃ­der Rural</span>
-            <span class="spec-label">ElectrificaciÃ³n de Comunidades</span>
+            <span class="spec-value">Líder Rural</span>
+            <span class="spec-label">Electrificación</span>
           </div>
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Mapa de Cortes Frontel
+          <a href="frontel.html" class="btn-premium-primary">
+            Conocer Frontel en Detalle
           </a>
-          <a href="#dist-edelaysen" class="btn-tesla-ghost">
-            Conocer Edelaysen
+          <a href="#dist-edelaysen" class="btn-premium-ghost">
+            Siguiente: Edelaysen →
           </a>
         </div>
       </div>
 
-      <a href="#dist-edelaysen" class="scroll-indicator-arrow" aria-label="Siguiente slide">â†“</a>
+      <a href="#dist-edelaysen" class="scroll-arrow-link" aria-label="Ir a Edelaysen">↓</a>
     </section>
 
-    <!-- SLIDE 3: DISTRIBUIDORA EDELAYSEN (https://web.gruposaesa.cl/web/edelaysen) -->
+    <!-- SLIDE 3: DISTRIBUIDORA EDELAYSEN -->
     <section class="tesla-hero-section" id="dist-edelaysen"
              style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tagline">DISTRIBUIDORA EDELAYSEN â€” PATAGONIA AUSTRAL</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          DISTRIBUIDORA EDELAYSEN — PATAGONIA AUSTRAL
+        </div>
         <h2 class="hero-title">Edelaysen</h2>
         <p class="hero-subtext">
-          GeneraciÃ³n y distribuciÃ³n elÃ©ctrica en la desafiante geografÃ­a de AysÃ©n: Coyhaique, Puerto AysÃ©n, Cochrane, Chile Chico y fiordos aislados.
+          Generación y distribución eléctrica en la desafiante geografía de Aysén: Coyhaique, Puerto Aysén, Cochrane, Chile Chico y fiordos aislados.
         </p>
       </div>
 
@@ -167,19 +192,19 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">40.000+</span>
-            <span class="spec-label">Clientes PatagÃ³nicos</span>
+            <span class="spec-label">Clientes Patagónicos</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
-            <span class="spec-value">AysÃ©n</span>
+            <span class="spec-value">Aysén</span>
             <span class="spec-label">Territorio Austral</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">800 600 803</span>
-            <span class="spec-label">AtenciÃ³n Edelaysen</span>
+            <span class="spec-label">Atención Edelaysen</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">100% Cobertura</span>
             <span class="spec-label">Sistemas Aislados</span>
@@ -187,26 +212,29 @@
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Mapa de Cortes Edelaysen
+          <a href="edelaysen.html" class="btn-premium-primary">
+            Conocer Edelaysen en Detalle
           </a>
-          <a href="#dist-luz-osorno" class="btn-tesla-ghost">
-            Conocer Luz Osorno
+          <a href="#dist-luz-osorno" class="btn-premium-ghost">
+            Siguiente: Luz Osorno →
           </a>
         </div>
       </div>
 
-      <a href="#dist-luz-osorno" class="scroll-indicator-arrow" aria-label="Siguiente slide">â†“</a>
+      <a href="#dist-luz-osorno" class="scroll-arrow-link" aria-label="Ir a Luz Osorno">↓</a>
     </section>
 
-    <!-- SLIDE 4: DISTRIBUIDORA LUZ OSORNO (https://web.gruposaesa.cl/web/luz-osorno) -->
+    <!-- SLIDE 4: DISTRIBUIDORA LUZ OSORNO -->
     <section class="tesla-hero-section" id="dist-luz-osorno"
              style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tagline">DISTRIBUIDORA LUZ OSORNO â€” PROVINCIA DE OSORNO</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          DISTRIBUIDORA LUZ OSORNO — PROVINCIA DE OSORNO
+        </div>
         <h2 class="hero-title">Luz Osorno</h2>
         <p class="hero-subtext">
-          Calidad de servicio y modernizaciÃ³n de redes subterrÃ¡neas e inteligentes para la ciudad de Osorno, San Pablo y Puyehue.
+          Calidad de servicio y modernización de redes subterráneas e inteligentes para la ciudad de Osorno, San Pablo y Puyehue.
         </p>
       </div>
 
@@ -214,41 +242,42 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">90.000+</span>
-            <span class="spec-label">Clientes Conectados</span>
+            <span class="spec-label">Clientes</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Provincia Osorno</span>
             <span class="spec-label">Zona Urbana y Rural</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">800 600 804</span>
             <span class="spec-label">Emergencias Luz Osorno</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
-            <span class="spec-value">SubterrÃ¡neo</span>
-            <span class="spec-label">Redes Blindadas</span>
+            <span class="spec-value">Subterráneo</span>
+            <span class="spec-label">Red Blindada</span>
           </div>
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Lanzar Mapa en Tiempo Real
+          <a href="luz-osorno.html" class="btn-premium-primary">
+            Conocer Luz Osorno en Detalle
           </a>
-          <a href="index.html" class="btn-tesla-ghost">
-            Volver a Inicio
+          <a href="mapa-desconexiones.html" class="btn-premium-ghost">
+            Ver Mapa en Tiempo Real
           </a>
         </div>
       </div>
 
-      <footer class="tesla-footer" style="width: 100%; max-width: 900px; background: transparent; padding: var(--spacing-16) 0 0;">
+      <footer class="tesla-footer">
         <ul class="tesla-footer-links">
-          <li><a href="index.html">Grupo Saesa Â© 2026</a></li>
-          <li><a href="generacion.html">GeneraciÃ³n</a></li>
-          <li><a href="transmision.html">TransmisiÃ³n</a></li>
-          <li><a href="distribucion.html">DistribuciÃ³n</a></li>
+          <li><a href="index.html">Grupo Saesa © 2026</a></li>
+          <li><a href="saesa.html">Saesa</a></li>
+          <li><a href="frontel.html">Frontel</a></li>
+          <li><a href="edelaysen.html">Edelaysen</a></li>
+          <li><a href="luz-osorno.html">Luz Osorno</a></li>
           <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
         </ul>
       </footer>
@@ -259,5 +288,3 @@
   <script src="js/showroom.js"></script>
 </body>
 </html>
-
-

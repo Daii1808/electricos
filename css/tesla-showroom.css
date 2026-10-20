@@ -1,132 +1,186 @@
 /**
  * ═══════════════════════════════════════════════════════
- *  tesla-showroom.css — Estilos de Presentación Full-Bleed
- *  Inspirado en DESIGN.md (Tesla Style Reference)
- *  "Automotive Showroom on Screen: High-fidelity product visuals dominate,
- *   framed by a minimal, functional interface that gets out of the way."
+ *  tesla-showroom.css — Estilo Premium High-Tech (Devv / Linear / Tesla)
+ *  Atmósfera oscura profunda, glassmorphism con brillo sutil,
+ *  tipografía con degradado, navbar flotante y efectos micro-interactivos.
  * ═══════════════════════════════════════════════════════
  */
 
-/* ─── Contenedor de Scroll Snapping ───────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --color-obsidian:      #06080D;
+  --color-surface-dark:  rgba(14, 18, 28, 0.75);
+  --color-surface-hover: rgba(22, 28, 44, 0.85);
+  --color-tesla-blue:    #3E6AE1;
+  --color-neon-cyan:     #00F0FF;
+  --color-electric-glow: rgba(62, 106, 225, 0.35);
+
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-text:    'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+
+  --border-glass: rgba(255, 255, 255, 0.10);
+  --border-glass-hover: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Contenedor y Fondo ──────────────────────────────────────────────────── */
+html, body {
+  background-color: var(--color-obsidian);
+  color: #FFFFFF;
+  font-family: var(--font-text);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
 .tesla-snap-container {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   position: relative;
-  background-color: var(--color-onyx);
+  background-color: var(--color-obsidian);
 }
 
-/* ─── Header Transparente con Blur Minimalista ────────────────────────────── */
-.tesla-navbar {
+/* ─── Navbar Flotante Glassmorphism ───────────────────────────────────────── */
+.tesla-navbar-wrapper {
   position: fixed;
-  top: 0;
+  top: 16px;
   left: 0;
   right: 0;
-  height: 56px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--spacing-32);
+  justify-content: center;
   z-index: 1000;
-  background: rgba(23, 26, 32, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  transition: background-color 200ms ease;
+  padding: 0 16px;
+  pointer-events: none;
 }
 
+.tesla-navbar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(10, 14, 23, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px 6px 20px;
+  transition: all 200ms ease;
+}
+
+.tesla-navbar:hover {
+  border-color: var(--border-glass-hover);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Marca / Logo */
 .tesla-brand-link {
   display: flex;
   align-items: center;
-  gap: var(--spacing-8);
+  gap: 8px;
   text-decoration: none;
-  color: var(--color-pure-white);
+  color: #FFFFFF;
 }
 
 .tesla-brand-symbol {
-  width: 26px;
-  height: 26px;
-  background: var(--color-pure-white);
-  color: var(--color-onyx);
-  border-radius: var(--radius-buttons);
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #3E6AE1, #00F0FF);
+  color: #FFFFFF;
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
+  box-shadow: 0 0 12px rgba(62, 106, 225, 0.6);
 }
 
 .tesla-brand-name {
-  font-family: var(--font-universal-sans-display);
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 1.2px;
-  color: var(--color-pure-white);
-  text-transform: uppercase;
+  color: #FFFFFF;
 }
 
-/* Menú central de navegación */
+/* Enlaces del Navbar */
 .tesla-nav-links {
   display: flex;
   align-items: center;
-  gap: var(--spacing-24);
+  gap: 4px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .tesla-nav-item {
   position: relative;
 }
 
-.tesla-nav-item a {
+.tesla-nav-item > a {
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.3px;
-  color: rgba(255, 255, 255, 0.85);
-  padding: 6px 12px;
-  border-radius: var(--radius-buttons);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
   transition: all 150ms ease;
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
-.tesla-nav-item a:hover {
-  color: var(--color-pure-white);
-  background: rgba(255, 255, 255, 0.12);
+.tesla-nav-item > a:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .tesla-nav-item.active > a {
-  color: var(--color-pure-white);
-  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
   font-weight: 600;
 }
 
-/* Dropdown de Distribución (Filiales Saesa, Frontel, Edelaysen, Luz Osorno) */
+/* Dropdown de Distribución */
+.tesla-dropdown {
+  position: relative;
+}
+
 .tesla-dropdown:hover .tesla-dropdown-menu,
-.tesla-dropdown:focus-within .tesla-dropdown-menu {
+.tesla-dropdown:focus-within .tesla-dropdown-menu,
+.tesla-dropdown.open .tesla-dropdown-menu {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 .tesla-dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 12px);
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  min-width: 260px;
-  background: rgba(23, 26, 32, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-cards);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
-  padding: var(--spacing-8);
+  transform: translateX(-50%) translateY(6px);
+  min-width: 280px;
+  background: rgba(12, 16, 26, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass-hover);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(62, 106, 225, 0.15);
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   opacity: 0;
   visibility: hidden;
   transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,62 +188,87 @@
 }
 
 .dropdown-link {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: 2px !important;
-  padding: 8px 12px !important;
-  border-radius: var(--radius-buttons) !important;
-  text-decoration: none !important;
-  color: rgba(255, 255, 255, 0.9) !important;
-  transition: background-color 120ms ease !important;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 120ms ease;
 }
 
-.dropdown-link:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  color: var(--color-pure-white) !important;
+.dropdown-link:hover, .dropdown-link.active {
+  background: rgba(62, 106, 225, 0.15);
+  border: 1px solid rgba(62, 106, 225, 0.3);
+  color: #FFFFFF;
 }
 
 .dropdown-link-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-pure-white);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .dropdown-link-sub {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .dropdown-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 4px 0;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 6px;
 }
 
-/* Acciones derecha */
+/* Botones del Navbar */
 .tesla-nav-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-12);
+  gap: 8px;
 }
 
 .nav-cta-blue {
-  background-color: var(--color-tesla-blue);
-  color: var(--color-pure-white) !important;
+  background: linear-gradient(135deg, #3E6AE1, #2554D8);
+  color: #FFFFFF !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  padding: 6px 16px !important;
-  border-radius: var(--radius-buttons) !important;
-  letter-spacing: 0.4px;
+  padding: 8px 18px !important;
+  border-radius: var(--radius-pill) !important;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 20px rgba(62, 106, 225, 0.45);
+  transition: all 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav-cta-blue:hover {
-  opacity: 0.92;
-  background-color: var(--color-tesla-blue) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 0 25px rgba(62, 106, 225, 0.7);
 }
 
-/* ─── Sección Hero Full-Bleed (Showroom Slide) ────────────────────────────── */
+.nav-btn-ghost {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 8px 14px !important;
+  border-radius: var(--radius-pill) !important;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 150ms ease;
+}
+
+.nav-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF !important;
+}
+
+/* ─── Hero Section Showroom Full-Bleed ────────────────────────────────────── */
 .tesla-hero-section {
   position: relative;
   width: 100%;
@@ -201,92 +280,126 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 96px var(--spacing-24) var(--spacing-48);
+  padding: 110px 24px 40px;
+  box-sizing: border-box;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 
-/* Gradiente tipo scrim cinematográfico */
+/* Overlay cinematográfico con glow ambiental */
 .tesla-hero-section::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(23, 26, 32, 0.55) 0%,
-    rgba(23, 26, 32, 0.15) 35%,
-    rgba(23, 26, 32, 0.25) 65%,
-    rgba(23, 26, 32, 0.80) 100%
+    rgba(6, 8, 13, 0.75) 0%,
+    rgba(6, 8, 13, 0.30) 40%,
+    rgba(6, 8, 13, 0.45) 65%,
+    rgba(6, 8, 13, 0.90) 100%
   );
   z-index: 1;
   pointer-events: none;
 }
 
-/* Bloque Superior: Título y Subtítulo Centrados */
+/* Malla de puntos de fondo ultra-sutil */
+.tesla-hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Bloque Superior */
 .hero-content-top {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
-  animation: fade-in-up 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.hero-tagline {
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: var(--spacing-8);
+.hero-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #38BDF8;
+  margin-bottom: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.badge-glow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 8px #38BDF8;
 }
 
 .hero-title {
-  font-family: var(--font-universal-sans-display);
-  font-size: var(--text-heading-lg);
-  font-weight: 500;
-  color: var(--color-pure-white);
-  line-height: var(--leading-heading-lg);
-  letter-spacing: -0.5px;
-  margin-bottom: var(--spacing-8);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin: 0 0 12px 0;
+  background: linear-gradient(180deg, #FFFFFF 30%, #CBD5E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtext {
-  font-family: var(--font-universal-sans-text);
+  font-family: var(--font-text);
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.88);
-  line-height: 1.45;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  color: rgba(241, 245, 249, 0.88);
+  line-height: 1.5;
+  max-width: 720px;
+  margin: 0 auto;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
-/* Bloque Inferior: Specs Strip y Botones de Acción */
+/* Bloque Inferior */
 .hero-content-bottom {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-24);
+  gap: 20px;
   width: 100%;
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
-/* Tira de Especificaciones Técnicas (Specs Strip) */
+/* Tira de Especificaciones (Specs Strip Devv/Linear) */
 .hero-specs-strip {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-40);
-  background: rgba(23, 26, 32, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-cards);
-  padding: var(--spacing-12) var(--spacing-32);
+  gap: 36px;
+  background: var(--color-surface-dark);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 14px 32px;
+  width: fit-content;
 }
 
 .spec-item {
@@ -297,217 +410,157 @@
 }
 
 .spec-value {
-  font-family: var(--font-universal-sans-display);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--color-pure-white);
-  letter-spacing: -0.3px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.5px;
   line-height: 1.1;
+  text-shadow: 0 0 15px rgba(62, 106, 225, 0.4);
 }
 
 .spec-label {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 3px;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 .spec-divider {
   width: 1px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.2);
+  height: 32px;
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* Botones de Acción (Pair Primary Tesla Blue + Secondary Ghost) */
+/* Botones de Acción */
 .hero-action-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-16);
+  gap: 14px;
   width: 100%;
 }
 
-.btn-tesla-primary {
-  background-color: var(--color-tesla-blue);
-  color: var(--color-pure-white);
-  border: none;
-  border-radius: var(--radius-buttons);
-  padding: 10px 32px;
-  font-size: var(--text-body);
-  font-weight: 500;
-  text-decoration: none;
-  letter-spacing: 0.3px;
-  transition: opacity 150ms ease, transform 100ms ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-width: 170px;
-}
-
-.btn-tesla-primary:hover {
-  opacity: 0.92;
-}
-
-.btn-tesla-primary:active {
-  transform: translateY(1px);
-}
-
-.btn-tesla-ghost {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: var(--color-pure-white);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: var(--radius-buttons);
-  padding: 10px 28px;
-  font-size: var(--text-body);
-  font-weight: 500;
-  text-decoration: none;
-  letter-spacing: 0.3px;
-  backdrop-filter: blur(4px);
-  transition: all 150ms ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-width: 170px;
-}
-
-.btn-tesla-ghost:hover {
-  background-color: var(--color-pure-white);
-  color: var(--color-onyx);
-  border-color: var(--color-pure-white);
-}
-
-/* Indicador de Scroll hacia abajo */
-.scroll-indicator-arrow {
-  position: absolute;
-  bottom: 12px;
-  z-index: 2;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 18px;
-  animation: bounce-subtle 2s infinite;
-  text-decoration: none;
-}
-
-@keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(6px); }
-}
-
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0);    }
-}
-
-/* ─── Placas Informativas y Fichas de Filiales ────────────────────────────── */
-.tesla-plaque-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-24);
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-32) var(--spacing-24);
-}
-
-.tesla-info-card {
-  background: var(--color-pure-white);
-  border: 1px solid var(--color-light-border);
-  border-radius: var(--radius-cards);
-  padding: var(--spacing-24);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-16);
-  box-shadow: var(--shadow-sm);
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
-
-.tesla-info-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.card-tag {
-  align-self: flex-start;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 3px 8px;
-  border-radius: var(--radius-buttons);
-  background: var(--color-off-white);
-  color: var(--color-charcoal);
-}
-
-.card-title {
-  font-family: var(--font-universal-sans-display);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-onyx);
-  line-height: 1.25;
-}
-
-.card-description {
+.btn-premium-primary {
+  background: linear-gradient(135deg, #3E6AE1 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 32px;
   font-size: 14px;
-  color: var(--color-charcoal);
-  line-height: 1.5;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 25px rgba(62, 106, 225, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 180px;
 }
 
-/* Footer Minimalista */
-.tesla-footer {
-  background: var(--color-onyx);
-  color: var(--color-steel);
-  padding: var(--spacing-32) var(--spacing-24);
-  text-align: center;
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
+.btn-premium-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(62, 106, 225, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.btn-premium-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 180ms ease;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.btn-premium-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Indicador de Desplazamiento */
+.scroll-arrow-link {
+  position: absolute;
+  bottom: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  text-decoration: none;
+  z-index: 2;
+  animation: float-pulse 2s infinite ease-in-out;
+}
+
+@keyframes float-pulse {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* Footer */
+.tesla-footer {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  padding-top: 12px;
 }
 
 .tesla-footer-links {
   display: flex;
-  gap: var(--spacing-24);
+  gap: 20px;
   list-style: none;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .tesla-footer-links a {
-  color: var(--color-steel);
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
   text-decoration: none;
   transition: color 150ms ease;
 }
 
 .tesla-footer-links a:hover {
-  color: var(--color-pure-white);
+  color: #FFFFFF;
 }
 
-/* ─── Responsive Media Queries ────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 900px) {
   .tesla-navbar {
-    padding: 0 var(--spacing-16);
+    padding: 6px 12px;
+    gap: 8px;
   }
   .tesla-nav-links {
-    display: none; /* Mobile menu */
+    display: none;
   }
   .hero-title {
     font-size: 32px;
   }
   .hero-specs-strip {
-    gap: var(--spacing-16);
-    padding: var(--spacing-8) var(--spacing-16);
+    gap: 16px;
+    padding: 10px 16px;
   }
   .spec-value {
     font-size: 18px;
   }
   .hero-action-buttons {
     flex-direction: column;
-    gap: var(--spacing-12);
-  }
-  .btn-tesla-primary, .btn-tesla-ghost {
     width: 100%;
+  }
+  .btn-premium-primary, .btn-premium-ghost {
+    width: 100%;
+    min-width: 0;
   }
 }

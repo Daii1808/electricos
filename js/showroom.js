@@ -1,8 +1,7 @@
 /**
  * ─────────────────────────────────────────────────────
- *  showroom.js — Lógica de navegación y scroll del showroom Tesla
- *  Garantiza que todos los enlaces del menú superior y anclas
- *  se conecten y desplacen fluidamente sin errores.
+ *  showroom.js — Navegación y scroll fluido para el Showroom
+ *  Conecta el navbar flotante, dropdowns y anclas de forma robusta.
  * ─────────────────────────────────────────────────────
  */
 
@@ -11,40 +10,40 @@
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.tesla-snap-container');
 
-  // 1. Manejador de scroll suave para anclas dentro del showroom
+  // 1. Manejo de scroll suave en enlaces tipo ancla (#...)
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const targetId = link.getAttribute('href').substring(1);
       if (!targetId) return;
 
-      const targetElement = document.getElementById(targetId);
-      if (targetElement && container) {
+      const targetEl = document.getElementById(targetId);
+      if (targetEl && container) {
         e.preventDefault();
         container.scrollTo({
-          top: targetElement.offsetTop,
+          top: targetEl.offsetTop,
           behavior: 'smooth',
         });
-
-        // Actualizar URL sin recargar
         history.pushState(null, null, `#${targetId}`);
       }
     });
   });
 
-  // 2. Si la URL ya viene con un hash (#hero-generacion, etc.), navegar a él
-  if (window.location.hash && container) {
-    const initialTarget = document.getElementById(window.location.hash.substring(1));
-    if (initialTarget) {
-      setTimeout(() => {
-        container.scrollTo({
-          top: initialTarget.offsetTop,
-          behavior: 'smooth',
-        });
-      }, 100);
+  // 2. Soporte para dropdown de Distribución en dispositivos táctiles / click
+  const dropdownItem = document.querySelector('.tesla-dropdown');
+  if (dropdownItem) {
+    const dropdownToggle = dropdownItem.querySelector('a');
+    if (dropdownToggle) {
+      dropdownToggle.addEventListener('click', (e) => {
+        // En pantallas móviles permite abrir/cerrar dropdown
+        if (window.innerWidth <= 900) {
+          e.preventDefault();
+          dropdownItem.classList.toggle('open');
+        }
+      });
     }
   }
 
-  // 3. Indicador dinámico de sección activa según el scroll
+  // 3. Indicador de sección activa durante el scroll
   if (container) {
     const sections = document.querySelectorAll('.tesla-hero-section');
     const navItems = document.querySelectorAll('.tesla-nav-item');

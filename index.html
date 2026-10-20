@@ -1,120 +1,111 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Grupo Saesa â€” Infraestructura energÃ©tica, generaciÃ³n limpia, transmisiÃ³n y distribuciÃ³n elÃ©ctrica en el sur de Chile. RediseÃ±o estilo Tesla Showroom." />
-  <meta name="theme-color" content="#171a20" />
+  <meta name="description" content="Grupo Saesa — Infraestructura energética, generación limpia, transmisión y distribución eléctrica en el sur de Chile." />
+  <meta name="theme-color" content="#06080D" />
 
-  <title>Grupo Saesa â€” EnergÃ­a que Conecta el Sur</title>
+  <title>Grupo Saesa — Energía que Conecta el Sur</title>
 
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Estilos principales y showroom de Tesla -->
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/tesla-showroom.css" />
 </head>
 
 <body>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       NAVBAR SUPERIOR MINIMALISTA (Estilo Tesla Showroom)
-  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <header class="tesla-navbar" role="banner">
-    <!-- Logotipo / Marca -->
-    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
-      <div class="tesla-brand-symbol" aria-hidden="true">âš¡</div>
-      <span class="tesla-brand-name">GRUPO SAESA</span>
-    </a>
-
-    <!-- Enlaces Principales de NavegaciÃ³n -->
-    <nav class="tesla-nav-center" aria-label="NavegaciÃ³n principal">
-      <ul class="tesla-nav-links">
-        <li class="tesla-nav-item active"><a href="index.html">Inicio</a></li>
-        <li class="tesla-nav-item"><a href="generacion.html">GeneraciÃ³n</a></li>
-        <li class="tesla-nav-item"><a href="transmision.html">TransmisiÃ³n</a></li>
-        <li class="tesla-nav-item tesla-dropdown">
-          <a href="distribucion.html">DistribuciÃ³n â–¾</a>
-          <div class="tesla-dropdown-menu">
-            <a href="distribucion.html" class="dropdown-link">
-              <span class="dropdown-link-title">Todas las Distribuidoras</span>
-              <span class="dropdown-link-sub">Resumen general del Ã¡rea</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="saesa.html" class="dropdown-link">
-              <span class="dropdown-link-title">Saesa</span>
-              <span class="dropdown-link-sub">Los RÃ­os y Los Lagos</span>
-            </a>
-            <a href="frontel.html" class="dropdown-link">
-              <span class="dropdown-link-title">Frontel</span>
-              <span class="dropdown-link-sub">BiobÃ­o y La AraucanÃ­a</span>
-            </a>
-            <a href="edelaysen.html" class="dropdown-link">
-              <span class="dropdown-link-title">Edelaysen</span>
-              <span class="dropdown-link-sub">RegiÃ³n de AysÃ©n</span>
-            </a>
-            <a href="luz-osorno.html" class="dropdown-link">
-              <span class="dropdown-link-title">Luz Osorno</span>
-              <span class="dropdown-link-sub">Provincia de Osorno</span>
-            </a>
-          </div>
-        </li>
-        <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-      </ul>
-    </nav>
-
-    <!-- Acciones Derecha -->
-    <div class="tesla-nav-actions">
-      <a href="mapa-desconexiones.html" class="nav-cta-blue" aria-label="Ver mapa de cortes en vivo">
-        Mapa en Vivo
+  <!-- Navbar Flotante Glassmorphism -->
+  <div class="tesla-navbar-wrapper">
+    <header class="tesla-navbar" role="banner">
+      <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+        <div class="tesla-brand-symbol" aria-hidden="true">⚡</div>
+        <span class="tesla-brand-name">GRUPO SAESA</span>
       </a>
-      <a href="brigadista.html" class="btn-tesla-ghost" style="padding: 6px 14px; font-size: 12px; min-width: auto;" aria-label="Portal exclusivo para brigadas">
-        Portal Brigadas
-      </a>
-    </div>
-  </header>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       CONTENEDOR SHOWROOM SCROLL SNAPPING (PresentaciÃ³n Vertical Pantalla Completa)
-  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+      <nav class="tesla-nav-center" aria-label="Navegación principal">
+        <ul class="tesla-nav-links">
+          <li class="tesla-nav-item active"><a href="index.html">Inicio</a></li>
+          <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+          <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+          <li class="tesla-nav-item tesla-dropdown">
+            <a href="distribucion.html">Distribución ▾</a>
+            <div class="tesla-dropdown-menu">
+              <a href="distribucion.html" class="dropdown-link">
+                <span class="dropdown-link-title">Todas las Distribuidoras</span>
+                <span class="dropdown-link-sub">Resumen general del área</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="saesa.html" class="dropdown-link">
+                <span class="dropdown-link-title">Saesa <span>→</span></span>
+                <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+              </a>
+              <a href="frontel.html" class="dropdown-link">
+                <span class="dropdown-link-title">Frontel <span>→</span></span>
+                <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+              </a>
+              <a href="edelaysen.html" class="dropdown-link">
+                <span class="dropdown-link-title">Edelaysen <span>→</span></span>
+                <span class="dropdown-link-sub">Región de Aysén</span>
+              </a>
+              <a href="luz-osorno.html" class="dropdown-link">
+                <span class="dropdown-link-title">Luz Osorno <span>→</span></span>
+                <span class="dropdown-link-sub">Provincia de Osorno</span>
+              </a>
+            </div>
+          </li>
+          <li class="tesla-nav-item"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        </ul>
+      </nav>
+
+      <div class="tesla-nav-actions">
+        <a href="mapa-desconexiones.html" class="nav-cta-blue">
+          <span>⚡</span> Mapa en Vivo
+        </a>
+        <a href="brigadista.html" class="nav-btn-ghost">
+          Portal Brigadas
+        </a>
+      </div>
+    </header>
+  </div>
+
+  <!-- Contenedor Showroom Vertical Snapping -->
   <main class="tesla-snap-container" id="showroom-container">
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 1: GRUPO SAESA â€” HUB PRINCIPAL (https://web.gruposaesa.cl/inicio)
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- SLIDE 1: GRUPO SAESA HUB -->
     <section class="tesla-hero-section" id="hero-inicio"
-             style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=2400&q=85');">
-      
-      <!-- TÃ­tulo Superior -->
+             style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
-        <div class="hero-tagline">INFRAESTRUCTURA ENERGÃ‰TICA DEL SUR DE CHILE</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          INFRAESTRUCTURA ENERGÉTICA DEL SUR DE CHILE
+        </div>
         <h1 class="hero-title">Grupo Saesa</h1>
         <p class="hero-subtext">
-          GeneraciÃ³n sustentable, transmisiÃ³n de alta tensiÃ³n y distribuciÃ³n para mÃ¡s de un millÃ³n de hogares y empresas.
+          Generación sustentable, transmisión de alta tensión y distribución continua para más de un millón de hogares y empresas desde el Biobío hasta la Patagonia.
         </p>
       </div>
 
-      <!-- Specs Inferiores y CTAs -->
       <div class="hero-content-bottom">
-        <div class="hero-specs-strip" role="region" aria-label="Cifras clave del grupo">
+        <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">1.094.000+</span>
             <span class="spec-label">Clientes en el Sur</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">3.264 km</span>
-            <span class="spec-label">LÃ­neas de TransmisiÃ³n</span>
+            <span class="spec-label">Líneas de Transmisión</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">275 MW</span>
-            <span class="spec-label">Capacidad de GeneraciÃ³n</span>
+            <span class="spec-label">Capacidad de Generación</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">99.4%</span>
             <span class="spec-label">Disponibilidad de Red</span>
@@ -122,29 +113,29 @@
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Mapa de Desconexiones
+          <a href="mapa-desconexiones.html" class="btn-premium-primary">
+            <span>⚡</span> Mapa de Desconexiones
           </a>
-          <a href="#hero-generacion" class="btn-tesla-ghost">
-            Explorar Ãreas
+          <a href="generacion.html" class="btn-premium-ghost">
+            Explorar Generación
           </a>
         </div>
       </div>
 
-      <a href="#hero-generacion" class="scroll-indicator-arrow" aria-label="Desplazarse a GeneraciÃ³n">â†“</a>
+      <a href="#hero-generacion" class="scroll-arrow-link" aria-label="Ir a Generación">↓</a>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 2: SAESA GENERACIÃ“N (https://web.gruposaesa.cl/generacion)
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- SLIDE 2: SAESA GENERACIÓN -->
     <section class="tesla-hero-section" id="hero-generacion"
              style="background-image: url('https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=2400&q=85');">
-      
       <div class="hero-content-top">
-        <div class="hero-tagline">MATRIZ LIMPIA Y TRANSICIÃ“N ENERGÃ‰TICA</div>
-        <h2 class="hero-title">Saesa GeneraciÃ³n</h2>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          MATRIZ LIMPIA Y TRANSICIÓN ENERGÉTICA
+        </div>
+        <h2 class="hero-title">Saesa Generación</h2>
         <p class="hero-subtext">
-          Centrales hidroelÃ©ctricas de pasada sustentables y el parque solar mÃ¡s austral del planeta en la RegiÃ³n de AysÃ©n.
+          Centrales hidroeléctricas de pasada con mínimo impacto ambiental y el parque fotovoltaico más austral del mundo en la Región de Aysén.
         </p>
       </div>
 
@@ -154,17 +145,17 @@
             <span class="spec-value">275 MW</span>
             <span class="spec-label">Capacidad Instalada</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
-            <span class="spec-value">14</span>
-            <span class="spec-label">Centrales en OperaciÃ³n</span>
+            <span class="spec-value">14 Centrales</span>
+            <span class="spec-label">Operación Activa</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">El Blanco</span>
-            <span class="spec-label">Planta Solar Patagonia</span>
+            <span class="spec-label">Parque Solar Patagonia</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">100%</span>
             <span class="spec-label">Pasada y Renovables</span>
@@ -172,29 +163,29 @@
         </div>
 
         <div class="hero-action-buttons">
-          <a href="generacion.html" class="btn-tesla-primary">
-            Conocer Saesa GeneraciÃ³n
+          <a href="generacion.html" class="btn-premium-primary">
+            Conocer Saesa Generación
           </a>
-          <a href="#hero-transmision" class="btn-tesla-ghost">
-            Siguiente: TransmisiÃ³n
+          <a href="transmision.html" class="btn-premium-ghost">
+            Ver Transmisión →
           </a>
         </div>
       </div>
 
-      <a href="#hero-transmision" class="scroll-indicator-arrow" aria-label="Desplazarse a TransmisiÃ³n">â†“</a>
+      <a href="#hero-transmision" class="scroll-arrow-link" aria-label="Ir a Transmisión">↓</a>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 3: SAESA TRANSMISIÃ“N (https://web.gruposaesa.cl/transmision)
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- SLIDE 3: SAESA TRANSMISIÓN -->
     <section class="tesla-hero-section" id="hero-transmision"
              style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85');">
-      
       <div class="hero-content-top">
-        <div class="hero-tagline">SISTEMA TRONCAL Y ZONAL DE ALTA TENSIÃ“N</div>
-        <h2 class="hero-title">Saesa TransmisiÃ³n</h2>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          SISTEMA TRONCAL Y ZONAL DE ALTA TENSIÓN
+        </div>
+        <h2 class="hero-title">Saesa Transmisión</h2>
         <p class="hero-subtext">
-          3.264 kilÃ³metros de lÃ­neas de alta tensiÃ³n desde Antofagasta a Los Lagos con subestaciones digitales y almacenamiento BESS.
+          3.264 kilómetros de circuitos de 66 a 220 kV desde Antofagasta a Los Lagos con 110 subestaciones digitales y almacenamiento de baterías BESS.
         </p>
       </div>
 
@@ -202,49 +193,49 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">3.264 km</span>
-            <span class="spec-label">Redes de Alta TensiÃ³n</span>
+            <span class="spec-label">Redes de Alta Tensión</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">220 kV</span>
-            <span class="spec-label">Niveles de TensiÃ³n Troncal</span>
+            <span class="spec-label">Voltaje Troncal</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">110</span>
-            <span class="spec-label">Subestaciones ElÃ©ctricas</span>
+            <span class="spec-label">Subestaciones</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">BESS</span>
-            <span class="spec-label">Almacenamiento Nueva Imperial</span>
+            <span class="spec-label">Baterías Nueva Imperial</span>
           </div>
         </div>
 
         <div class="hero-action-buttons">
-          <a href="transmision.html" class="btn-tesla-primary">
-            Explorar TransmisiÃ³n
+          <a href="transmision.html" class="btn-premium-primary">
+            Explorar Transmisión
           </a>
-          <a href="#hero-distribucion" class="btn-tesla-ghost">
-            Siguiente: DistribuciÃ³n
+          <a href="distribucion.html" class="btn-premium-ghost">
+            Ver Distribución →
           </a>
         </div>
       </div>
 
-      <a href="#hero-distribucion" class="scroll-indicator-arrow" aria-label="Desplazarse a DistribuciÃ³n">â†“</a>
+      <a href="#hero-distribucion" class="scroll-arrow-link" aria-label="Ir a Distribución">↓</a>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 4: DISTRIBUCIÃ“N (SAESA, FRONTEL, EDELAYSEN, LUZ OSORNO)
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- SLIDE 4: DISTRIBUCIÓN -->
     <section class="tesla-hero-section" id="hero-distribucion"
              style="background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85');">
-      
       <div class="hero-content-top">
-        <div class="hero-tagline">FILIALES DE DISTRIBUCIÃ“N RESIDENCIAL E INDUSTRIAL</div>
-        <h2 class="hero-title">DistribuciÃ³n Austral</h2>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          FILIALES DE DISTRIBUCIÓN RESIDENCIAL E INDUSTRIAL
+        </div>
+        <h2 class="hero-title">Distribución Austral</h2>
         <p class="hero-subtext">
-          Cuatro empresas dedicadas al suministro continuo de energÃ­a: <strong>Saesa</strong>, <strong>Frontel</strong>, <strong>Edelaysen</strong> y <strong>Luz Osorno</strong>.
+          Cuatro empresas dedicadas al suministro continuo de energía: Saesa, Frontel, Edelaysen y Luz Osorno.
         </p>
       </div>
 
@@ -252,49 +243,49 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">Saesa</span>
-            <span class="spec-label">Los RÃ­os y Los Lagos</span>
+            <span class="spec-label">Los Ríos y Lagos</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Frontel</span>
-            <span class="spec-label">BiobÃ­o y AraucanÃ­a</span>
+            <span class="spec-label">Biobío y Araucanía</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Edelaysen</span>
-            <span class="spec-label">RegiÃ³n de AysÃ©n</span>
+            <span class="spec-label">Región de Aysén</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Luz Osorno</span>
-            <span class="spec-label">Provincia de Osorno</span>
+            <span class="spec-label">Provincia Osorno</span>
           </div>
         </div>
 
         <div class="hero-action-buttons">
-          <a href="distribucion.html" class="btn-tesla-primary">
-            Filiales y Servicios
+          <a href="distribucion.html" class="btn-premium-primary">
+            Ver Todas las Filiales
           </a>
-          <a href="#hero-mapa" class="btn-tesla-ghost">
-            Ver Mapa de Cortes
+          <a href="mapa-desconexiones.html" class="btn-premium-ghost">
+            Mapa de Cortes en Vivo
           </a>
         </div>
       </div>
 
-      <a href="#hero-mapa" class="scroll-indicator-arrow" aria-label="Desplazarse a Mapa">â†“</a>
+      <a href="#hero-mapa" class="scroll-arrow-link" aria-label="Ir a Mapa">↓</a>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 5: MAPA DE DESCONEXIONES EN VIVO (HERRAMIENTA INTERACTIVA)
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- SLIDE 5: MAPA DE DESCONEXIONES -->
     <section class="tesla-hero-section" id="hero-mapa"
              style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
-      
       <div class="hero-content-top">
-        <div class="hero-tagline">TRAZABILIDAD EN TIEMPO REAL Y GEOLOCALIZACIÃ“N</div>
+        <div class="hero-tag-badge">
+          <span class="badge-glow-dot"></span>
+          TRAZABILIDAD EN TIEMPO REAL Y GEOLOCALIZACIÓN
+        </div>
         <h2 class="hero-title">Mapa de Desconexiones</h2>
         <p class="hero-subtext">
-          Revisa en vivo zonas sin suministro, tiempos estimados de reposiciÃ³n (ETR), geolocalizaciÃ³n de cuadrillas en ruta y reportes rÃ¡pidos.
+          Revisa en tiempo real zonas sin suministro, tiempos estimados de reposición (ETR), geolocalización de cuadrillas técnicas y reportes ciudadanos inmediatos.
         </p>
       </div>
 
@@ -302,19 +293,19 @@
         <div class="hero-specs-strip">
           <div class="spec-item">
             <span class="spec-value">GPS en Vivo</span>
-            <span class="spec-label">TelemetrÃ­a de Brigadas</span>
+            <span class="spec-label">Telemetría de Brigadas</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">ETR</span>
-            <span class="spec-label">Cuenta Regresiva de ReposiciÃ³n</span>
+            <span class="spec-label">Cuenta Regresiva</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">Radar GPS</span>
-            <span class="spec-label">DetecciÃ³n "Mi UbicaciÃ³n"</span>
+            <span class="spec-label">Detección "Mi Ubicación"</span>
           </div>
-          <div class="spec-divider" aria-hidden="true"></div>
+          <div class="spec-divider"></div>
           <div class="spec-item">
             <span class="spec-value">100% Digital</span>
             <span class="spec-label">Reporte "Estoy sin luz"</span>
@@ -322,70 +313,24 @@
         </div>
 
         <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Abrir Mapa en Vivo
+          <a href="mapa-desconexiones.html" class="btn-premium-primary">
+            <span>⚡</span> Abrir Mapa en Tiempo Real
           </a>
-          <a href="mapa-desconexiones.html#report" class="btn-tesla-ghost">
-            Reportar Corte
-          </a>
-        </div>
-      </div>
-
-      <a href="#hero-innova" class="scroll-indicator-arrow" aria-label="Desplazarse a Saesa Innova">â†“</a>
-    </section>
-
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-         SLIDE 6: SAESA INNOVA Y SOSTENIBILIDAD
-    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
-    <section class="tesla-hero-section" id="hero-innova"
-             style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2400&q=85');">
-      
-      <div class="hero-content-top">
-        <div class="hero-tagline">SOLUCIONES ENERGÃ‰TICAS INTELIGENTES</div>
-        <h2 class="hero-title">Saesa Innova</h2>
-        <p class="hero-subtext">
-          Autoconsumo fotovoltaico para empresas, almacenamiento a escala industrial y la red de cargadores de electromovilidad del sur.
-        </p>
-      </div>
-
-      <div class="hero-content-bottom">
-        <div class="hero-specs-strip">
-          <div class="spec-item">
-            <span class="spec-value">Solar Industrial</span>
-            <span class="spec-label">Autoconsumo Net Billing</span>
-          </div>
-          <div class="spec-divider" aria-hidden="true"></div>
-          <div class="spec-item">
-            <span class="spec-value">BaterÃ­as BESS</span>
-            <span class="spec-label">Almacenamiento Continuo</span>
-          </div>
-          <div class="spec-divider" aria-hidden="true"></div>
-          <div class="spec-item">
-            <span class="spec-value">Electro-Ruta</span>
-            <span class="spec-label">Carga RÃ¡pida en el Sur</span>
-          </div>
-        </div>
-
-        <div class="hero-action-buttons">
-          <a href="mapa-desconexiones.html" class="btn-tesla-primary">
-            Volver al Mapa en Vivo
-          </a>
-          <a href="generacion.html" class="btn-tesla-ghost">
-            Ver GeneraciÃ³n Limpia
+          <a href="mapa-desconexiones.html" class="btn-premium-ghost">
+            Consultar N° de Cliente
           </a>
         </div>
       </div>
 
-      <!-- Footer Minimalista al pie del Ãºltimo slide -->
-      <footer class="tesla-footer" style="width: 100%; max-width: 900px; background: transparent; padding: var(--spacing-16) 0 0;">
+      <!-- Footer al pie del showroom -->
+      <footer class="tesla-footer">
         <ul class="tesla-footer-links">
-          <li><a href="index.html">Grupo Saesa Â© 2026</a></li>
-          <li><a href="generacion.html">GeneraciÃ³n</a></li>
-          <li><a href="transmision.html">TransmisiÃ³n</a></li>
-          <li><a href="distribucion.html">DistribuciÃ³n</a></li>
-          <li><a href="mapa-desconexiones.html">Mapa de Desconexiones</a></li>
-          <li><a href="brigadista.html">Portal Brigadista</a></li>
-          <li><a href="https://www.sec.cl" target="_blank" rel="noopener">Superintendencia SEC</a></li>
+          <li><a href="index.html">Grupo Saesa © 2026</a></li>
+          <li><a href="generacion.html">Generación</a></li>
+          <li><a href="transmision.html">Transmisión</a></li>
+          <li><a href="distribucion.html">Distribución</a></li>
+          <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+          <li><a href="brigadista.html">Portal Brigadas</a></li>
         </ul>
       </footer>
     </section>
@@ -395,4 +340,3 @@
   <script src="js/showroom.js"></script>
 </body>
 </html>
-

@@ -1,15 +1,17 @@
 {
   "name": "corte-electrico",
   "version": "1.0.0",
-  "description": "",
+  "description": "Plataforma Grupo Saesa",
   "main": "index.js",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "vite": "^8.3.4"
   }
