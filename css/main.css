@@ -150,7 +150,10 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  padding-top: 56px;
+  box-sizing: border-box;
   overflow: hidden;
+  background-color: var(--bg-base);
 }
 
 /* ─── Header Minimalista (Thin unobtrusive chrome) ────────────────────────── */

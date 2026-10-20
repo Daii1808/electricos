@@ -71,7 +71,7 @@
 
   <main class="tesla-snap-container" id="showroom-container">
 
-    <!-- SLIDE 1: TRANSMISIÓN OVERVIEW -->
+    <!-- SLIDE 1: TRANSMISIÓN OVERVIEW (HERO SHOWCASE) -->
     <section class="tesla-hero-section" id="trans-overview"
              style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85');">
       <div class="hero-content-top">
@@ -116,76 +116,147 @@
       </div>
     </section>
 
-    <!-- SLIDE 2: SUBESTACIONES DIGITALES -->
-    <section class="tesla-hero-section" id="trans-subestaciones"
+    <!-- SLIDE 2: NARRATIVA EDITORIAL SPLIT (SUBESTACIONES DIGITALES IEC 61850) -->
+    <section class="tesla-editorial-section" id="trans-subestaciones"
              style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
-      <div class="hero-content-top">
-        <span class="hero-tag-badge">TELEMETRÍA Y PROTECCIÓN EN MILISEGUNDOS</span>
-        <h2 class="hero-title">Subestaciones Digitales</h2>
-        <p class="hero-subtext">
-          Centros de transformación inteligentes con arquitectura IEC 61850 y fibra óptica que permiten aislar fallas de forma autónoma en fracciones de segundo.
-        </p>
-      </div>
+      <div class="tesla-container-inner">
+        <div class="tesla-split-grid">
 
-      <div class="hero-content-bottom">
-        <div class="hero-specs-strip">
-          <div class="spec-item">
-            <span class="spec-value">&lt; 30 ms</span>
-            <span class="spec-label">Despeje de Perturbaciones</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-item">
-            <span class="spec-value">SCADA 24/7</span>
-            <span class="spec-label">Despacho Centralizado</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-item">
-            <span class="spec-value">OPGW</span>
-            <span class="spec-label">Fibra Óptica de Guarda</span>
-          </div>
-        </div>
+          <!-- Columna Izquierda: Arquitectura Digital -->
+          <div class="editorial-content">
+            <span class="editorial-eyebrow">Telemetría de Última Generación</span>
+            <h2 class="editorial-heading">
+              Subestaciones Digitales y Despeje Autónomo de Perturbaciones
+            </h2>
+            <p class="editorial-paragraph">
+              La columna vertebral de nuestra red de transmisión incorpora centros de transformación de arquitectura digital basada en el estándar internacional IEC 61850.
+            </p>
+            <p class="editorial-paragraph">
+              La comunicación interna entre transformadores de poder, interruptores y relés de protección se ejecuta mediante cables de fibra óptica inmunes a interferencias electromagnéticas, permitiendo detectar y aislar perturbaciones en menos de 30 milisegundos.
+            </p>
 
-        <div class="hero-action-buttons">
-          <a href="#trans-bess" class="btn-premium-primary">
-            Baterías BESS Nueva Imperial
-          </a>
-          <a href="index.html" class="btn-premium-ghost">
-            Volver a Inicio
-          </a>
+            <div class="editorial-features-list">
+              <div class="editorial-feature-item">
+                <div class="feature-bullet"></div>
+                <div>
+                  <div class="feature-title">Fibra Óptica de Guarda (OPGW)</div>
+                  <p class="feature-desc">El cable de tierra superior de cada torre de alta tensión alberga filamentos de fibra óptica para comunicación SCADA de alta velocidad.</p>
+                </div>
+              </div>
+
+              <div class="editorial-feature-item">
+                <div class="feature-bullet"></div>
+                <div>
+                  <div class="feature-title">Supervisión Predictiva Termográfica</div>
+                  <p class="feature-desc">Sensores térmicos en línea y análisis de gases disueltos (DGA) en transformadores que anticipan anomalías antes de una desconexión.</p>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <a href="#trans-pilares" class="btn-premium-primary">
+                Ver Sistemas BESS y Red Zonal
+              </a>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Tarjeta Técnica -->
+          <div class="editorial-spec-card">
+            <div class="spec-card-header">
+              <span class="spec-card-title">Parámetros Operativos — Red de Transmisión</span>
+            </div>
+
+            <div class="spec-card-grid">
+              <div class="spec-card-stat">
+                <span class="stat-number">&lt; 30 ms</span>
+                <span class="stat-label">Despeje de Falla</span>
+              </div>
+              <div class="spec-card-stat">
+                <span class="stat-number">24/7/365</span>
+                <span class="stat-label">Despacho Centralizado</span>
+              </div>
+              <div class="spec-card-stat">
+                <span class="stat-number">110</span>
+                <span class="stat-label">Subestaciones Conectadas</span>
+              </div>
+              <div class="spec-card-stat">
+                <span class="stat-number">99.98%</span>
+                <span class="stat-label">Disponibilidad Sistema</span>
+              </div>
+            </div>
+
+            <div style="padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 13px; color: #8e929a; line-height: 1.5;">
+              Interconexión en tiempo real con el Coordinador Eléctrico Nacional (CEN), respaldando el flujo energético desde la minería del norte hasta las ciudades del sur.
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 3: BESS NUEVA IMPERIAL -->
-    <section class="tesla-hero-section" id="trans-bess"
-             style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2400&q=85');">
-      <div class="hero-content-top">
-        <span class="hero-tag-badge">ALMACENAMIENTO ENERGÉTICO A GRAN ESCALA</span>
-        <h2 class="hero-title">Sistema BESS Nueva Imperial</h2>
-        <p class="hero-subtext">
-          Bancos de almacenamiento con celdas de iones de litio de última tecnología integrados al sistema de transmisión para regular frecuencia y absorber excedentes de energía renovable.
-        </p>
-      </div>
+    <!-- SLIDE 3: PILARES TECNOLÓGICOS (GRID 3 COLUMNAS: BESS, SCADA, ALTA TENSIÓN) -->
+    <section class="tesla-pillars-section" id="trans-pilares"
+             style="background: #0f1115;">
+      <div class="tesla-container-inner">
 
-      <div class="hero-content-bottom">
-        <div class="hero-specs-strip">
-          <div class="spec-item">
-            <span class="spec-value">Instantánea</span>
-            <span class="spec-label">Inyección de Potencia</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-item">
-            <span class="spec-value">Estabilidad SEN</span>
-            <span class="spec-label">Control de Voltaje</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-item">
-            <span class="spec-value">0 Emisiones</span>
-            <span class="spec-label">Operación Limpia</span>
-          </div>
+        <div class="section-header-center">
+          <div class="section-kicker">Estabilidad y Respaldo</div>
+          <h2 class="section-main-title">Almacenamiento BESS y Resiliencia Regional</h2>
+          <p class="section-lead">
+            Tecnologías de vanguardia para regular voltaje, compensar potencia reactiva y mantener la integridad del suministro en condiciones meteorológicas severas.
+          </p>
         </div>
 
-        <div class="hero-action-buttons">
+        <div class="tesla-cards-grid">
+
+          <!-- Card 1 -->
+          <div class="tesla-card-pillar">
+            <div>
+              <span class="pillar-tag">Baterías Utility BESS</span>
+              <h3 class="pillar-title">Almacenamiento Nueva Imperial</h3>
+              <p class="pillar-desc">
+                Complejo de baterías de ion-litio a escala industrial que responde en milisegundos inyectando potencia activa ante variaciones imprevistas de frecuencia en La Araucanía.
+              </p>
+            </div>
+            <div class="pillar-stat-strip">
+              <span class="pillar-stat-val">Instantánea</span>
+              <span class="pillar-stat-lbl">Inyección de Potencia</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="tesla-card-pillar">
+            <div>
+              <span class="pillar-tag">Líneas Troncales y Zonales</span>
+              <h3 class="pillar-title">Tensiones de 66 kV a 220 kV</h3>
+              <p class="pillar-desc">
+                Circuitos dobles y simples estructurados sobre torres de acero galvanizado diseñadas para soportar cargas de hielo (manguito de nieve) y vientos australes.
+              </p>
+            </div>
+            <div class="pillar-stat-strip">
+              <span class="pillar-stat-val">3.264 km</span>
+              <span class="pillar-stat-lbl">Circuito Total</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="tesla-card-pillar">
+            <div>
+              <span class="pillar-tag">Seguridad Operacional</span>
+              <h3 class="pillar-title">Cero Emisiones en Transporte</h3>
+              <p class="pillar-desc">
+                Tecnología libre de emisiones directas con transformadores eco-aislantes y planes de reforestación para las franjas de servidumbre en predios rurales y cordilleranos.
+              </p>
+            </div>
+            <div class="pillar-stat-strip">
+              <span class="pillar-stat-val">0</span>
+              <span class="pillar-stat-lbl">Emisiones Directas</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 16px; margin-top: 40px;">
           <a href="distribucion.html" class="btn-premium-primary">
             Ir a Distribución
           </a>
@@ -193,17 +264,19 @@
             Ver Mapa en Vivo
           </a>
         </div>
-      </div>
 
-      <footer class="tesla-footer">
-        <ul class="tesla-footer-links">
-          <li><a href="index.html">Grupo Saesa © 2026</a></li>
-          <li><a href="generacion.html">Generación</a></li>
-          <li><a href="transmision.html">Transmisión</a></li>
-          <li><a href="distribucion.html">Distribución</a></li>
-          <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
-        </ul>
-      </footer>
+        <!-- Footer -->
+        <footer class="tesla-footer" style="margin-top: 48px;">
+          <ul class="tesla-footer-links">
+            <li><a href="index.html">Grupo Saesa © 2026</a></li>
+            <li><a href="generacion.html">Generación</a></li>
+            <li><a href="transmision.html">Transmisión</a></li>
+            <li><a href="distribucion.html">Distribución</a></li>
+            <li><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+          </ul>
+        </footer>
+
+      </div>
     </section>
 
   </main>

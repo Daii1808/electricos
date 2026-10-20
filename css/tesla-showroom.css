@@ -441,7 +441,396 @@ html, body {
   color: var(--color-pure-white);
 }
 
+/* ─── Secciones Modulares de Variedad Visual (Tesla Editorial & Tech Blocks) ─ */
+
+/* Sección Editorial / Split Screen */
+.tesla-editorial-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 32px 64px;
+  box-sizing: border-box;
+  background-color: #111317;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.tesla-editorial-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(17, 19, 23, 0.92) 0%,
+    rgba(17, 19, 23, 0.82) 50%,
+    rgba(17, 19, 23, 0.95) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tesla-container-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Split Grid 2 Columnas */
+.tesla-split-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.editorial-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editorial-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-tesla-blue);
+}
+
+.editorial-heading {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-pure-white);
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.editorial-paragraph {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #c4c7cc;
+  margin: 0;
+}
+
+.editorial-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.editorial-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.feature-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-tesla-blue);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.feature-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+  margin-bottom: 2px;
+}
+
+.feature-desc {
+  font-size: 13px;
+  color: #8e929a;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Tarjeta Técnica Lateral */
+.editorial-spec-card {
+  background: rgba(23, 26, 32, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.spec-card-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+
+.spec-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8e929a;
+}
+
+.spec-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 16px;
+}
+
+.spec-card-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #8e929a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Grid de Pilares Tecnológicos (3 o 4 Columnas) */
+.tesla-pillars-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 32px 64px;
+  box-sizing: border-box;
+  background-color: var(--color-onyx);
+  overflow: hidden;
+}
+
+.section-header-center {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.section-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-tesla-blue);
+  margin-bottom: 8px;
+}
+
+.section-main-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+.section-lead {
+  font-size: 15px;
+  color: #9da1aa;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.tesla-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.tesla-cards-grid.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.tesla-card-pillar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-card);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 200ms ease;
+}
+
+.tesla-card-pillar:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.pillar-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-tesla-blue);
+  margin-bottom: 12px;
+}
+
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.pillar-desc {
+  font-size: 13px;
+  color: #9da1aa;
+  line-height: 1.55;
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+
+.pillar-stat-strip {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.pillar-stat-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+}
+
+.pillar-stat-lbl {
+  font-size: 11px;
+  color: #8e929a;
+  text-transform: uppercase;
+}
+
+/* Consola de Telemetría en Vivo (Slide 5 Preview) */
+.tesla-console-preview {
+  background: #0f1115;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.console-info-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.console-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(62, 106, 225, 0.15);
+  border: 1px solid rgba(62, 106, 225, 0.35);
+  color: #99b6ff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.console-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3e6ae1;
+}
+
+.console-map-pane {
+  background: #171a20;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.console-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.console-metric-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+}
+
+.console-metric-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-pure-white);
+}
+
+.console-metric-text {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #8e929a;
+  margin-top: 4px;
+}
+
 /* Responsive */
+@media (max-width: 1024px) {
+  .tesla-split-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .tesla-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .tesla-cards-grid.grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tesla-console-preview {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 @media (max-width: 900px) {
   .tesla-navbar {
     padding: 0 16px;
@@ -452,9 +841,16 @@ html, body {
   .hero-title {
     font-size: 32px;
   }
+  .editorial-heading {
+    font-size: 28px;
+  }
+  .section-main-title {
+    font-size: 26px;
+  }
   .hero-specs-strip {
     gap: 16px;
     padding: 10px 16px;
+    flex-wrap: wrap;
   }
   .spec-value {
     font-size: 18px;
@@ -466,5 +862,8 @@ html, body {
   .btn-premium-primary, .btn-premium-ghost {
     width: 100%;
     min-width: 0;
+  }
+  .tesla-cards-grid.grid-4 {
+    grid-template-columns: 1fr;
   }
 }

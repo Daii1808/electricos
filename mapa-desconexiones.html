@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr">
+<html lang="es" dir="ltr" class="dark-mode">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#171a20" />
 
   <title>Mapa de Desconexiones Eléctricas — Grupo Saesa</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet"
@@ -18,33 +23,74 @@
   <link rel="stylesheet" href="css/main.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/map.css" />
+  <link rel="stylesheet" href="css/tesla-showroom.css" />
 </head>
 
-<body>
+<body class="dark-mode">
+
+  <!-- Header Minimalista Ancho Completo Showroom Tesla -->
+  <header class="tesla-navbar" role="banner">
+    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item tesla-dropdown">
+          <a href="distribucion.html">Distribución</a>
+          <div class="tesla-dropdown-menu">
+            <a href="distribucion.html" class="dropdown-link">
+              <span class="dropdown-link-title">Todas las Distribuidoras</span>
+              <span class="dropdown-link-sub">Resumen general del área</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="saesa.html" class="dropdown-link">
+              <span class="dropdown-link-title">Saesa</span>
+              <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+            </a>
+            <a href="frontel.html" class="dropdown-link">
+              <span class="dropdown-link-title">Frontel</span>
+              <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+            </a>
+            <a href="edelaysen.html" class="dropdown-link">
+              <span class="dropdown-link-title">Edelaysen</span>
+              <span class="dropdown-link-sub">Región de Aysén</span>
+            </a>
+            <a href="luz-osorno.html" class="dropdown-link">
+              <span class="dropdown-link-title">Luz Osorno</span>
+              <span class="dropdown-link-sub">Provincia de Osorno</span>
+            </a>
+          </div>
+        </li>
+        <li class="tesla-nav-item active"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
+      </a>
+      <a href="brigadista.html" class="nav-btn-ghost">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
+
   <div class="app-layout" role="application">
 
     <!-- ───────────────────────────────────────────────────────────────────
-         HEADER MINIMALISTA (Chrome no intrusivo)
+         HERO / BARRA DE CONSULTA RÁPIDA ("¿Estás sin suministro?")
     ──────────────────────────────────────────────────────────────────── -->
-    <header class="app-header" role="banner">
-      <div class="header-brand">
-        <a href="index.html" class="logo-container" aria-label="Ir a Inicio Grupo Saesa" style="text-decoration:none; color:inherit;">
-          <div class="logo-text-group">
-            <span class="logo-text" id="company-logo-text">GRUPO SAESA</span>
-            <span class="logo-subtitle" id="company-full-name">Desconexiones en línea</span>
-          </div>
-        </a>
+    <section class="consultation-hero-bar" aria-label="Consulta de servicio eléctrico">
+      <div class="consultation-title-group">
+        <h1>Mapa de Desconexiones Eléctricas</h1>
+        <p>Monitoreo en tiempo real, geolocalización de cuadrillas y tiempos de reposición</p>
+      </div>
 
-        <div class="brand-divider" aria-hidden="true"></div>
-
-        <!-- Navegación Corporativa Grupo Saesa -->
-        <nav style="display: flex; gap: 6px; margin-right: 8px;" aria-label="Navegación corporativa">
-          <a href="index.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Inicio</a>
-          <a href="generacion.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Generación</a>
-          <a href="transmision.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Transmisión</a>
-          <a href="distribucion.html" class="btn-plaque" style="text-decoration: none; font-size: 12px; padding: 5px 12px;">Distribución</a>
-        </nav>
-
+      <div class="consultation-actions">
         <!-- Selector de Distribuidora -->
         <div class="company-selector" role="group" aria-label="Seleccionar empresa distribuidora">
           <button class="company-btn active" data-company="saesa" id="btn-company-saesa">
@@ -54,49 +100,22 @@
             Crell
           </button>
         </div>
-      </div>
 
-      <!-- Estado en tiempo real de la red -->
-      <div class="status-pill" role="status">
-        <span class="status-dot-pulse" aria-hidden="true"></span>
-        <span id="header-status-text">Red de distribución operando con normalidad (99.4%)</span>
-      </div>
+        <!-- Estado en tiempo real de la red -->
+        <div class="status-pill" role="status">
+          <span class="status-dot-pulse" aria-hidden="true"></span>
+          <span id="header-status-text">Red operando con normalidad (99.4%)</span>
+        </div>
 
-      <!-- Controles de cabecera -->
-      <div class="header-controls">
-        <a href="brigadista.html" class="btn-secondary-ghost" style="padding: 6px 14px; font-size: 13px;" title="Acceso a cuadrillas en terreno">
-          Portal Brigadas
-        </a>
-
-        <button class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Cambiar tema">
-          <span aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </span>
-        </button>
-      </div>
-    </header>
-
-    <!-- ───────────────────────────────────────────────────────────────────
-         HERO / BARRA DE CONSULTA RÁPIDA ("¿Estás sin suministro?")
-    ──────────────────────────────────────────────────────────────────── -->
-    <section class="consultation-hero-bar" aria-label="Consulta de servicio eléctrico">
-      <div class="consultation-title-group">
-        <h1>Mapa de Desconexiones Eléctricas</h1>
-        <p>Revisa cortes imprevistos y trabajos programados en tiempo real con geolocalización</p>
-      </div>
-
-      <div class="consultation-actions">
         <!-- Input de búsqueda por N° de cliente o comuna -->
         <div class="search-input-wrap">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input type="text"
                  id="search-service-input"
-                 placeholder="Ingresa tu N° de cliente (ej. 1204859) o Comuna"
+                 placeholder="N° de cliente o Comuna"
                  aria-label="Buscar por número de cliente o comuna" />
         </div>
 
@@ -125,7 +144,7 @@
         <span class="kpi-label">Red en Operación</span>
         <div class="kpi-value-group">
           <span class="kpi-value" id="kpi-operational">99.4%</span>
-          <span class="kpi-sub">normal</span>
+          <span class="kpi-sub">disponible</span>
         </div>
       </div>
 
@@ -178,7 +197,7 @@
           </select>
         </div>
 
-        <!-- Lienzo de Leaflet -->
+        <!-- Lienzo de Leaflet (CartoDB Dark Matter) -->
         <div id="map"></div>
       </div>
 

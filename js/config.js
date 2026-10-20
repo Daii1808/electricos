@@ -35,8 +35,8 @@ const CONFIG = {
     defaultZoom: 10,
     minZoom: 6,
     maxZoom: 18,
-    // CartoDB Positron — Estilo minimalista showroom acorde a DESIGN.md
-    tileUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    // CartoDB Dark Matter — Estilo minimalista showroom técnico acorde a DESIGN.md
+    tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     // Fallback estándar OSM
     fallbackTileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

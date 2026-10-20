@@ -16,10 +16,6 @@
   background-color: #12151a;
 }
 
-.dark-mode .leaflet-tile-pane {
-  filter: brightness(0.68) invert(1) contrast(3) hue-rotate(200deg) saturate(0.35);
-}
-
 /* ─── Controles de Zoom Minimalistas ──────────────────────────────────────── */
 .leaflet-control-zoom {
   border: 1px solid var(--border-color) !important;
