@@ -131,3 +131,10 @@ const AuthManager = (() => {
 
   return { login, logout, getSession, isLoggedIn };
 })();
+
+if (typeof window !== 'undefined') {
+  window.AuthManager = AuthManager;
+}
+
+export { AuthManager };
+

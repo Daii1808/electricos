@@ -7,6 +7,12 @@
 
 'use strict';
 
+import './config.js';
+import './api.js';
+import './theme.js';
+import './map.js';
+import './ui.js';
+
 const App = (() => {
 
   let _currentFilter = {
@@ -299,3 +305,10 @@ const App = (() => {
 document.addEventListener('DOMContentLoaded', () => {
   App.init();
 });
+
+if (typeof window !== 'undefined') {
+  window.App = App;
+}
+
+export { App };
+

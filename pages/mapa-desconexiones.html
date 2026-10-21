@@ -20,60 +20,60 @@
         crossorigin="" />
 
   <!-- Estilos del Sistema de Diseño (DESIGN.md) -->
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/map.css" />
-  <link rel="stylesheet" href="css/tesla-showroom.css" />
+  <link rel="stylesheet" href="/src/css/main.css" />
+  <link rel="stylesheet" href="/src/css/components.css" />
+  <link rel="stylesheet" href="/src/css/map.css" />
+  <link rel="stylesheet" href="/src/css/tesla-showroom.css" />
 </head>
 
 <body class="dark-mode">
 
   <!-- Header Minimalista Ancho Completo Showroom Tesla -->
   <header class="tesla-navbar" role="banner">
-    <a href="index.html" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+    <a href="/" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
       <span class="tesla-brand-name">GRUPO SAESA</span>
     </a>
 
     <nav class="tesla-nav-center" aria-label="Navegación principal">
       <ul class="tesla-nav-links">
-        <li class="tesla-nav-item"><a href="index.html">Inicio</a></li>
-        <li class="tesla-nav-item"><a href="generacion.html">Generación</a></li>
-        <li class="tesla-nav-item"><a href="transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item"><a href="/">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="/pages/generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="/pages/transmision.html">Transmisión</a></li>
         <li class="tesla-nav-item tesla-dropdown">
-          <a href="distribucion.html">Distribución</a>
+          <a href="/pages/distribucion.html">Distribución</a>
           <div class="tesla-dropdown-menu">
-            <a href="distribucion.html" class="dropdown-link">
+            <a href="/pages/distribucion.html" class="dropdown-link">
               <span class="dropdown-link-title">Todas las Distribuidoras</span>
               <span class="dropdown-link-sub">Resumen general del área</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="saesa.html" class="dropdown-link">
+            <a href="/pages/saesa.html" class="dropdown-link">
               <span class="dropdown-link-title">Saesa</span>
               <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
             </a>
-            <a href="frontel.html" class="dropdown-link">
+            <a href="/pages/frontel.html" class="dropdown-link">
               <span class="dropdown-link-title">Frontel</span>
               <span class="dropdown-link-sub">Biobío y La Araucanía</span>
             </a>
-            <a href="edelaysen.html" class="dropdown-link">
+            <a href="/pages/edelaysen.html" class="dropdown-link">
               <span class="dropdown-link-title">Edelaysen</span>
               <span class="dropdown-link-sub">Región de Aysén</span>
             </a>
-            <a href="luz-osorno.html" class="dropdown-link">
+            <a href="/pages/luz-osorno.html" class="dropdown-link">
               <span class="dropdown-link-title">Luz Osorno</span>
               <span class="dropdown-link-sub">Provincia de Osorno</span>
             </a>
           </div>
         </li>
-        <li class="tesla-nav-item active"><a href="mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        <li class="tesla-nav-item active"><a href="/pages/mapa-desconexiones.html">Mapa Desconexiones</a></li>
       </ul>
     </nav>
 
     <div class="tesla-nav-actions">
-      <a href="mapa-desconexiones.html" class="nav-cta-blue">
+      <a href="/pages/mapa-desconexiones.html" class="nav-cta-blue">
         Mapa en Vivo
       </a>
-      <a href="brigadista.html" class="nav-btn-ghost">
+      <a href="/pages/brigadista.html" class="nav-btn-ghost">
         Portal Brigadas
       </a>
     </div>
@@ -366,12 +366,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs="
           crossorigin=""></script>
-
-  <script src="js/config.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/theme.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/main.js"></script>
+  <script type="module" src="/src/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Luz Osorno — Distribuidora eléctrica de la Provincia de Osorno. Redes subterráneas y alta continuidad de suministro." />
+  <meta name="theme-color" content="#171a20" />
+
+  <title>Luz Osorno — Distribuidora Provincia de Osorno</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/src/css/main.css" />
+  <link rel="stylesheet" href="/src/css/tesla-showroom.css" />
+</head>
+
+<body>
+
+  <!-- Header Minimalista Ancho Completo -->
+  <header class="tesla-navbar" role="banner">
+    <a href="/" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
+      <span class="tesla-brand-name">GRUPO SAESA</span>
+    </a>
+
+    <nav class="tesla-nav-center" aria-label="Navegación principal">
+      <ul class="tesla-nav-links">
+        <li class="tesla-nav-item"><a href="/">Inicio</a></li>
+        <li class="tesla-nav-item"><a href="/pages/generacion.html">Generación</a></li>
+        <li class="tesla-nav-item"><a href="/pages/transmision.html">Transmisión</a></li>
+        <li class="tesla-nav-item tesla-dropdown active">
+          <a href="/pages/distribucion.html">Distribución</a>
+          <div class="tesla-dropdown-menu">
+            <a href="/pages/distribucion.html" class="dropdown-link">
+              <span class="dropdown-link-title">Todas las Distribuidoras</span>
+              <span class="dropdown-link-sub">Resumen general del área</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="/pages/saesa.html" class="dropdown-link">
+              <span class="dropdown-link-title">Saesa</span>
+              <span class="dropdown-link-sub">Los Ríos y Los Lagos</span>
+            </a>
+            <a href="/pages/frontel.html" class="dropdown-link">
+              <span class="dropdown-link-title">Frontel</span>
+              <span class="dropdown-link-sub">Biobío y La Araucanía</span>
+            </a>
+            <a href="/pages/edelaysen.html" class="dropdown-link">
+              <span class="dropdown-link-title">Edelaysen</span>
+              <span class="dropdown-link-sub">Región de Aysén</span>
+            </a>
+            <a href="/pages/luz-osorno.html" class="dropdown-link active">
+              <span class="dropdown-link-title">Luz Osorno</span>
+              <span class="dropdown-link-sub">Provincia de Osorno</span>
+            </a>
+          </div>
+        </li>
+        <li class="tesla-nav-item"><a href="/pages/mapa-desconexiones.html">Mapa Desconexiones</a></li>
+      </ul>
+    </nav>
+
+    <div class="tesla-nav-actions">
+      <a href="/pages/mapa-desconexiones.html" class="nav-cta-blue">
+        Mapa en Vivo
+      </a>
+      <a href="/pages/brigadista.html" class="nav-btn-ghost">
+        Portal Brigadas
+      </a>
+    </div>
+  </header>
+
+  <main class="tesla-snap-container" id="showroom-container">
+
+    <!-- SLIDE 1: OVERVIEW LUZ OSORNO -->
+    <section class="tesla-hero-section"
+             style="background-image: url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2400&q=85');">
+      <div class="hero-content-top">
+        <span class="hero-tag-badge">DISTRIBUIDORA ELÉCTRICA — PROVINCIA DE OSORNO</span>
+        <h1 class="hero-title">Luz Osorno</h1>
+        <p class="hero-subtext">
+          Calidad de servicio sostenida para más de 90.000 clientes en la Provincia de Osorno. Redes subterráneas modernas, respuesta rápida ante emergencias y atención digital 24/7.
+        </p>
+      </div>
+
+      <div class="hero-content-bottom">
+        <div class="hero-specs-strip">
+          <div class="spec-item">
+            <span class="spec-value">90.000+</span>
+            <span class="spec-label">Clientes Conectados</span>
+          </div>
+          <div class="spec-divider"></div>
+          <div class="spec-item">
+            <span class="spec-value">800 600 804</span>
+            <span class="spec-label">Emergencias 24/7</span>
+          </div>
+          <div class="spec-divider"></div>
+          <div class="spec-item">
+            <span class="spec-value">Subterráneo</span>
+            <span class="spec-label">Red Blindada Urbana</span>
+          </div>
+          <div class="spec-divider"></div>
+          <div class="spec-item">
+            <span class="spec-value">99.6%</span>
+            <span class="spec-label">Continuidad de Suministro</span>
+          </div>
+        </div>
+
+        <div class="hero-action-buttons">
+          <a href="/pages/mapa-desconexiones.html" class="btn-premium-primary">
+            Mapa de Desconexiones
+          </a>
+          <a href="/pages/distribucion.html" class="btn-premium-ghost">
+            Ver Todas las Filiales
+          </a>
+        </div>
+      </div>
+
+      <footer class="tesla-footer">
+        <ul class="tesla-footer-links">
+          <li><a href="/">Grupo Saesa © 2026</a></li>
+          <li><a href="/pages/saesa.html">Saesa</a></li>
+          <li><a href="/pages/frontel.html">Frontel</a></li>
+          <li><a href="/pages/edelaysen.html">Edelaysen</a></li>
+          <li><a href="/pages/luz-osorno.html">Luz Osorno</a></li>
+          <li><a href="/pages/mapa-desconexiones.html">Mapa Desconexiones</a></li>
+        </ul>
+      </footer>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/js/showroom.js"></script>
+</body>
+</html>

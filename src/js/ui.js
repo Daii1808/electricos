@@ -239,3 +239,10 @@ const UIManager = (() => {
     showToast,
   };
 })();
+
+if (typeof window !== 'undefined') {
+  window.UIManager = UIManager;
+}
+
+export { UIManager };
+

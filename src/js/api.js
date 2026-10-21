@@ -453,3 +453,11 @@ const API = {
     return _currentOutageId;
   },
 };
+
+if (typeof window !== 'undefined') {
+  window.API = API;
+  window.MOCK_DATA = MOCK_DATA;
+}
+
+export { API, MOCK_DATA };
+

@@ -408,3 +408,10 @@ const MapManager = (() => {
     getMap: () => _map,
   };
 })();
+
+if (typeof window !== 'undefined') {
+  window.MapManager = MapManager;
+}
+
+export { MapManager };
+

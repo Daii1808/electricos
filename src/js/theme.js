@@ -82,3 +82,10 @@ const ThemeManager = (() => {
 
   return { init, toggle };
 })();
+
+if (typeof window !== 'undefined') {
+  window.ThemeManager = ThemeManager;
+}
+
+export { ThemeManager };
+

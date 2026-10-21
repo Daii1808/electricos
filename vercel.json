@@ -1,4 +1,24 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/generacion", "destination": "/pages/generacion.html" },
+    { "source": "/generacion.html", "destination": "/pages/generacion.html" },
+    { "source": "/transmision", "destination": "/pages/transmision.html" },
+    { "source": "/transmision.html", "destination": "/pages/transmision.html" },
+    { "source": "/distribucion", "destination": "/pages/distribucion.html" },
+    { "source": "/distribucion.html", "destination": "/pages/distribucion.html" },
+    { "source": "/saesa", "destination": "/pages/saesa.html" },
+    { "source": "/saesa.html", "destination": "/pages/saesa.html" },
+    { "source": "/frontel", "destination": "/pages/frontel.html" },
+    { "source": "/frontel.html", "destination": "/pages/frontel.html" },
+    { "source": "/edelaysen", "destination": "/pages/edelaysen.html" },
+    { "source": "/edelaysen.html", "destination": "/pages/edelaysen.html" },
+    { "source": "/luz-osorno", "destination": "/pages/luz-osorno.html" },
+    { "source": "/luz-osorno.html", "destination": "/pages/luz-osorno.html" },
+    { "source": "/mapa-desconexiones", "destination": "/pages/mapa-desconexiones.html" },
+    { "source": "/mapa-desconexiones.html", "destination": "/pages/mapa-desconexiones.html" },
+    { "source": "/brigadista", "destination": "/pages/brigadista.html" },
+    { "source": "/brigadista.html", "destination": "/pages/brigadista.html" }
+  ]
 }

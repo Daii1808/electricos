@@ -82,3 +82,10 @@ const CONFIG = {
 Object.freeze(CONFIG);
 Object.freeze(CONFIG.API);
 Object.freeze(CONFIG.MAP);
+
+if (typeof window !== 'undefined') {
+  window.CONFIG = CONFIG;
+}
+
+export { CONFIG };
+

@@ -8,6 +8,10 @@
 
 'use strict';
 
+import './config.js';
+import './theme.js';
+import './brigadista-auth.js';
+
 const BrigadistaPortal = (() => {
 
   // ─── Estado local ─────────────────────────────────────────────────────────
@@ -566,3 +570,10 @@ const BrigadistaPortal = (() => {
 
 // Bootstrap cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => BrigadistaPortal.init());
+
+if (typeof window !== 'undefined') {
+  window.BrigadistaPortal = BrigadistaPortal;
+}
+
+export { BrigadistaPortal };
+
