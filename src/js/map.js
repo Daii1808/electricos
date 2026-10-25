@@ -119,11 +119,37 @@ const MapManager = (() => {
       zoomControl: false,
       attributionControl: true,
     });
+    // 1. Diccionario con las coordenadas aproximadas de cada comuna
+const coordenadasComunas = {
+    "Temuco": [-38.7397, -72.5901, 13],
+    "Valdivia": [-39.8196, -73.2452, 13],
+    "Osorno": [-40.5725, -73.1353, 13],
+    "Puerto Montt": [-41.4693, -72.9424, 13],
+    "Puerto Varas": [-41.3197, -72.9845, 13]
+};
+
+// 2. Escuchar cuando cambie la selección en el menú desplegable
+const selectComuna = document.getElementById('comuna-filter-select');
+if (selectComuna) {
+    selectComuna.addEventListener('change', (event) => {
+        const comunaSeleccionada = event.target.value;
+        
+        // Si selecciona una comuna válida, mover el mapa de forma fluida
+        if (coordenadasComunas[comunaSeleccionada]) {
+            const [lat, lng, zoom] = coordenadasComunas[comunaSeleccionada];
+            _map.setView([lat, lng], zoom); // Mueve el mapa directamente a la ciudad
+        } else if (comunaSeleccionada === "all") {
+            // Opcional: Vista general si selecciona "Todas las comunas"
+            _map.setView([-41.4693, -72.9424], 9);
+        }
+    });
+}
 
     // Layer CartoDB Positron / OSM
-    _tileLayer = L.tileLayer(tileUrl, {
-      attribution: tileAttribution,
-      maxZoom,
+    // Capa alternativa gratuita de CartoDB (Dark) sin API key estricta
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
     }).addTo(_map);
 
     // Controles de zoom abajo a la derecha

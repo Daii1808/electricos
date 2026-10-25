@@ -13,11 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin="" />
+  <!-- Leaflet CSS (Corregido: sin integrity ni crossorigin bloqueantes) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <!-- Estilos del Sistema de Diseño (DESIGN.md) -->
   <link rel="stylesheet" href="/src/css/main.css" />
@@ -81,9 +78,7 @@
 
   <div class="app-layout" role="application">
 
-    <!-- ───────────────────────────────────────────────────────────────────
-         HERO / BARRA DE CONSULTA RÁPIDA ("¿Estás sin suministro?")
-    ──────────────────────────────────────────────────────────────────── -->
+    <!-- HERO / BARRA DE CONSULTA RÁPIDA -->
     <section class="consultation-hero-bar" aria-label="Consulta de servicio eléctrico">
       <div class="consultation-title-group">
         <h1>Mapa de Desconexiones Eléctricas</h1>
@@ -136,9 +131,7 @@
       </div>
     </section>
 
-    <!-- ───────────────────────────────────────────────────────────────────
-         PLAQUES DE KPI / MÉTRICAS DE RED
-    ──────────────────────────────────────────────────────────────────── -->
+    <!-- PLAQUES DE KPI / MÉTRICAS DE RED -->
     <section class="kpi-row" aria-label="Estadísticas de la red eléctrica">
       <div class="kpi-plaque">
         <span class="kpi-label">Red en Operación</span>
@@ -173,9 +166,7 @@
       </div>
     </section>
 
-    <!-- ───────────────────────────────────────────────────────────────────
-         CUERPO PRINCIPAL (Mapa + Panel Lateral Inspector)
-    ──────────────────────────────────────────────────────────────────── -->
+    <!-- CUERPO PRINCIPAL (Mapa + Panel Lateral Inspector) -->
     <div class="app-body">
 
       <!-- Contenedor del Mapa -->
@@ -197,7 +188,7 @@
           </select>
         </div>
 
-        <!-- Lienzo de Leaflet (CartoDB Dark Matter) -->
+        <!-- Lienzo de Leaflet -->
         <div id="map"></div>
       </div>
 
@@ -302,9 +293,7 @@
     </div>
   </div>
 
-  <!-- ───────────────────────────────────────────────────────────────────
-       MODAL: "Reportar Corte / Estoy sin Luz"
-  ──────────────────────────────────────────────────────────────────── -->
+  <!-- MODAL: "Reportar Corte / Estoy sin Luz" -->
   <div class="modal-overlay" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-report-title">
     <div class="modal-dialog">
       <div class="modal-header">
@@ -362,10 +351,8 @@
   <!-- Contenedor de Toasts -->
   <div id="toast-container" aria-live="polite"></div>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WLs="
-          crossorigin=""></script>
+  <!-- Scripts (Corregido: sin integrity ni crossorigin bloqueantes) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="/src/js/main.js"></script>
 </body>
 </html>
