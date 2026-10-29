@@ -26,7 +26,7 @@ const CONFIG = {
   },
 
   /** Intervalo de polling para posición del vehículo (ms) */
-  VEHICLE_POLL_INTERVAL_MS: 12000,
+  VEHICLE_POLL_INTERVAL_MS: 4500,
   REFRESH_COOLDOWN_MS: 30000,
 
   /** Configuración del mapa (OpenStreetMap con estética clara y descansada) */

@@ -335,15 +335,22 @@ if (selectComuna) {
 
         _vehicleMarkersMap.set(outage.id, brigadeMarker);
 
-        // Si este corte está seleccionado y la furgoneta está en traslado, trazar ruta
-        if (isSelected && !isOnSite && outage.center) {
-          _routeLine = L.polyline([[brigade.location.lat, brigade.location.lng], [outage.center.lat, outage.center.lng]], {
-            color: '#2563eb',
-            weight: 3,
-            opacity: 0.85,
-            dashArray: '8 6',
-            lineCap: 'round',
-          }).addTo(_map);
+        // Si este corte está seleccionado y la furgoneta está en traslado, trazar la ruta real por las calles
+        if (isSelected && !isOnSite) {
+          const routePoints = (brigade.routeWaypoints && brigade.routeWaypoints.length > 0)
+            ? brigade.routeWaypoints.slice(brigade.currentWaypointIndex || 0)
+            : (outage.center ? [[brigade.location.lat, brigade.location.lng], [outage.center.lat, outage.center.lng]] : []);
+
+          if (routePoints.length > 1) {
+            _routeLine = L.polyline(routePoints, {
+              color: '#2563eb',
+              weight: 3.5,
+              opacity: 0.9,
+              dashArray: '8 6',
+              lineCap: 'round',
+              lineJoin: 'round',
+            }).addTo(_map);
+          }
         }
       }
     });
@@ -372,16 +379,23 @@ if (selectComuna) {
       marker.setIcon(newIcon);
     }
 
-    if (destination && !isOnSite) {
+    if (!isOnSite) {
       if (_routeLine) _map.removeLayer(_routeLine);
 
-      _routeLine = L.polyline([[lat, lng], [destination.lat, destination.lng]], {
-        color: '#2563eb',
-        weight: 3,
-        opacity: 0.85,
-        dashArray: '8 6',
-        lineCap: 'round',
-      }).addTo(_map);
+      const routePoints = (brigade.routeWaypoints && brigade.routeWaypoints.length > 0)
+        ? brigade.routeWaypoints.slice(brigade.currentWaypointIndex || 0)
+        : (destination ? [[lat, lng], [destination.lat, destination.lng]] : []);
+
+      if (routePoints.length > 1) {
+        _routeLine = L.polyline(routePoints, {
+          color: '#2563eb',
+          weight: 3.5,
+          opacity: 0.9,
+          dashArray: '8 6',
+          lineCap: 'round',
+          lineJoin: 'round',
+        }).addTo(_map);
+      }
     } else if (isOnSite && _routeLine) {
       _map.removeLayer(_routeLine);
       _routeLine = null;

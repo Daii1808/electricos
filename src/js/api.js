@@ -8,6 +8,39 @@
 
 'use strict';
 
+const MIRASOL_STREET_WAYPOINTS = [
+  [-41.46296, -72.95157],
+  [-41.46362, -72.95140],
+  [-41.46393, -72.95182],
+  [-41.46448, -72.95277],
+  [-41.46495, -72.95360],
+  [-41.46533, -72.95427],
+  [-41.46560, -72.95477],
+  [-41.46579, -72.95521],
+  [-41.46612, -72.95585],
+  [-41.46652, -72.95653],
+  [-41.46715, -72.95765],
+  [-41.46803, -72.95921],
+  [-41.46822, -72.95957],
+  [-41.46842, -72.95998],
+  [-41.46857, -72.96038],
+  [-41.46887, -72.96126],
+  [-41.46922, -72.96209],
+  [-41.46941, -72.96255],
+  [-41.47016, -72.96463],
+  [-41.47038, -72.96524],
+  [-41.47059, -72.96586],
+  [-41.47085, -72.96664],
+  [-41.47134, -72.96805],
+  [-41.47193, -72.96932],
+  [-41.47284, -72.97121],
+  [-41.47369, -72.97152],
+  [-41.47541, -72.97272],
+  [-41.47577, -72.97322],
+  [-41.47627, -72.97378],
+  [-41.47709, -72.97389]
+];
+
 const MOCK_DATA = {
   outages: [
     {
@@ -24,19 +57,19 @@ const MOCK_DATA = {
       reportedAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
       estimatedRestoration: new Date(Date.now() + 75 * 60 * 1000).toISOString(),
       estimatedRepairDuration: '1 hora 15 minutos',
-      affectedUsers: 285,
+      affectedUsers: 285, // Zona Mediana (4-5 cuadras residenciales)
       priority: 'high',
       associatedClients: ['6104820-1', '6104820', '6104821', '6104822', '6104823'],
-      center: { lat: -41.4740, lng: -72.9650 },
+      center: { lat: -41.4771, lng: -72.9739 },
+      // Polígono mediano residencial (~350m x 250m)
       polygon: {
         type: 'Polygon',
         coordinates: [[
-          [-72.9730, -41.4680],
-          [-72.9560, -41.4690],
-          [-72.9540, -41.4790],
-          [-72.9680, -41.4820],
-          [-72.9750, -41.4750],
-          [-72.9730, -41.4680],
+          [-72.9768, -41.4752],
+          [-72.9705, -41.4755],
+          [-72.9712, -41.4790],
+          [-72.9765, -41.4792],
+          [-72.9768, -41.4752],
         ]],
       },
       brigade: {
@@ -45,9 +78,11 @@ const MOCK_DATA = {
         assistantName: 'Gonzalo Silva Tapia',
         employeeId: 'EMP-16204',
         status: 'en_route',
-        statusText: 'Furgoneta en traslado — Llegada en ~8 min (1.2 km)',
+        statusText: 'Furgoneta en traslado por calle — Llegada en ~8 min (2.4 km)',
         etaMinutes: 8,
         estimatedRepairMinutes: 75,
+        currentWaypointIndex: 0,
+        routeWaypoints: MIRASOL_STREET_WAYPOINTS,
         vehicle: {
           plate: 'RHKL-18',
           type: 'Furgoneta Técnica de Respuesta Rápida',
@@ -56,9 +91,9 @@ const MOCK_DATA = {
           year: 2024,
         },
         location: {
-          lat: -41.4630,
-          lng: -72.9520,
-          speedKmh: 42,
+          lat: -41.46296,
+          lng: -72.95157,
+          speedKmh: 40,
           heading: 215,
         },
       },
@@ -72,25 +107,26 @@ const MOCK_DATA = {
       typeName: 'Emergencia / No programada',
       status: 'active',
       comuna: 'Puerto Montt',
-      sector: 'Sector Pelluco — Av. Juan Soler Manfredini con Libanesa',
-      reason: 'Reemplazo de aislador y conductor cortado por viento costero',
-      reasonCode: 'WEATHER_EQUIPMENT',
-      reportedAt: new Date(Date.now() - 55 * 60 * 1000).toISOString(),
-      estimatedRestoration: new Date(Date.now() + 45 * 60 * 1000).toISOString(),
-      estimatedRepairDuration: '45 minutos',
-      affectedUsers: 184,
-      priority: 'high',
+      sector: 'Sector Pelluco — Pasaje Los Alerces con Av. Libanesa',
+      reason: 'Fusible aéreo de transformador domiciliario quemado por sobrecarga puntual',
+      reasonCode: 'EQUIPMENT',
+      reportedAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+      estimatedRestoration: new Date(Date.now() + 25 * 60 * 1000).toISOString(),
+      estimatedRepairDuration: '25 minutos',
+      affectedUsers: 34, // ZONA PEQUEÑA: Una sola cuadra puntual
+      priority: 'medium',
       associatedClients: ['6209110-3', '6209110', '6209111', '6209112'],
-      center: { lat: -41.4880, lng: -72.9050 },
+      // Coordenadas 100% en TIERRA FIRME en Villa Cayhuasi, Pelluco (lejos del mar)
+      center: { lat: -41.4852, lng: -72.8975 },
+      // Polígono pequeño de EXACTAMENTE 1 cuadra (~90m x 70m)
       polygon: {
         type: 'Polygon',
         coordinates: [[
-          [-72.9150, -41.4830],
-          [-72.8980, -41.4820],
-          [-72.8950, -41.4930],
-          [-72.9100, -41.4940],
-          [-72.9180, -41.4890],
-          [-72.9150, -41.4830],
+          [-72.8982, -41.4847],
+          [-72.8968, -41.4846],
+          [-72.8967, -41.4857],
+          [-72.8981, -41.4858],
+          [-72.8982, -41.4847],
         ]],
       },
       brigade: {
@@ -99,9 +135,9 @@ const MOCK_DATA = {
         assistantName: 'Claudio Mansilla R.',
         employeeId: 'EMP-15408',
         status: 'on_site',
-        statusText: 'Personal técnico en el lugar reparando línea y aislador',
+        statusText: 'Personal técnico en el lugar reparando transformador en el poste',
         etaMinutes: 0,
-        estimatedRepairMinutes: 45,
+        estimatedRepairMinutes: 25,
         vehicle: {
           plate: 'SPKL-33',
           type: 'Furgoneta Técnica de Faena',
@@ -109,9 +145,10 @@ const MOCK_DATA = {
           color: 'Blanco Saesa',
           year: 2024,
         },
+        // Posición del brigadista exactamente en tierra firme en la esquina del poste
         location: {
-          lat: -41.4882,
-          lng: -72.9048,
+          lat: -41.4852,
+          lng: -72.8975,
           speedKmh: 0,
           heading: 90,
         },
@@ -422,24 +459,50 @@ const API = {
    */
   async getVehicleLocation(outageId = null) {
     const outage = await this.getOutageDetails(outageId);
+    if (!outage || !outage.brigade || !outage.brigade.location) return null;
     const brigade = outage.brigade;
 
-    // Si la brigada está en ruta, simular avance real hacia el punto de falla
-    if (brigade.status === 'en_route' && outage.center) {
-      const dLat = outage.center.lat - brigade.location.lat;
-      const dLng = outage.center.lng - brigade.location.lng;
-      const dist = Math.sqrt(dLat * dLat + dLng * dLng);
-      if (dist > 0.001) {
-        brigade.location.lat += (dLat / dist) * 0.00035;
-        brigade.location.lng += (dLng / dist) * 0.00035;
-        const kmRemaining = Math.max(0.2, dist * 111);
-        const etaMinutes = Math.max(1, Math.round((kmRemaining / 35) * 60));
-        brigade.etaMinutes = etaMinutes;
-        brigade.statusText = `Furgoneta en traslado — Llegada en ~${etaMinutes} min (${kmRemaining.toFixed(1)} km)`;
-      } else {
-        brigade.status = 'on_site';
-        brigade.etaMinutes = 0;
-        brigade.statusText = 'Furgoneta en el lugar — Personal trabajando en terreno';
+    // Si la brigada tiene ruta de calles definida y está en ruta, avanzar paso a paso por las esquinas
+    if (brigade.status === 'en_route') {
+      if (brigade.routeWaypoints && brigade.routeWaypoints.length > 0) {
+        if (typeof brigade.currentWaypointIndex !== 'number') {
+          brigade.currentWaypointIndex = 0;
+        }
+
+        // Avanzar al siguiente punto o esquina de la calle
+        if (brigade.currentWaypointIndex < brigade.routeWaypoints.length - 1) {
+          brigade.currentWaypointIndex++;
+          const [wLat, wLng] = brigade.routeWaypoints[brigade.currentWaypointIndex];
+          brigade.location.lat = wLat;
+          brigade.location.lng = wLng;
+
+          const remainingPoints = brigade.routeWaypoints.length - 1 - brigade.currentWaypointIndex;
+          const kmRemaining = Math.max(0.1, +(remainingPoints * 0.08).toFixed(1));
+          const etaMinutes = Math.max(1, Math.round(kmRemaining * 2.2));
+          brigade.etaMinutes = etaMinutes;
+          brigade.statusText = `Furgoneta en traslado por calle — Llegada en ~${etaMinutes} min (${kmRemaining} km)`;
+        } else {
+          brigade.status = 'on_site';
+          brigade.etaMinutes = 0;
+          brigade.statusText = 'Furgoneta en el lugar — Personal técnico trabajando en terreno';
+        }
+      } else if (outage.center) {
+        // Fallback vectorial suave
+        const dLat = outage.center.lat - brigade.location.lat;
+        const dLng = outage.center.lng - brigade.location.lng;
+        const dist = Math.sqrt(dLat * dLat + dLng * dLng);
+        if (dist > 0.001) {
+          brigade.location.lat += (dLat / dist) * 0.00035;
+          brigade.location.lng += (dLng / dist) * 0.00035;
+          const kmRemaining = Math.max(0.2, dist * 111);
+          const etaMinutes = Math.max(1, Math.round((kmRemaining / 35) * 60));
+          brigade.etaMinutes = etaMinutes;
+          brigade.statusText = `Furgoneta en traslado — Llegada en ~${etaMinutes} min (${kmRemaining.toFixed(1)} km)`;
+        } else {
+          brigade.status = 'on_site';
+          brigade.etaMinutes = 0;
+          brigade.statusText = 'Furgoneta en el lugar — Personal trabajando en terreno';
+        }
       }
     }
 
