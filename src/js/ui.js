@@ -1,8 +1,8 @@
 /**
  * ─────────────────────────────────────────────────────
- *  ui.js — Renderizado de interfaz para el Cliente (DESIGN.md)
- *  Tarjeta de estado de suministro, cuenta regresiva ETR,
- *  modal "Estoy sin luz" y notificaciones.
+ *  ui.js — Renderizado de interfaz para Clientes (Modo Claro Suave)
+ *  Tarjeta de estado de suministro, tiempos duales (llegada y reposición),
+ *  información de cuadrilla y furgoneta técnica.
  * ─────────────────────────────────────────────────────
  */
 
@@ -51,13 +51,29 @@ const UIManager = (() => {
       title.textContent = `${outage.comuna} — ${outage.sector}`;
     }
 
-    // 3. Filial
+    // 3. Filial y hogares
     const filialTag = document.getElementById('result-filial-tag');
     if (filialTag) {
-      filialTag.textContent = outage.filial || 'Grupo Saesa';
+      filialTag.textContent = `${outage.filial || 'Grupo Saesa'} · ${outage.affectedUsers} hogares sin servicio`;
     }
 
-    // 4. Bloque ETR (Hora estimada y cuenta regresiva)
+    // 4. Banner de Furgoneta en Camino / en Terreno
+    const vanBanner = document.getElementById('result-van-banner');
+    const vanStatusText = document.getElementById('result-van-status-text');
+    if (vanBanner && vanStatusText) {
+      vanBanner.style.display = 'flex';
+      const isOnSite = outage.brigade?.status === 'on_site';
+      vanBanner.className = `result-van-eta-banner ${isOnSite ? 'van-on-site' : ''}`;
+
+      if (isOnSite) {
+        vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
+      } else {
+        const etaMin = outage.brigade?.etaMinutes || 8;
+        vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${etaMin} min al sector`;
+      }
+    }
+
+    // 5. Bloque ETR (Hora estimada de reposición de luz y duración de faena)
     const etaBlock = document.getElementById('result-eta-block');
     if (etaBlock) etaBlock.style.display = 'flex';
 
@@ -66,32 +82,39 @@ const UIManager = (() => {
       etaTime.textContent = `${formatTime(outage.estimatedRestoration)} hrs`;
     }
 
-    startCountdown(outage.estimatedRestoration);
+    startCountdown(outage.estimatedRestoration, outage.estimatedRepairDuration);
 
-    // 5. Causa del corte en lenguaje claro
+    // 6. Causa del corte
     const reasonText = document.getElementById('result-reason-text');
     if (reasonText) {
       reasonText.textContent = outage.reason || 'Personal técnico investiga causa en la red.';
     }
 
-    // 6. Estado de la Cuadrilla y Clientes Afectados
-    const crewStatus = document.getElementById('result-crew-status');
-    if (crewStatus) crewStatus.style.display = 'flex';
+    // 7. Ficha de Cuadrilla y Furgoneta Asignada (Directamente en la tarjeta)
+    const crewBox = document.getElementById('result-crew-box');
+    if (crewBox && outage.brigade) {
+      crewBox.style.display = 'flex';
 
-    const crewText = document.getElementById('result-crew-text');
-    if (crewText) {
-      crewText.textContent = outage.brigade?.statusText || 'Cuadrilla técnica en terreno';
+      const vanModel = document.getElementById('crew-van-model');
+      if (vanModel) {
+        vanModel.textContent = `${outage.brigade.vehicle?.model || 'Furgoneta Técnica'} (${outage.brigade.vehicle?.plate || '—'})`;
+      }
+
+      const leadName = document.getElementById('crew-lead-name');
+      if (leadName) {
+        leadName.textContent = outage.brigade.leadName || 'Jefe de Cuadrilla en Terreno';
+      }
+
+      const assistantName = document.getElementById('crew-assistant-name');
+      if (assistantName) {
+        assistantName.textContent = outage.brigade.assistantName || 'Técnico Especialista de Apoyo';
+      }
     }
 
-    const affectedClients = document.getElementById('result-affected-clients');
-    if (affectedClients) {
-      affectedClients.textContent = `${outage.affectedUsers} hogares involucrados`;
-    }
-
-    // 7. Botón de reporte rápido
+    // 8. Botón de reporte rápido
     const reportBtn = document.getElementById('btn-quick-confirm-outage');
     if (reportBtn) {
-      reportBtn.textContent = 'Sigo sin suministro en esta zona';
+      reportBtn.textContent = 'Vivo en este sector y sigo sin luz';
       reportBtn.dataset.comuna = outage.comuna;
     }
   }
@@ -118,16 +141,19 @@ const UIManager = (() => {
       filialTag.textContent = 'Grupo Saesa';
     }
 
+    const vanBanner = document.getElementById('result-van-banner');
+    if (vanBanner) vanBanner.style.display = 'none';
+
     const etaBlock = document.getElementById('result-eta-block');
     if (etaBlock) etaBlock.style.display = 'none';
 
+    const crewBox = document.getElementById('result-crew-box');
+    if (crewBox) crewBox.style.display = 'none';
+
     const reasonText = document.getElementById('result-reason-text');
     if (reasonText) {
-      reasonText.textContent = `La red eléctrica asociada a "${query}" opera con normalidad. Si te encuentras sin suministro en tu domicilio, puedes ingresar un aviso directo.`;
+      reasonText.textContent = `La red eléctrica asociada a "${query}" opera con normalidad. Si te encuentras sin suministro en tu domicilio, puedes ingresar un aviso de inmediato.`;
     }
-
-    const crewStatus = document.getElementById('result-crew-status');
-    if (crewStatus) crewStatus.style.display = 'none';
 
     const reportBtn = document.getElementById('btn-quick-confirm-outage');
     if (reportBtn) {
@@ -144,7 +170,7 @@ const UIManager = (() => {
 
   // ─── Cuenta Regresiva ──────────────────────────────────────────────────────
 
-  function startCountdown(estimatedIso) {
+  function startCountdown(estimatedIso, repairDurationText = '') {
     if (_countdownTimer) clearInterval(_countdownTimer);
 
     const countdownBadge = document.getElementById('result-eta-countdown');
@@ -154,7 +180,8 @@ const UIManager = (() => {
 
     function update() {
       const diff = targetTime - Date.now();
-      countdownBadge.textContent = `En ${formatRemaining(diff)}`;
+      const repairInfo = repairDurationText ? ` (Trabajo estimado: ${repairDurationText})` : '';
+      countdownBadge.textContent = `Luz estimada en ${formatRemaining(diff)}${repairInfo}`;
     }
 
     update();
@@ -177,7 +204,7 @@ const UIManager = (() => {
     toast.className = `toast toast--${type}`;
 
     const icons = { success: '✓', error: '!', info: 'ℹ' };
-    toast.innerHTML = `<span style="font-weight:600;">${icons[type] || '•'}</span> <span>${message}</span>`;
+    toast.innerHTML = `<span style="font-weight:700;">${icons[type] || '•'}</span> <span>${message}</span>`;
 
     container.appendChild(toast);
 

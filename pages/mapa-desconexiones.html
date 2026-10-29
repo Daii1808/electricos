@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr" class="dark-mode">
+<html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Mapa de Desconexiones Eléctricas en Línea — Consulta el estado de tu servicio eléctrico, tiempos estimados de reposición y cuadrillas técnicas en terreno." />
-  <meta name="theme-color" content="#171a20" />
+  <meta name="description" content="Mapa de Desconexiones Eléctricas en Línea — Consulta el estado de tu servicio eléctrico, tiempos de llegada de furgonetas y reposición estimada en Puerto Montt y el sur." />
+  <meta name="theme-color" content="#ffffff" />
 
   <title>Mapa de Desconexiones — Grupo Saesa</title>
 
@@ -22,9 +22,9 @@
   <link rel="stylesheet" href="/src/css/map.css" />
 </head>
 
-<body class="dark-mode">
+<body class="map-light-theme">
 
-  <!-- Header Estandarizado Tesla Showroom -->
+  <!-- Header Estandarizado -->
   <header class="tesla-navbar" role="banner">
     <a href="/" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
       <span class="tesla-brand-name">GRUPO SAESA</span>
@@ -78,7 +78,7 @@
   <!-- Viewport Principal del Mapa con Tarjetas Flotantes -->
   <main class="client-map-viewport" role="main">
 
-    <!-- Lienzo Completo del Mapa (Leaflet + CartoDB Dark Matter) -->
+    <!-- Lienzo Completo del Mapa (Leaflet + CartoDB Positron en tonos suaves) -->
     <div id="map" aria-label="Mapa interactivo de desconexiones eléctricas"></div>
 
     <!-- TARJETA FLOTANTE 1: Centro de Consulta y Búsqueda para Clientes -->
@@ -131,12 +131,12 @@
       <div class="search-card-filters">
         <div class="filter-comuna-wrap">
           <select class="client-comuna-select" id="comuna-filter-select" aria-label="Seleccionar ciudad o comuna">
-            <option value="all">Todas las ciudades</option>
-            <option value="Temuco">Temuco</option>
-            <option value="Valdivia">Valdivia</option>
-            <option value="Osorno">Osorno</option>
-            <option value="Puerto Montt">Puerto Montt</option>
+            <option value="Puerto Montt" selected>Puerto Montt</option>
             <option value="Puerto Varas">Puerto Varas</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Temuco">Temuco</option>
+            <option value="all">Todas las ciudades</option>
           </select>
         </div>
 
@@ -148,11 +148,11 @@
       </div>
     </aside>
 
-    <!-- TARJETA FLOTANTE 2: Estado y Detalle de Suministro para el Cliente -->
-    <aside class="client-result-card" id="client-result-card" aria-label="Resultado del estado de suministro" role="region">
+    <!-- TARJETA FLOTANTE 2: Estado y Detalle de Suministro para el Cliente (Oculta por defecto al iniciar) -->
+    <aside class="client-result-card hidden" id="client-result-card" aria-label="Resultado del estado de suministro" role="region">
       <div class="result-card-header">
         <span class="result-status-badge badge--outage" id="result-status-badge">
-          Interrupción en Curso
+          Interrupción no programada
         </span>
         <button class="result-close-btn" id="close-result-card-btn" aria-label="Cerrar ficha">
           &times;
@@ -161,40 +161,61 @@
 
       <div class="result-card-body">
         <div class="result-location-group">
-          <h2 class="result-sector-title" id="result-sector-title">Temuco — Los Notros</h2>
-          <span class="result-filial-tag" id="result-filial-tag">Saesa</span>
+          <h2 class="result-sector-title" id="result-sector-title">Puerto Montt — Sector Mirasol</h2>
+          <span class="result-filial-tag" id="result-filial-tag">Saesa · 285 hogares sin servicio</span>
+        </div>
+
+        <!-- Banner de Furgoneta en Camino / en Terreno -->
+        <div class="result-van-eta-banner" id="result-van-banner">
+          <span class="van-eta-icon">
+            <svg viewBox="0 0 32 20" width="22" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="2" x2="23" y2="2"></line>
+              <path d="M3 14V11c0-1.5 1-2.5 2.5-3l4-2c.8-.4 1.7-.6 2.5-.6H25c1.1 0 2 .9 2 2v6.6"></path>
+              <circle cx="8" cy="14.5" r="2.5"></circle>
+              <circle cx="22" cy="14.5" r="2.5"></circle>
+            </svg>
+          </span>
+          <span id="result-van-status-text">Furgoneta en camino — Llegada estimada en ~8 min al sector</span>
         </div>
 
         <!-- Métrica Clave: Tiempo Estimado de Reposición (ETR) -->
         <div class="result-eta-block" id="result-eta-block">
-          <span class="eta-block-label">Hora Estimada de Reposición</span>
-          <div class="eta-time-value" id="result-eta-time">23:45 hrs</div>
+          <span class="eta-block-label">Hora Estimada de Luz de Vuelta</span>
+          <div class="eta-time-value" id="result-eta-time">23:30 hrs</div>
           <div class="eta-countdown-badge" id="result-eta-countdown">
-            En ~1 hora 05 minutos
+            Luz estimada en ~1 hora 15 minutos (Trabajo estimado: 1 hora 15 min)
           </div>
         </div>
 
         <!-- Causa en Lenguaje Natural -->
         <div class="result-info-box">
-          <span class="info-box-label">Causa del corte:</span>
+          <span class="info-box-label">Causa del problema:</span>
           <p class="info-box-text" id="result-reason-text">
-            Caída de rama sobre tendido de media tensión en sector Los Notros.
+            Falla en seccionador de media tensión por ramas sobre red y ráfagas de viento.
           </p>
         </div>
 
-        <!-- Estado de la Cuadrilla Técnica -->
-        <div class="result-crew-status" id="result-crew-status">
-          <div class="crew-status-indicator">
-            <span class="crew-dot"></span>
-            <span class="crew-status-text" id="result-crew-text">Cuadrilla en traslado al sector</span>
+        <!-- Ficha de Cuadrilla y Furgoneta Asignada (Directamente Visible) -->
+        <div class="result-crew-details-box" id="result-crew-box">
+          <span class="crew-box-title">Cuadrilla y Furgoneta en Terreno</span>
+          <div class="crew-detail-line">
+            <span>Móvil asignado:</span>
+            <strong id="crew-van-model">Peugeot Partner 1.6 HDi (RHKL-18)</strong>
           </div>
-          <span class="crew-clients-count" id="result-affected-clients">234 hogares involucrados</span>
+          <div class="crew-detail-line">
+            <span>Jefe de Cuadrilla:</span>
+            <strong id="crew-lead-name">Rodrigo Alarcón Cárdenas</strong>
+          </div>
+          <div class="crew-detail-line">
+            <span>Personal de apoyo:</span>
+            <strong id="crew-assistant-name">Gonzalo Silva Tapia</strong>
+          </div>
         </div>
 
         <!-- Botón de Confirmación Directa -->
         <div class="result-actions">
           <button class="btn-confirm-report" id="btn-quick-confirm-outage">
-            Sigo sin suministro en esta zona
+            Vivo en este sector y sigo sin luz
           </button>
         </div>
       </div>
@@ -220,18 +241,18 @@
           <input type="text"
                  class="form-input"
                  id="report-client-number"
-                 placeholder="Ej: 1204859-1 (figura en tu boleta)"
+                 placeholder="Ej: 6104820-1 (figura en tu boleta)"
                  required />
         </div>
 
         <div class="form-group">
           <label class="form-label" for="report-comuna">Comuna</label>
           <select class="form-select" id="report-comuna" required>
-            <option value="Temuco">Temuco</option>
-            <option value="Valdivia">Valdivia</option>
-            <option value="Osorno">Osorno</option>
-            <option value="Puerto Montt">Puerto Montt</option>
+            <option value="Puerto Montt" selected>Puerto Montt</option>
             <option value="Puerto Varas">Puerto Varas</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Temuco">Temuco</option>
             <option value="Castro">Castro</option>
             <option value="Coyhaique">Coyhaique</option>
           </select>
@@ -242,7 +263,7 @@
           <input type="text"
                  class="form-input"
                  id="report-address"
-                 placeholder="Ej: Av. Las Encinas 420"
+                 placeholder="Ej: Av. Los Notros 1450, Mirasol"
                  required />
         </div>
 

@@ -53,20 +53,25 @@ const App = (() => {
     try {
       _activeOutages = await API.getAllOutages(_currentFilter);
 
+      if (isFirstLoad) {
+        // En la carga inicial: NO abrir ninguna tarjeta de forma intrusiva
+        MapManager.renderOutages(_activeOutages, null);
+        UIManager.hideResultCard();
+
+        const map = MapManager.getMap();
+        if (map) {
+          map.setView([-41.4693, -72.9424], 12); // Enfoque principal en Puerto Montt
+        }
+        return;
+      }
+
       const currentSelectedId = API.getCurrentOutageId();
       let activeOutage = _activeOutages.find(o => o.id === currentSelectedId);
-      if (!activeOutage && _activeOutages.length > 0) {
-        activeOutage = _activeOutages[0];
-        API.setCurrentOutageId(activeOutage.id);
-      }
 
       // Renderizar mapa
       MapManager.renderOutages(_activeOutages, activeOutage ? activeOutage.id : null);
 
-      if (isFirstLoad && activeOutage) {
-        MapManager.focusOnOutage(activeOutage);
-        UIManager.renderOutageDetails(activeOutage);
-      } else if (activeOutage) {
+      if (activeOutage) {
         UIManager.renderOutageDetails(activeOutage);
       } else {
         UIManager.hideResultCard();
@@ -106,6 +111,16 @@ const App = (() => {
           const loc = await API.getVehicleLocation(currentId);
           outage.brigade.location = loc;
           MapManager.renderBrigadeVehicle(outage.brigade, outage.center);
+
+          // Si la tarjeta está visible, actualizar el tiempo de llegada en vivo
+          const vanStatusText = document.getElementById('result-van-status-text');
+          if (vanStatusText && outage.brigade) {
+            if (outage.brigade.status === 'on_site') {
+              vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
+            } else {
+              vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${outage.brigade.etaMinutes} min al sector`;
+            }
+          }
         }
       } catch (err) {
         console.warn('[App] Telemetría temporalmente pausada:', err);

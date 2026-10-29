@@ -29,14 +29,14 @@ const CONFIG = {
   VEHICLE_POLL_INTERVAL_MS: 12000,
   REFRESH_COOLDOWN_MS: 30000,
 
-  /** Configuración del mapa (CartoDB Positron: limpio, minimalista, técnico) */
+  /** Configuración del mapa (CartoDB Positron: limpio, suave, tonos blancos y grises) */
   MAP: {
-    defaultCenter: [-39.8142, -73.2459], // Los Ríos / Araucanía / Los Lagos
-    defaultZoom: 10,
+    defaultCenter: [-41.4693, -72.9424], // Puerto Montt (Hub principal)
+    defaultZoom: 12,
     minZoom: 6,
     maxZoom: 18,
-    // CartoDB Dark Matter — Estilo minimalista showroom técnico acorde a DESIGN.md
-    tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    // CartoDB Positron — Tonos claros suaves, grises neutros y máxima legibilidad
+    tileUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     // Fallback estándar OSM
     fallbackTileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

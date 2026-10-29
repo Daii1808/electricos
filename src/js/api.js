@@ -11,6 +11,60 @@
 const MOCK_DATA = {
   outages: [
     {
+      id: 'CRT-2026-00955',
+      company: 'saesa',
+      filial: 'Saesa',
+      type: 'no_programada',
+      typeName: 'Emergencia / No programada',
+      status: 'active',
+      comuna: 'Puerto Montt',
+      sector: 'Sector Mirasol — Av. Los Notros con Vicuña Mackenna',
+      reason: 'Falla en seccionador de media tensión por ramas sobre red y ráfagas de viento',
+      reasonCode: 'WEATHER_EQUIPMENT',
+      reportedAt: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+      estimatedRestoration: new Date(Date.now() + 75 * 60 * 1000).toISOString(),
+      estimatedRepairDuration: '1 hora 15 minutos',
+      affectedUsers: 285,
+      priority: 'high',
+      associatedClients: ['6104820-1', '6104820', '6104821', '6104822', '6104823'],
+      center: { lat: -41.4740, lng: -72.9650 },
+      polygon: {
+        type: 'Polygon',
+        coordinates: [[
+          [-72.9730, -41.4680],
+          [-72.9560, -41.4690],
+          [-72.9540, -41.4790],
+          [-72.9680, -41.4820],
+          [-72.9750, -41.4750],
+          [-72.9730, -41.4680],
+        ]],
+      },
+      brigade: {
+        id: 'BRG-022',
+        leadName: 'Rodrigo Alarcón Cárdenas',
+        assistantName: 'Gonzalo Silva Tapia',
+        employeeId: 'EMP-16204',
+        status: 'en_route',
+        statusText: 'Furgoneta en traslado — Llegada en ~8 min (1.2 km)',
+        etaMinutes: 8,
+        estimatedRepairMinutes: 75,
+        vehicle: {
+          plate: 'RHKL-18',
+          type: 'Furgoneta Técnica de Respuesta Rápida',
+          model: 'Peugeot Partner 1.6 HDi (Móvil F-22)',
+          color: 'Blanco Saesa',
+          year: 2024,
+        },
+        location: {
+          lat: -41.4630,
+          lng: -72.9520,
+          speedKmh: 42,
+          heading: 215,
+        },
+      },
+    },
+
+    {
       id: 'CRT-2026-00847',
       company: 'saesa',
       filial: 'Saesa',
@@ -23,6 +77,7 @@ const MOCK_DATA = {
       reasonCode: 'VEGETATION',
       reportedAt: new Date(Date.now() - 48 * 60 * 1000).toISOString(),
       estimatedRestoration: new Date(Date.now() + 65 * 60 * 1000).toISOString(),
+      estimatedRepairDuration: '1 hora 05 minutos',
       affectedUsers: 234,
       priority: 'high',
       associatedClients: ['1204859-1', '1204859', '1204860', '1204861'],
@@ -42,13 +97,16 @@ const MOCK_DATA = {
       brigade: {
         id: 'BRG-045',
         leadName: 'Carlos Andrés Fuentes Molina',
+        assistantName: 'Miguel Sepúlveda P.',
         employeeId: 'EMP-12483',
         status: 'en_route',
-        statusText: 'En ruta al punto de falla',
-        etaMinutes: 14,
+        statusText: 'Furgoneta en traslado — Llegada en ~12 min',
+        etaMinutes: 12,
+        estimatedRepairMinutes: 65,
         vehicle: {
           plate: 'RXLB-51',
-          model: 'Toyota Hilux 4WD',
+          type: 'Furgoneta Técnica',
+          model: 'Renault Kangoo Maxi (Móvil F-14)',
           color: 'Blanco',
           year: 2023,
         },
@@ -312,11 +370,23 @@ const API = {
     const outage = await this.getOutageDetails(outageId);
     const brigade = outage.brigade;
 
-    // Si la brigada está en ruta, simular pequeño desplazamiento GPS
-    if (brigade.status === 'en_route') {
-      const step = 0.0003;
-      brigade.location.lat += (Math.random() - 0.45) * step;
-      brigade.location.lng += (Math.random() - 0.48) * step;
+    // Si la brigada está en ruta, simular avance real hacia el punto de falla
+    if (brigade.status === 'en_route' && outage.center) {
+      const dLat = outage.center.lat - brigade.location.lat;
+      const dLng = outage.center.lng - brigade.location.lng;
+      const dist = Math.sqrt(dLat * dLat + dLng * dLng);
+      if (dist > 0.001) {
+        brigade.location.lat += (dLat / dist) * 0.00035;
+        brigade.location.lng += (dLng / dist) * 0.00035;
+        const kmRemaining = Math.max(0.2, dist * 111);
+        const etaMinutes = Math.max(1, Math.round((kmRemaining / 35) * 60));
+        brigade.etaMinutes = etaMinutes;
+        brigade.statusText = `Furgoneta en traslado — Llegada en ~${etaMinutes} min (${kmRemaining.toFixed(1)} km)`;
+      } else {
+        brigade.status = 'on_site';
+        brigade.etaMinutes = 0;
+        brigade.statusText = 'Furgoneta en el lugar — Personal trabajando en terreno';
+      }
     }
 
     return {

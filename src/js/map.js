@@ -190,9 +190,9 @@ if (selectComuna) {
         const isEmergency = outage.type === 'no_programada';
 
         const polygon = L.polygon(latLngs, {
-          color: isSelected ? (isEmergency ? '#DC2626' : '#3e6ae1') : '#5c5e62',
-          fillColor: isEmergency ? '#DC2626' : '#3e6ae1',
-          fillOpacity: isSelected ? 0.22 : 0.08,
+          color: isSelected ? (isEmergency ? '#dc2626' : '#2563eb') : '#64748b',
+          fillColor: isEmergency ? '#ef4444' : '#3b82f6',
+          fillOpacity: isSelected ? 0.26 : 0.12,
           weight: isSelected ? 2.5 : 1.5,
           dashArray: isSelected ? '6 4' : '4 4',
           lineCap: 'round',
@@ -256,7 +256,7 @@ if (selectComuna) {
       animateMarker(_vehicleMarker, [lat, lng]);
     } else {
       _vehicleMarker = L.marker([lat, lng], {
-        icon: createTruckIcon(brigade.vehicle?.plate),
+        icon: createVanIcon(brigade.vehicle?.plate),
         zIndexOffset: 1000,
       }).addTo(_map);
 
