@@ -1,40 +1,49 @@
 /**
  * ═══════════════════════════════════════════════════════
- *  map.css — Estilos técnicos del mapa interactivo
- *  Inspirado en tokens de DESIGN.md (Tesla Automotive Showroom)
+ *  map.css — Estilos del Mapa de Desconexiones para Clientes
+ *  Diseño minimalista, espacioso y moderno (Tesla Showroom / DESIGN.md)
+ *  Enfocado 100% en la experiencia y claridad del cliente final.
  * ═══════════════════════════════════════════════════════
  */
 
-/* ─── Contenedor y Map Tile Layer ─────────────────────────────────────────── */
+/* ─── Viewport del Mapa Completo ─────────────────────────────────────────── */
+.client-map-viewport {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 56px);
+  margin-top: 56px;
+  overflow: hidden;
+  background-color: #0d0f12;
+}
+
 #map {
   width: 100%;
   height: 100%;
-  background-color: #f2f4f7;
-}
-
-.dark-mode #map {
   background-color: #12151a;
+  z-index: 1;
 }
 
-/* ─── Controles de Zoom Minimalistas ──────────────────────────────────────── */
+/* ─── Controles de Zoom Minimalistas (Leaflet) ────────────────────────────── */
 .leaflet-control-zoom {
-  border: 1px solid var(--border-color) !important;
-  box-shadow: var(--shadow-sm) !important;
-  border-radius: var(--radius-buttons) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 6px !important;
   overflow: hidden;
-  margin-bottom: var(--spacing-24) !important;
-  margin-right: var(--spacing-24) !important;
+  margin-bottom: 24px !important;
+  margin-right: 24px !important;
 }
 
 .leaflet-control-zoom a {
-  width: 32px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-  background: var(--bg-base) !important;
-  color: var(--text-primary) !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  font-size: 15px !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  background: rgba(23, 26, 32, 0.92) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  font-size: 16px !important;
   font-weight: 500 !important;
+  backdrop-filter: blur(12px);
+  transition: background 150ms ease;
 }
 
 .leaflet-control-zoom a:last-child {
@@ -42,25 +51,489 @@
 }
 
 .leaflet-control-zoom a:hover {
-  background: var(--bg-surface) !important;
+  background: rgba(35, 40, 50, 0.95) !important;
 }
 
-/* Atribución técnica */
 .leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.8) !important;
-  color: var(--color-steel) !important;
+  background: rgba(13, 15, 18, 0.75) !important;
+  color: #8e929a !important;
   font-size: 10px !important;
-  border-radius: 2px !important;
-  margin-left: var(--spacing-16) !important;
-  margin-bottom: var(--spacing-8) !important;
+  border-radius: 4px !important;
+  margin-left: 16px !important;
+  margin-bottom: 12px !important;
+  backdrop-filter: blur(8px);
 }
 
-.dark-mode .leaflet-control-attribution {
-  background: rgba(23, 26, 32, 0.8) !important;
-  color: var(--color-subtle-gray) !important;
+.leaflet-control-attribution a {
+  color: #8e929a !important;
+  text-decoration: none;
 }
 
-/* ─── Marcador de Corte en el Mapa ────────────────────────────────────────── */
+/* ─── TARJETA FLOTANTE 1: Centro de Consulta y Búsqueda (Cliente) ────────── */
+.client-search-card {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 1000;
+  width: 420px;
+  max-width: calc(100vw - 48px);
+  background: rgba(23, 26, 32, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 200ms ease;
+}
+
+.search-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.live-status-chip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #4ade80;
+  letter-spacing: 0.3px;
+}
+
+.live-dot-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.search-card-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+.search-card-subtitle {
+  font-size: 13px;
+  color: #8e929a;
+  line-height: 1.45;
+}
+
+/* Formulario de búsqueda */
+.search-form-group {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.search-input-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 0 12px;
+  gap: 10px;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.search-input-box:focus-within {
+  border-color: var(--color-tesla-blue);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.search-input-box svg {
+  color: #8e929a;
+  flex-shrink: 0;
+}
+
+.search-input-box input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  font-size: 13px;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.search-input-box input::placeholder {
+  color: #6a6e76;
+}
+
+.btn-search-primary {
+  background: var(--color-tesla-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+  white-space: nowrap;
+}
+
+.btn-search-primary:hover {
+  background: #3458bc;
+  transform: translateY(-1px);
+}
+
+/* Acciones directas para el cliente */
+.quick-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quick-action-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.quick-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.quick-action-btn.btn-report-warning {
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.25);
+  color: #f87171;
+}
+
+.quick-action-btn.btn-report-warning:hover {
+  background: rgba(220, 38, 38, 0.16);
+  border-color: rgba(220, 38, 38, 0.45);
+}
+
+/* Filtros por ciudad y tipo */
+.search-card-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.filter-comuna-wrap {
+  width: 100%;
+}
+
+.client-comuna-select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #d0d3d8;
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+}
+
+.client-comuna-select:focus {
+  border-color: var(--color-tesla-blue);
+}
+
+.client-comuna-select option {
+  background: #171a20;
+  color: #ffffff;
+}
+
+.filter-pills-wrap {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.client-pill-btn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #8e929a;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: center;
+}
+
+.client-pill-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.client-pill-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ─── TARJETA FLOTANTE 2: Estado y Detalle de Suministro (Cliente) ────────── */
+.client-result-card {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 380px;
+  max-width: calc(100vw - 48px);
+  background: rgba(23, 26, 32, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+}
+
+.client-result-card.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-16px);
+}
+
+.result-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.result-status-badge.badge--outage {
+  background: rgba(220, 38, 38, 0.14);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #f87171;
+}
+
+.result-status-badge.badge--scheduled {
+  background: rgba(62, 106, 225, 0.12);
+  border: 1px solid rgba(62, 106, 225, 0.3);
+  color: #60a5fa;
+}
+
+.result-status-badge.badge--normal {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.result-close-btn {
+  background: transparent;
+  border: none;
+  color: #8e929a;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: color 150ms ease;
+}
+
+.result-close-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.result-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.result-location-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-sector-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.result-filial-tag {
+  font-size: 12px;
+  color: #8e929a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Bloque destacado ETR (Hora estimada) */
+.result-eta-block {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eta-block-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #8e929a;
+  font-weight: 500;
+}
+
+.eta-time-value {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin: 2px 0;
+}
+
+.eta-countdown-badge {
+  font-size: 12px;
+  color: var(--color-tesla-blue);
+  font-weight: 500;
+}
+
+/* Caja de causa clara */
+.result-info-box {
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 2.5px solid var(--color-tesla-blue);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-box-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8e929a;
+}
+
+.info-box-text {
+  font-size: 13px;
+  color: #d0d3d8;
+  line-height: 1.45;
+}
+
+/* Estado de cuadrilla */
+.result-crew-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+}
+
+.crew-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.crew-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.crew-clients-count {
+  color: #8e929a;
+  font-size: 11px;
+}
+
+/* Botón de confirmación o reporte rápido */
+.result-actions {
+  margin-top: 4px;
+}
+
+.btn-confirm-report {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d0d3d8;
+  cursor: pointer;
+  transition: all 150ms ease;
+  text-align: center;
+}
+
+.btn-confirm-report:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* ─── Íconos y Marcadores en el Mapa ──────────────────────────────────────── */
 .custom-outage-div-icon {
   background: transparent;
   border: none;
@@ -88,7 +561,8 @@
 
 @keyframes pulse-ring {
   0%   { transform: scale(0.6); opacity: 0.8; }
-  100% { transform: scale(1.6); opacity: 0;   }
+  50%  { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(1.8); opacity: 0; }
 }
 
 .map-marker-pin {
@@ -99,15 +573,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
 .marker-symbol {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ─── Marcador de Móvil de Brigada ────────────────────────────────────────── */
+/* Vehículo cuadrilla */
 .custom-truck-div-icon {
   background: transparent;
   border: none;
@@ -128,39 +604,42 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: rgba(62, 106, 225, 0.3);
-  animation: pulse-ring 1.8s infinite;
+  background: rgba(62, 106, 225, 0.25);
+  animation: truck-pulse 2s infinite;
+}
+
+@keyframes truck-pulse {
+  0%   { transform: scale(0.7); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
 }
 
 .map-truck-body {
   position: relative;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-buttons);
-  background: var(--color-onyx);
+  width: 32px;
+  height: 32px;
+  background: #171a20;
   border: 2px solid var(--color-tesla-blue);
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
 .truck-plate-label {
   position: absolute;
-  bottom: -14px;
-  background: var(--color-onyx);
-  color: var(--color-pure-white);
-  font-family: var(--font-mono);
+  bottom: -15px;
+  background: #171a20;
+  color: #ffffff;
   font-size: 9px;
   padding: 1px 4px;
   border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   white-space: nowrap;
-  letter-spacing: 0.5px;
 }
 
-/* ─── Marcador de "Mi Ubicación" (Tesla Blue Pulse) ───────────────────────── */
+/* Marcador GPS de usuario */
 .custom-user-div-icon {
   background: transparent;
   border: none;
@@ -195,17 +674,17 @@
   height: 14px;
   border-radius: 50%;
   background: var(--color-tesla-blue);
-  border: 2.5px solid var(--color-pure-white);
+  border: 2.5px solid #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   z-index: 2;
 }
 
-/* ─── Popup Estilo Plaque Tesla ───────────────────────────────────────────── */
+/* ─── Popups de Leaflet con estilo Tesla Glass ────────────────────────────── */
 .tesla-map-popup .leaflet-popup-content-wrapper {
-  background: var(--bg-base);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-cards);
-  box-shadow: var(--shadow-plaque);
+  background: #171a20;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   padding: 0;
   overflow: hidden;
 }
@@ -213,76 +692,289 @@
 .tesla-map-popup .leaflet-popup-content {
   margin: 0;
   line-height: 1.4;
-  font-family: var(--font-universal-sans-text);
+  font-family: 'Inter', -apple-system, sans-serif;
 }
 
 .tesla-map-popup .leaflet-popup-tip {
-  background: var(--bg-base);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  background: #171a20;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .map-popup-plaque {
-  padding: var(--spacing-16);
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .popup-tag {
   align-self: flex-start;
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   padding: 2px 6px;
-  border-radius: var(--radius-buttons);
+  border-radius: 3px;
 }
 
 .popup-tag.tag-emergency {
-  background: var(--color-danger-bg);
-  color: var(--color-danger);
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
 }
 
 .popup-tag.tag-scheduled {
-  background: rgba(62, 106, 225, 0.1);
-  color: var(--color-tesla-blue);
-}
-
-.popup-tag.tag-brigade {
-  background: var(--bg-surface);
-  color: var(--color-onyx);
-}
-
-.popup-tag.tag-user {
   background: rgba(62, 106, 225, 0.15);
-  color: var(--color-tesla-blue);
-}
-
-.popup-id {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
+  color: #60a5fa;
 }
 
 .popup-title {
   font-weight: 600;
   font-size: 14px;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .popup-meta {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: #d0d3d8;
+}
+
+.popup-reason {
+  font-size: 12px;
+  color: #8e929a;
+  line-height: 1.35;
 }
 
 .popup-cta-btn {
-  margin-top: 6px;
+  margin-top: 4px;
   background: var(--color-tesla-blue);
-  color: var(--color-pure-white);
+  color: #ffffff;
   border: none;
-  border-radius: var(--radius-buttons);
-  padding: 6px 12px;
+  border-radius: 4px;
+  padding: 7px 12px;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   text-align: center;
+  transition: background 150ms ease;
+}
+
+.popup-cta-btn:hover {
+  background: #3458bc;
+}
+
+/* ─── Modal de Aviso ("Estoy sin luz") ────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: #171a20;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 480px;
+  max-width: 100%;
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #8e929a;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 150ms ease;
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-form-description {
+  font-size: 13px;
+  color: #8e929a;
+  line-height: 1.45;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #d0d3d8;
+}
+
+.form-input, .form-select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #ffffff;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 150ms ease;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: var(--color-tesla-blue);
+}
+
+.form-select option {
+  background: #171a20;
+  color: #ffffff;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-secondary-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #d0d3d8;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-secondary-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.btn-primary-cta {
+  background: var(--color-tesla-blue);
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-primary-cta:hover {
+  background: #3458bc;
+}
+
+/* ─── Contenedor de Toasts ───────────────────────────────────────────────── */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3000;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(23, 26, 32, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.toast--success {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.toast--error {
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+.toast--info {
+  border-color: rgba(62, 106, 225, 0.35);
+}
+
+/* ─── Media Queries Responsivas ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .client-search-card {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .client-result-card {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .leaflet-control-zoom {
+    display: none !important;
+  }
 }

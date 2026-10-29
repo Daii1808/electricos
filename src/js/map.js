@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ─────────────────────────────────────────────────────
  *  map.js — Módulo del mapa interactivo (Leaflet.js)
  *  Inspirado en la estética técnica y minimalista de DESIGN.md (Tesla Showroom)
@@ -137,10 +137,10 @@ if (selectComuna) {
         // Si selecciona una comuna válida, mover el mapa de forma fluida
         if (coordenadasComunas[comunaSeleccionada]) {
             const [lat, lng, zoom] = coordenadasComunas[comunaSeleccionada];
-            _map.setView([lat, lng], zoom); // Mueve el mapa directamente a la ciudad
+            _map.flyTo([lat, lng], zoom, { duration: 1.2 });
         } else if (comunaSeleccionada === "all") {
             // Opcional: Vista general si selecciona "Todas las comunas"
-            _map.setView([-41.4693, -72.9424], 9);
+            _map.flyTo([-39.8142, -73.2459], 9, { duration: 1.2 });
         }
     });
 }

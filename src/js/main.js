@@ -1,7 +1,8 @@
 /**
  * ─────────────────────────────────────────────────────
- *  main.js — Orquestador de la aplicación
- *  Conecta el mapa, la API, los filtros, búsqueda y geolocalización
+ *  main.js — Orquestador de la aplicación para Clientes
+ *  Conecta el mapa, la API, los filtros, búsqueda por cliente/comuna
+ *  y reporte rápido de interrupciones ("Estoy sin luz").
  * ─────────────────────────────────────────────────────
  */
 
@@ -25,10 +26,8 @@ const App = (() => {
   let _vehicleTimer = null;
 
   async function init() {
-    // 1. Inicializar tema y branding
+    // 1. Inicializar tema
     if (typeof ThemeManager !== 'undefined') ThemeManager.init();
-    UIManager.applyCompanyBranding(CONFIG.DEFAULT_COMPANY);
-    UIManager.updateKPIs(CONFIG.NETWORK_STATS);
 
     // 2. Inicializar mapa con callback de selección
     MapManager.init((outageId) => {
@@ -41,10 +40,10 @@ const App = (() => {
     // 3. Cargar datos iniciales
     await reloadOutages(true);
 
-    // 4. Iniciar telemetría de vehículo
+    // 4. Iniciar telemetría suave del móvil
     startVehicleTelemetry();
 
-    // 5. Registrar eventos de UI
+    // 5. Registrar eventos de UI para clientes
     registerEventListeners();
   }
 
@@ -55,7 +54,6 @@ const App = (() => {
       _activeOutages = await API.getAllOutages(_currentFilter);
 
       const currentSelectedId = API.getCurrentOutageId();
-      // Si el corte seleccionado ya no está en el filtro, tomar el primero disponible
       let activeOutage = _activeOutages.find(o => o.id === currentSelectedId);
       if (!activeOutage && _activeOutages.length > 0) {
         activeOutage = _activeOutages[0];
@@ -67,16 +65,12 @@ const App = (() => {
 
       if (isFirstLoad && activeOutage) {
         MapManager.focusOnOutage(activeOutage);
-      }
-
-      // Renderizar ficha de corte y listado
-      if (activeOutage) {
         UIManager.renderOutageDetails(activeOutage);
+      } else if (activeOutage) {
+        UIManager.renderOutageDetails(activeOutage);
+      } else {
+        UIManager.hideResultCard();
       }
-
-      UIManager.renderOutagesList(_activeOutages, activeOutage ? activeOutage.id : null, (id) => {
-        selectOutage(id);
-      });
 
     } catch (err) {
       console.error('[App] Error cargando cortes:', err);
@@ -91,21 +85,15 @@ const App = (() => {
     const outage = await API.getOutageDetails(outageId);
     if (!outage) return;
 
-    // Actualizar inspector
+    // Actualizar ficha de resultado para el cliente
     UIManager.renderOutageDetails(outage);
 
-    // Actualizar capas en el mapa y enfocar
+    // Actualizar capas en el mapa y enfocar suavemente
     MapManager.renderOutages(_activeOutages, outage.id);
     MapManager.focusOnOutage(outage);
-
-    // Actualizar selección en listado
-    UIManager.renderOutagesList(_activeOutages, outage.id, (id) => selectOutage(id));
-
-    // Si estaba en pestaña de listado en mobile, cambiar a detalles
-    switchTab('tab-details');
   }
 
-  // ─── Telemetría periódica del móvil ───────────────────────────────────────
+  // ─── Telemetría periódica del móvil en terreno ─────────────────────────────
 
   function startVehicleTelemetry() {
     if (_vehicleTimer) clearInterval(_vehicleTimer);
@@ -129,28 +117,17 @@ const App = (() => {
 
   function registerEventListeners() {
 
-    // 1. Selector de Empresa / Filial
-    document.querySelectorAll('.company-btn').forEach(btn => {
+    // 1. Filtros Rápidos de Tipo (Todos / Emergencias / Programados)
+    document.querySelectorAll('.client-pill-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
-        const companyId = btn.dataset.company;
-        _currentFilter.company = companyId;
-        UIManager.applyCompanyBranding(companyId);
-        await reloadOutages();
-        UIManager.showToast(`Visualizando red de ${CONFIG.COMPANIES[companyId]?.name}`, 'info');
-      });
-    });
-
-    // 2. Filtros de Tipo (Todas / Emergencia / Programadas)
-    document.querySelectorAll('.filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.client-pill-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         _currentFilter.type = btn.dataset.filterType;
         await reloadOutages();
       });
     });
 
-    // 3. Filtro por Comuna
+    // 2. Filtro por Ciudad / Comuna
     const comunaSelect = document.getElementById('comuna-filter-select');
     if (comunaSelect) {
       comunaSelect.addEventListener('change', async (e) => {
@@ -159,14 +136,14 @@ const App = (() => {
       });
     }
 
-    // 4. Búsqueda por N° de Cliente o Comuna
+    // 3. Búsqueda por N° de Cliente o Comuna
     const searchBtn = document.getElementById('search-service-btn');
     const searchInput = document.getElementById('search-service-input');
 
     async function executeSearch() {
       const query = (searchInput?.value || '').trim();
       if (!query) {
-        UIManager.showToast('Ingresa un N° de cliente o comuna para consultar', 'info');
+        UIManager.showToast('Ingresa tu N° de cliente o comuna para consultar', 'info');
         return;
       }
 
@@ -175,10 +152,11 @@ const App = (() => {
         const targetOutage = result.outage || result.primary;
         if (targetOutage) {
           await selectOutage(targetOutage.id);
-          UIManager.showToast(`Corte detectado en ${targetOutage.comuna} (#${targetOutage.id})`, 'info');
+          UIManager.showToast(`Corte detectado en ${targetOutage.comuna} (${targetOutage.sector})`, 'error');
         }
       } else {
-        UIManager.showToast(`No se registran cortes asociados a "${query}". Servicio operando normal.`, 'success');
+        UIManager.renderNormalService(query);
+        UIManager.showToast(`Servicio operando con normalidad para "${query}".`, 'success');
       }
     }
 
@@ -189,7 +167,7 @@ const App = (() => {
       });
     }
 
-    // 5. Geolocalización "Mi Ubicación"
+    // 4. Botón "Mi Ubicación" (Geolocalización GPS)
     const locateBtn = document.getElementById('locate-user-btn');
     if (locateBtn) {
       locateBtn.addEventListener('click', async () => {
@@ -198,24 +176,37 @@ const App = (() => {
 
         if (assessment.success) {
           if (assessment.inAffectedZone) {
-            UIManager.showToast(`Tu ubicación está dentro del área de corte #${assessment.outage.id}`, 'error');
+            UIManager.showToast(`Tu ubicación está en el área de corte de ${assessment.outage.comuna}`, 'error');
             await selectOutage(assessment.outage.id);
           } else {
-            UIManager.showToast('Tu ubicación se encuentra fuera de sectores con corte activo.', 'success');
+            UIManager.renderNormalService('tu ubicación GPS');
+            UIManager.showToast('Tu sector se encuentra con suministro eléctrico normal.', 'success');
           }
         }
       });
     }
 
-    // 6. Tabs de Panel Lateral
-    document.querySelectorAll('.panel-tab-btn').forEach(tabBtn => {
-      tabBtn.addEventListener('click', () => {
-        const targetId = tabBtn.dataset.tabTarget;
-        switchTab(targetId);
+    // 5. Cerrar Ficha de Resultado
+    const closeResultBtn = document.getElementById('close-result-card-btn');
+    if (closeResultBtn) {
+      closeResultBtn.addEventListener('click', () => {
+        UIManager.hideResultCard();
       });
-    });
+    }
 
-    // 7. Modal de Reportar Corte ("Estoy sin Luz")
+    // 6. Botón de Confirmación Rápida ("Sigo sin luz")
+    const confirmReportBtn = document.getElementById('btn-quick-confirm-outage');
+    if (confirmReportBtn) {
+      confirmReportBtn.addEventListener('click', () => {
+        const modalComuna = document.getElementById('report-comuna');
+        if (modalComuna && confirmReportBtn.dataset.comuna) {
+          modalComuna.value = confirmReportBtn.dataset.comuna;
+        }
+        openModal();
+      });
+    }
+
+    // 7. Modal de Reporte ("Estoy sin Luz")
     const openReportBtn = document.getElementById('open-report-modal-btn');
     const modalOverlay = document.getElementById('report-modal');
     const closeReportBtn = document.getElementById('close-report-modal-btn');
@@ -239,7 +230,7 @@ const App = (() => {
       });
     }
 
-    // Envío del reporte
+    // Envío del reporte ciudadano
     if (reportForm) {
       reportForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -249,7 +240,7 @@ const App = (() => {
         const address = document.getElementById('report-address')?.value;
         const reason = document.getElementById('report-reason')?.value;
 
-        UIManager.showToast('Ingresando reporte a despacho de emergencias...', 'info');
+        UIManager.showToast('Registrando reporte en el centro de despacho...', 'info');
 
         const newOutage = await API.reportOutage({
           clientNumber,
@@ -264,36 +255,9 @@ const App = (() => {
         await reloadOutages();
         await selectOutage(newOutage.id);
 
-        UIManager.showToast(`Reporte creado exitosamente. Ticket #${newOutage.id}`, 'success');
+        UIManager.showToast(`Aviso ingresado con éxito. Cuadrilla alertada.`, 'success');
       });
     }
-
-    // 8. Toggle de Tema
-    const themeBtn = document.getElementById('theme-toggle-btn');
-    if (themeBtn && typeof ThemeManager !== 'undefined') {
-      themeBtn.addEventListener('click', () => {
-        ThemeManager.toggle();
-      });
-    }
-
-    // 9. Botón Refrescar
-    const refreshBtn = document.getElementById('refresh-state-btn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', async () => {
-        UIManager.showToast('Sincronizando estado con centro de despacho...', 'info');
-        await reloadOutages();
-        UIManager.showToast('Datos de red eléctrica actualizados.', 'success');
-      });
-    }
-  }
-
-  function switchTab(tabId) {
-    document.querySelectorAll('.panel-tab-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tabTarget === tabId);
-    });
-    document.querySelectorAll('.panel-content-tab').forEach(tab => {
-      tab.classList.toggle('active', tab.id === tabId);
-    });
   }
 
   return {
@@ -311,4 +275,3 @@ if (typeof window !== 'undefined') {
 }
 
 export { App };
-
