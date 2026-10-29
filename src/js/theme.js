@@ -40,18 +40,11 @@ const ThemeManager = (() => {
     }
   }
 
-  /** Inicializa el tema según prioridad: guardado > sistema */
+  /** Inicializa el tema: por defecto modo claro luminoso y descansado */
   function init() {
     const saved = getSavedTheme();
-    const isDark = saved !== null ? saved === 'dark' : systemPrefersDark();
+    const isDark = saved === 'dark';
     applyTheme(isDark);
-
-    // Escuchar cambios del sistema en tiempo real
-    window.matchMedia('(prefers-color-scheme: dark)')
-      .addEventListener('change', e => {
-        // Solo aplicar cambio automático si el usuario nunca eligió manualmente
-        if (getSavedTheme() === null) applyTheme(e.matches);
-      });
   }
 
   /** Toggle manual — guarda la preferencia del usuario */
