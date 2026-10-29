@@ -60,7 +60,7 @@ const App = (() => {
 
         const map = MapManager.getMap();
         if (map) {
-          map.setView([-41.4693, -72.9424], 12); // Enfoque principal en Puerto Montt
+          map.setView([-41.4720, -72.9350], 13); // Enfoque principal en Puerto Montt
         }
         return;
       }
@@ -105,27 +105,39 @@ const App = (() => {
 
     _vehicleTimer = setInterval(async () => {
       try {
-        const currentId = API.getCurrentOutageId();
-        const outage = await API.getOutageDetails(currentId);
-        if (outage && outage.brigade) {
-          const loc = await API.getVehicleLocation(currentId);
-          outage.brigade.location = loc;
-          MapManager.renderBrigadeVehicle(outage.brigade, outage.center);
+        // 1. Actualizar el desplazamiento de todas las furgonetas en ruta
+        for (const outage of _activeOutages) {
+          if (outage.brigade && outage.brigade.status === 'en_route') {
+            const loc = await API.getVehicleLocation(outage.id);
+            if (loc) {
+              outage.brigade.location = loc;
+              MapManager.renderBrigadeVehicle(outage.brigade, outage.center, outage.id);
+            }
+          }
+        }
 
-          // Si la tarjeta está visible, actualizar el tiempo de llegada en vivo
-          const vanStatusText = document.getElementById('result-van-status-text');
-          if (vanStatusText && outage.brigade) {
-            if (outage.brigade.status === 'on_site') {
-              vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
-            } else {
-              vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${outage.brigade.etaMinutes} min al sector`;
+        // 2. Si hay una tarjeta abierta, actualizar dinámicamente sus contadores
+        const currentId = API.getCurrentOutageId();
+        if (currentId) {
+          const selectedOutage = _activeOutages.find(o => o.id === currentId);
+          if (selectedOutage && selectedOutage.brigade) {
+            const vanStatusText = document.getElementById('result-van-status-text');
+            const vanBanner = document.getElementById('result-van-banner');
+            if (vanStatusText) {
+              if (selectedOutage.brigade.status === 'on_site') {
+                vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
+                if (vanBanner) vanBanner.className = 'result-van-eta-banner van-on-site';
+              } else {
+                vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${selectedOutage.brigade.etaMinutes} min al sector`;
+                if (vanBanner) vanBanner.className = 'result-van-eta-banner';
+              }
             }
           }
         }
       } catch (err) {
         console.warn('[App] Telemetría temporalmente pausada:', err);
       }
-    }, CONFIG.VEHICLE_POLL_INTERVAL_MS);
+    }, CONFIG.VEHICLE_POLL_INTERVAL_MS || 10000);
   }
 
   // ─── Eventos de Interfaz ───────────────────────────────────────────────────

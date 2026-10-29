@@ -65,6 +65,60 @@ const MOCK_DATA = {
     },
 
     {
+      id: 'CRT-2026-00962',
+      company: 'saesa',
+      filial: 'Saesa',
+      type: 'no_programada',
+      typeName: 'Emergencia / No programada',
+      status: 'active',
+      comuna: 'Puerto Montt',
+      sector: 'Sector Pelluco — Av. Juan Soler Manfredini con Libanesa',
+      reason: 'Reemplazo de aislador y conductor cortado por viento costero',
+      reasonCode: 'WEATHER_EQUIPMENT',
+      reportedAt: new Date(Date.now() - 55 * 60 * 1000).toISOString(),
+      estimatedRestoration: new Date(Date.now() + 45 * 60 * 1000).toISOString(),
+      estimatedRepairDuration: '45 minutos',
+      affectedUsers: 184,
+      priority: 'high',
+      associatedClients: ['6209110-3', '6209110', '6209111', '6209112'],
+      center: { lat: -41.4880, lng: -72.9050 },
+      polygon: {
+        type: 'Polygon',
+        coordinates: [[
+          [-72.9150, -41.4830],
+          [-72.8980, -41.4820],
+          [-72.8950, -41.4930],
+          [-72.9100, -41.4940],
+          [-72.9180, -41.4890],
+          [-72.9150, -41.4830],
+        ]],
+      },
+      brigade: {
+        id: 'BRG-019',
+        leadName: 'Juan Carlos Bahamonde Soto',
+        assistantName: 'Claudio Mansilla R.',
+        employeeId: 'EMP-15408',
+        status: 'on_site',
+        statusText: 'Personal técnico en el lugar reparando línea y aislador',
+        etaMinutes: 0,
+        estimatedRepairMinutes: 45,
+        vehicle: {
+          plate: 'SPKL-33',
+          type: 'Furgoneta Técnica de Faena',
+          model: 'Peugeot Partner 1.6 HDi (Móvil F-19)',
+          color: 'Blanco Saesa',
+          year: 2024,
+        },
+        location: {
+          lat: -41.4882,
+          lng: -72.9048,
+          speedKmh: 0,
+          heading: 90,
+        },
+      },
+    },
+
+    {
       id: 'CRT-2026-00847',
       company: 'saesa',
       filial: 'Saesa',
@@ -322,7 +376,7 @@ const MOCK_DATA = {
 };
 
 // Variable interna para corte actualmente seleccionado
-let _currentOutageId = 'CRT-2026-00847';
+let _currentOutageId = 'CRT-2026-00955';
 
 const API = {
   /**

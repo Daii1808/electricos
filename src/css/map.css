@@ -650,6 +650,11 @@ body.map-light-theme .nav-btn-ghost:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: transform 180ms ease;
+}
+
+.map-van-marker.marker-selected {
+  transform: scale(1.18);
 }
 
 .map-van-pulse {
@@ -691,6 +696,71 @@ body.map-light-theme .nav-btn-ghost:hover {
   padding: 2px 6px;
   border-radius: 4px;
   border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+  white-space: nowrap;
+}
+
+/* ─── Marcador de Brigadista en Faena / Trabajando en la Zona ─────────────── */
+.custom-technician-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.map-technician-marker {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 180ms ease;
+}
+
+.map-technician-marker.marker-selected {
+  transform: scale(1.18);
+}
+
+.technician-pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.25);
+  border: 1.5px solid rgba(217, 119, 6, 0.6);
+  animation: technician-pulse 2.2s infinite ease-out;
+}
+
+@keyframes technician-pulse {
+  0%   { transform: scale(0.75); opacity: 0.9; }
+  60%  { transform: scale(1.55); opacity: 0.2; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
+.technician-badge {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  border: 2px solid #d97706;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.28);
+  z-index: 2;
+}
+
+.technician-status-label {
+  position: absolute;
+  bottom: -18px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #fde68a;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
   white-space: nowrap;
 }
@@ -780,6 +850,22 @@ body.map-light-theme .nav-btn-ghost:hover {
 .popup-tag.tag-scheduled {
   background: #eff6ff;
   color: #1d4ed8;
+}
+
+.popup-tag.tag-brigade {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.popup-tag.tag-onsite {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.popup-submeta {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
 }
 
 .popup-title {
