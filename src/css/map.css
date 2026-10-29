@@ -55,6 +55,11 @@ body.map-light-theme .nav-btn-ghost:hover {
   z-index: 1;
 }
 
+/* Filtro visual para suavizar los mosaicos del mapa a tonos neutros claros y grises descansados */
+.leaflet-tile-pane {
+  filter: saturate(0.68) brightness(1.02) contrast(0.96);
+}
+
 /* ─── Controles de Zoom Minimalistas (Leaflet Light) ─────────────────────── */
 .leaflet-control-zoom {
   border: 1px solid #cbd5e1 !important;

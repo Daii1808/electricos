@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ─────────────────────────────────────────────────────
  *  map.js — Módulo del mapa interactivo (Leaflet.js)
  *  Inspirado en la estética técnica y minimalista de DESIGN.md (Tesla Showroom)
@@ -188,9 +188,9 @@ if (selectComuna) {
     });
 }
 
-    // Layer CartoDB Positron (Tonos claros suaves y neutros)
+    // Capa de mapa base (OpenStreetMap sin marcas de agua ni restricciones de API)
     L.tileLayer(tileUrl, {
-      subdomains: 'abcd',
+      subdomains: ['a', 'b', 'c'],
       maxZoom,
       minZoom,
       attribution: tileAttribution,

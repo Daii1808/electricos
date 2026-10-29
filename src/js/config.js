@@ -29,17 +29,16 @@ const CONFIG = {
   VEHICLE_POLL_INTERVAL_MS: 12000,
   REFRESH_COOLDOWN_MS: 30000,
 
-  /** Configuración del mapa (CartoDB Positron: limpio, suave, tonos blancos y grises) */
+  /** Configuración del mapa (OpenStreetMap con estética clara y descansada) */
   MAP: {
-    defaultCenter: [-41.4693, -72.9424], // Puerto Montt (Hub principal)
-    defaultZoom: 12,
+    defaultCenter: [-41.4720, -72.9350], // Puerto Montt (Centro / Mirasol / Pelluco)
+    defaultZoom: 13,
     minZoom: 6,
-    maxZoom: 18,
-    // CartoDB Positron — Tonos claros suaves, grises neutros y máxima legibilidad
-    tileUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    // Fallback estándar OSM
-    fallbackTileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    maxZoom: 19,
+    // OpenStreetMap estándar confiable (sin marcas de agua ni restricciones de API Key)
+    tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+    fallbackTileUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 
   /** Empresas distribuidoras */
