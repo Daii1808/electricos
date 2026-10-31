@@ -1,39 +1,55 @@
 /**
  * ═══════════════════════════════════════════════════════
- *  tesla-showroom.css — Estilo Showroom Corporativo
- *  Inspirado en DESIGN.md (Tesla Automotive Style Reference)
- *  Estética limpia, técnica, acromática y sin estridencias.
+ *  tesla-showroom.css — Estilo Showroom Corporativo Moderno
+ *  Paleta Luminosa y Descansada en Tonos Blancos y Grises
+ *  Inspirado en interfaces de ingeniería de alta precisión:
+ *  tipografía Inter nítida, contrastes suaves, micro-sombras
+ *  y acento corporativo Saesa Blue (#2563eb).
  * ═══════════════════════════════════════════════════════
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --color-onyx:         #171a20;
-  --color-charcoal:     #393c41;
-  --color-steel:        #5c5e62;
-  --color-light-border: #cccccc;
-  --color-off-white:    #eeeeee;
+  /* Tonos Principales (Blancos, Grises Neutros y Pizarra Profunda) */
+  --color-slate-900:    #0f172a;
+  --color-slate-800:    #1e293b;
+  --color-slate-700:    #334155;
+  --color-slate-600:    #475569;
+  --color-slate-500:    #64748b;
+  --color-slate-400:    #94a3b8;
+  --color-slate-300:    #cbd5e1;
+  --color-slate-200:    #e2e8f0;
+  --color-slate-100:    #f1f5f9;
+  --color-slate-50:     #f8fafc;
   --color-pure-white:   #ffffff;
-  --color-tesla-blue:   #3e6ae1;
+  --color-off-white:    #f8f9fa;
+  --color-subtle-gray:  #f1f3f5;
+
+  /* Color de Acento Corporativo */
+  --color-tesla-blue:       #2563eb;
+  --color-tesla-blue-hover: #1d4ed8;
+  --color-tesla-blue-light: #eff6ff;
+  --color-tesla-blue-border:#bfdbfe;
 
   --font-display: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-text:    'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
 
-  --radius-btn:   4px;
-  --radius-card:  8px;
+  --radius-btn:   6px;
+  --radius-card:  12px;
 }
 
 /* ─── Contenedor y Fondo ──────────────────────────────────────────────────── */
 html, body {
-  background-color: var(--color-onyx);
-  color: var(--color-pure-white);
+  background-color: var(--color-pure-white);
+  color: var(--color-slate-800);
   font-family: var(--font-text);
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .tesla-snap-container {
@@ -42,10 +58,10 @@ html, body {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   position: relative;
-  background-color: var(--color-onyx);
+  background-color: var(--color-pure-white);
 }
 
-/* ─── Header Minimalista de Ancho Completo ───────────────────────────────── */
+/* ─── Header Minimalista de Ancho Completo (Frosted Glass Suave) ──────────── */
 .tesla-navbar {
   position: fixed;
   top: 0;
@@ -57,10 +73,11 @@ html, body {
   justify-content: space-between;
   padding: 0 32px;
   z-index: 1000;
-  background: rgba(23, 26, 32, 0.72);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-slate-200);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
 }
 
 /* Marca / Logotipo Corporativo Tipográfico */
@@ -68,7 +85,7 @@ html, body {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
 }
 
 .tesla-brand-name {
@@ -76,7 +93,7 @@ html, body {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
 }
 
 /* Enlaces Centrales */
@@ -97,7 +114,7 @@ html, body {
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-slate-600);
   padding: 8px 14px;
   border-radius: var(--radius-btn);
   transition: all 120ms ease;
@@ -107,13 +124,14 @@ html, body {
 }
 
 .tesla-nav-item > a:hover {
-  color: var(--color-pure-white);
-  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-slate-900);
+  background: var(--color-slate-100);
 }
 
 .tesla-nav-item.active > a {
-  color: var(--color-pure-white);
+  color: var(--color-tesla-blue);
   font-weight: 600;
+  background: rgba(37, 99, 235, 0.06);
 }
 
 /* Dropdown de Distribución */
@@ -134,11 +152,11 @@ html, body {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(4px);
-  min-width: 260px;
-  background: #171a20;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 270px;
+  background: #ffffff;
+  border: 1px solid var(--color-slate-200);
   border-radius: var(--radius-card);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(15, 23, 42, 0.04);
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -156,29 +174,29 @@ html, body {
   padding: 10px 14px;
   border-radius: var(--radius-btn);
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-slate-800);
   transition: background-color 120ms ease;
 }
 
 .dropdown-link:hover, .dropdown-link.active {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--color-pure-white);
+  background: var(--color-slate-50);
+  color: var(--color-tesla-blue);
 }
 
 .dropdown-link-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
 }
 
 .dropdown-link-sub {
   font-size: 11px;
-  color: #8e929a;
+  color: var(--color-slate-500);
 }
 
 .dropdown-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--color-slate-200);
   margin: 4px 6px;
 }
 
@@ -191,35 +209,40 @@ html, body {
 
 .nav-cta-blue {
   background-color: var(--color-tesla-blue);
-  color: var(--color-pure-white) !important;
+  color: #ffffff !important;
   font-size: 13px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   padding: 8px 18px !important;
   border-radius: var(--radius-btn) !important;
   text-decoration: none;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, transform 120ms ease;
   display: inline-flex;
   align-items: center;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
 }
 
 .nav-cta-blue:hover {
-  background-color: #345bd1;
+  background-color: var(--color-tesla-blue-hover);
+  transform: translateY(-1px);
 }
 
 .nav-btn-ghost {
-  color: var(--color-pure-white) !important;
+  color: var(--color-slate-700) !important;
   font-size: 13px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   padding: 7px 16px !important;
   border-radius: var(--radius-btn) !important;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: #ffffff;
+  border: 1px solid var(--color-slate-300);
   transition: all 150ms ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 .nav-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: var(--color-slate-50);
+  color: var(--color-slate-900) !important;
+  border-color: var(--color-slate-400);
 }
 
 /* ─── Hero Section Showroom Full-Bleed ────────────────────────────────────── */
@@ -242,17 +265,17 @@ html, body {
   overflow: hidden;
 }
 
-/* Scrim fotográfico natural */
+/* Scrim luminoso descansado a la vista: mantiene visibilidad de la imagen sin oscurecer en negro */
 .tesla-hero-section::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(23, 26, 32, 0.65) 0%,
-    rgba(23, 26, 32, 0.20) 40%,
-    rgba(23, 26, 32, 0.40) 70%,
-    rgba(23, 26, 32, 0.85) 100%
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.62) 42%,
+    rgba(255, 255, 255, 0.76) 75%,
+    rgba(255, 255, 255, 0.94) 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -269,33 +292,35 @@ html, body {
 
 .hero-tag-badge {
   display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 10px;
+  color: var(--color-tesla-blue);
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  margin-bottom: 12px;
 }
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 42px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
   margin: 0 0 12px 0;
-  color: var(--color-pure-white);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  color: var(--color-slate-900);
 }
 
 .hero-subtext {
   font-family: var(--font-text);
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.88);
-  line-height: 1.5;
+  color: var(--color-slate-600);
+  line-height: 1.55;
   max-width: 680px;
   margin: 0 auto;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* Bloque Inferior */
@@ -311,19 +336,20 @@ html, body {
   margin: 0 auto;
 }
 
-/* Tira de Especificaciones (Specs Strip Tesla DESIGN.md) */
+/* Tira de Especificaciones (Specs Strip en Blanco y Gris Suave) */
 .hero-specs-strip {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 36px;
-  background: rgba(23, 26, 32, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-slate-200);
   border-radius: var(--radius-card);
-  padding: 14px 32px;
+  padding: 16px 36px;
   width: fit-content;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 .spec-item {
@@ -335,9 +361,9 @@ html, body {
 
 .spec-value {
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--color-pure-white);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-slate-900);
   letter-spacing: -0.5px;
   line-height: 1.1;
 }
@@ -346,18 +372,18 @@ html, body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: #8e929a;
+  color: var(--color-slate-500);
   margin-top: 4px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .spec-divider {
   width: 1px;
   height: 28px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-slate-200);
 }
 
-/* Botones de Acción Tesla Showroom */
+/* Botones de Acción */
 .hero-action-buttons {
   display: flex;
   align-items: center;
@@ -368,34 +394,36 @@ html, body {
 
 .btn-premium-primary {
   background-color: var(--color-tesla-blue);
-  color: var(--color-pure-white);
+  color: #ffffff;
   border: none;
   border-radius: var(--radius-btn);
-  padding: 11px 32px;
+  padding: 12px 32px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   letter-spacing: 0.2px;
-  transition: background-color 150ms ease;
+  transition: all 150ms ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 190px;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
 }
 
 .btn-premium-primary:hover {
-  background-color: #345bd1;
+  background-color: var(--color-tesla-blue-hover);
+  transform: translateY(-1px);
 }
 
 .btn-premium-ghost {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--color-pure-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--color-slate-800);
+  border: 1px solid var(--color-slate-300);
   border-radius: var(--radius-btn);
-  padding: 11px 28px;
+  padding: 12px 28px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   backdrop-filter: blur(8px);
   transition: all 150ms ease;
@@ -404,12 +432,14 @@ html, body {
   justify-content: center;
   min-width: 190px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 
 .btn-premium-ghost:hover {
-  background: var(--color-pure-white);
-  color: var(--color-onyx);
-  border-color: var(--color-pure-white);
+  background: #ffffff;
+  border-color: var(--color-slate-400);
+  color: var(--color-slate-900);
+  transform: translateY(-1px);
 }
 
 /* Footer Minimalista */
@@ -417,7 +447,7 @@ html, body {
   width: 100%;
   max-width: 900px;
   text-align: center;
-  padding-top: 12px;
+  padding-top: 16px;
 }
 
 .tesla-footer-links {
@@ -431,17 +461,18 @@ html, body {
 }
 
 .tesla-footer-links a {
-  color: #8e929a;
+  color: var(--color-slate-500);
   font-size: 12px;
   text-decoration: none;
+  font-weight: 500;
   transition: color 150ms ease;
 }
 
 .tesla-footer-links a:hover {
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
 }
 
-/* ─── Secciones Modulares de Variedad Visual (Tesla Editorial & Tech Blocks) ─ */
+/* ─── Secciones Modulares de Variedad Visual (Editorial & Tech Blocks) ────── */
 
 /* Sección Editorial / Split Screen */
 .tesla-editorial-section {
@@ -456,7 +487,7 @@ html, body {
   align-items: center;
   padding: 100px 32px 64px;
   box-sizing: border-box;
-  background-color: #111317;
+  background-color: var(--color-slate-50);
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -468,9 +499,9 @@ html, body {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(17, 19, 23, 0.92) 0%,
-    rgba(17, 19, 23, 0.82) 50%,
-    rgba(17, 19, 23, 0.95) 100%
+    rgba(248, 250, 252, 0.96) 0%,
+    rgba(248, 250, 252, 0.90) 50%,
+    rgba(248, 250, 252, 0.98) 100%
   );
   z-index: 1;
   pointer-events: none;
@@ -499,8 +530,8 @@ html, body {
 }
 
 .editorial-eyebrow {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--color-tesla-blue);
@@ -509,9 +540,9 @@ html, body {
 .editorial-heading {
   font-family: var(--font-display);
   font-size: 36px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.25;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
   letter-spacing: -0.5px;
   margin: 0;
 }
@@ -519,7 +550,7 @@ html, body {
 .editorial-paragraph {
   font-size: 15px;
   line-height: 1.65;
-  color: #c4c7cc;
+  color: var(--color-slate-700);
   margin: 0;
 }
 
@@ -548,41 +579,40 @@ html, body {
 .feature-title {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
   margin-bottom: 2px;
 }
 
 .feature-desc {
   font-size: 13px;
-  color: #8e929a;
+  color: var(--color-slate-600);
   line-height: 1.45;
   margin: 0;
 }
 
 /* Tarjeta Técnica Lateral */
 .editorial-spec-card {
-  background: rgba(23, 26, 32, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid var(--color-slate-200);
   border-radius: var(--radius-card);
   padding: 32px 28px;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
 .spec-card-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--color-slate-200);
   padding-bottom: 14px;
 }
 
 .spec-card-title {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #8e929a;
+  color: var(--color-slate-500);
 }
 
 .spec-card-grid {
@@ -600,16 +630,17 @@ html, body {
 .stat-number {
   font-family: var(--font-display);
   font-size: 26px;
-  font-weight: 600;
-  color: var(--color-pure-white);
+  font-weight: 700;
+  color: var(--color-slate-900);
   line-height: 1.1;
 }
 
 .stat-label {
   font-size: 11px;
-  color: #8e929a;
+  color: var(--color-slate-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 /* Grid de Pilares Tecnológicos (3 o 4 Columnas) */
@@ -625,7 +656,7 @@ html, body {
   align-items: center;
   padding: 100px 32px 64px;
   box-sizing: border-box;
-  background-color: var(--color-onyx);
+  background-color: var(--color-pure-white);
   overflow: hidden;
 }
 
@@ -636,8 +667,8 @@ html, body {
 }
 
 .section-kicker {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--color-tesla-blue);
@@ -647,15 +678,15 @@ html, body {
 .section-main-title {
   font-family: var(--font-display);
   font-size: 34px;
-  font-weight: 600;
-  color: var(--color-pure-white);
+  font-weight: 700;
+  color: var(--color-slate-900);
   line-height: 1.25;
   margin: 0 0 12px;
 }
 
 .section-lead {
   font-size: 15px;
-  color: #9da1aa;
+  color: var(--color-slate-600);
   line-height: 1.55;
   margin: 0;
 }
@@ -673,25 +704,27 @@ html, body {
 }
 
 .tesla-card-pillar {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-slate-50);
+  border: 1px solid var(--color-slate-200);
   border-radius: var(--radius-card);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 200ms ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
 .tesla-card-pillar:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: #ffffff;
+  border-color: var(--color-slate-300);
   transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
 .pillar-tag {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--color-tesla-blue);
@@ -702,21 +735,21 @@ html, body {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
-  color: var(--color-pure-white);
+  color: var(--color-slate-900);
   margin: 0 0 10px;
   line-height: 1.3;
 }
 
 .pillar-desc {
   font-size: 13px;
-  color: #9da1aa;
+  color: var(--color-slate-600);
   line-height: 1.55;
   margin: 0 0 20px;
   flex-grow: 1;
 }
 
 .pillar-stat-strip {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--color-slate-200);
   padding-top: 14px;
   display: flex;
   justify-content: space-between;
@@ -726,26 +759,28 @@ html, body {
 .pillar-stat-val {
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 600;
-  color: var(--color-pure-white);
+  font-weight: 700;
+  color: var(--color-slate-900);
 }
 
 .pillar-stat-lbl {
   font-size: 11px;
-  color: #8e929a;
+  color: var(--color-slate-500);
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 /* Consola de Telemetría en Vivo (Slide 5 Preview) */
 .tesla-console-preview {
-  background: #0f1115;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  border: 1px solid var(--color-slate-200);
   border-radius: var(--radius-card);
   padding: 32px;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 36px;
   align-items: center;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
 .console-info-pane {
@@ -758,9 +793,9 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(62, 106, 225, 0.15);
-  border: 1px solid rgba(62, 106, 225, 0.35);
-  color: #99b6ff;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: var(--color-tesla-blue);
   font-size: 12px;
   font-weight: 600;
   padding: 5px 12px;
@@ -772,13 +807,13 @@ html, body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #3e6ae1;
+  background: var(--color-tesla-blue);
 }
 
 .console-map-pane {
-  background: #171a20;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
+  background: var(--color-slate-50);
+  border: 1px solid var(--color-slate-200);
+  border-radius: 8px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -792,25 +827,27 @@ html, body {
 }
 
 .console-metric-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid var(--color-slate-200);
+  border-radius: 6px;
   padding: 12px;
   text-align: center;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
 }
 
 .console-metric-num {
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 600;
-  color: var(--color-pure-white);
+  font-weight: 700;
+  color: var(--color-slate-900);
 }
 
 .console-metric-text {
   font-size: 10px;
   text-transform: uppercase;
-  color: #8e929a;
+  color: var(--color-slate-500);
   margin-top: 4px;
+  font-weight: 600;
 }
 
 /* Responsive */

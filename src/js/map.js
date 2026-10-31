@@ -15,7 +15,8 @@ const MapManager = (() => {
   // Capas activas
   let _markersGroup = null;
   let _polygonsGroup = null;
-  let _vehicleMarker = null;
+  let _brigadesGroup = null;
+  let _vehicleMarkersMap = new Map();
   let _routeLine = null;
   let _userLocationMarker = null;
 
@@ -57,29 +58,71 @@ const MapManager = (() => {
   }
 
   /**
-   * Ícono para el vehículo de la brigada en terreno
+   * Ícono para furgoneta técnica en traslado / ruta
    */
-  function createTruckIcon(plate = '') {
+  function createVanIcon(plate = '', isSelected = false) {
+    const scale = isSelected ? 'transform: scale(1.15);' : '';
     const html = `
-      <div class="map-truck-marker">
-        <div class="map-truck-pulse"></div>
-        <div class="map-truck-body">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="1" y="3" width="15" height="13"></rect>
-            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-            <circle cx="5.5" cy="18.5" r="2.5"></circle>
-            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+      <div class="map-van-marker ${isSelected ? 'marker-selected' : ''}" style="${scale}">
+        <div class="map-van-pulse"></div>
+        <div class="map-van-body">
+          <svg viewBox="0 0 32 20" width="26" height="16" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Portaescalas técnico en techo -->
+            <line x1="7" y1="2" x2="23" y2="2" stroke="#64748b" stroke-width="2"></line>
+            <line x1="10" y1="2" x2="10" y2="5" stroke="#64748b" stroke-width="1.5"></line>
+            <line x1="20" y1="2" x2="20" y2="5" stroke="#64748b" stroke-width="1.5"></line>
+            <!-- Carrocería de furgoneta técnica -->
+            <path d="M3 14V10c0-1.2.8-2.2 2-2.6l4.5-1.9c.7-.3 1.5-.5 2.3-.5H25c1.1 0 2 .9 2 2v7" fill="#ffffff"></path>
+            <path d="M11 5h8v4h-8z" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"></path>
+            <!-- Ruedas -->
+            <circle cx="8" cy="15" r="2.5" fill="#1e293b" stroke="#ffffff" stroke-width="1.5"></circle>
+            <circle cx="22" cy="15" r="2.5" fill="#1e293b" stroke="#ffffff" stroke-width="1.5"></circle>
           </svg>
-          ${plate ? `<span class="truck-plate-label">${plate}</span>` : ''}
         </div>
+        ${plate ? `<span class="van-plate-label">${plate}</span>` : ''}
       </div>
     `;
 
     return L.divIcon({
       html,
-      className: 'custom-truck-div-icon',
-      iconSize: [44, 44],
-      iconAnchor: [22, 22],
+      className: 'custom-van-div-icon',
+      iconSize: [46, 46],
+      iconAnchor: [23, 23],
+      popupAnchor: [0, -24],
+    });
+  }
+
+  /**
+   * Ícono para brigadista arreglando en la zona / en faena directa en el punto
+   */
+  function createBrigadeOnSiteIcon(leadName = '', isSelected = false) {
+    const scale = isSelected ? 'transform: scale(1.15);' : '';
+    const html = `
+      <div class="map-technician-marker ${isSelected ? 'marker-selected' : ''}" style="${scale}">
+        <div class="technician-pulse-ring"></div>
+        <div class="technician-badge">
+          <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
+            <!-- Casco brigadista de seguridad ámbar -->
+            <path d="M8 14c0-4.4 3.6-8 8-8s8 3.6 8 8H8z" fill="#f59e0b" stroke="#b45309" stroke-width="1.5"/>
+            <rect x="6" y="14" width="20" height="2.5" rx="1.2" fill="#d97706"/>
+            <!-- Cabeza y chaleco reflectante -->
+            <circle cx="16" cy="18" r="3.2" fill="#fde68a"/>
+            <path d="M9 28c0-3.3 3.1-6 7-6s7 2.7 7 6H9z" fill="#0284c7"/>
+            <path d="M13 22l-1 6m6-6l1 6" stroke="#fbbf24" stroke-width="1.8"/>
+            <!-- Indicador activo de faena técnica -->
+            <circle cx="23" cy="11" r="5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+            <path d="M22 8.5l-1.5 2.5h2l-1.5 3" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="technician-status-label">En faena</span>
+      </div>
+    `;
+
+    return L.divIcon({
+      html,
+      className: 'custom-technician-div-icon',
+      iconSize: [48, 48],
+      iconAnchor: [24, 24],
       popupAnchor: [0, -24],
     });
   }
@@ -137,19 +180,20 @@ if (selectComuna) {
         // Si selecciona una comuna válida, mover el mapa de forma fluida
         if (coordenadasComunas[comunaSeleccionada]) {
             const [lat, lng, zoom] = coordenadasComunas[comunaSeleccionada];
-            _map.setView([lat, lng], zoom); // Mueve el mapa directamente a la ciudad
+            _map.flyTo([lat, lng], zoom, { duration: 1.2 });
         } else if (comunaSeleccionada === "all") {
             // Opcional: Vista general si selecciona "Todas las comunas"
-            _map.setView([-41.4693, -72.9424], 9);
+            _map.flyTo([-39.8142, -73.2459], 9, { duration: 1.2 });
         }
     });
 }
 
-    // Layer CartoDB Positron / OSM
-    // Capa alternativa gratuita de CartoDB (Dark) sin API key estricta
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
+    // Capa de mapa base (OpenStreetMap sin marcas de agua ni restricciones de API)
+    L.tileLayer(tileUrl, {
+      subdomains: ['a', 'b', 'c'],
+      maxZoom,
+      minZoom,
+      attribution: tileAttribution,
     }).addTo(_map);
 
     // Controles de zoom abajo a la derecha
@@ -161,6 +205,7 @@ if (selectComuna) {
     // Grupos de capas
     _polygonsGroup = L.featureGroup().addTo(_map);
     _markersGroup = L.featureGroup().addTo(_map);
+    _brigadesGroup = L.featureGroup().addTo(_map);
 
     return _map;
   }
@@ -177,6 +222,13 @@ if (selectComuna) {
 
     _markersGroup.clearLayers();
     _polygonsGroup.clearLayers();
+    _brigadesGroup.clearLayers();
+    _vehicleMarkersMap.clear();
+
+    if (_routeLine) {
+      _map.removeLayer(_routeLine);
+      _routeLine = null;
+    }
 
     let selectedOutage = null;
 
@@ -190,9 +242,9 @@ if (selectComuna) {
         const isEmergency = outage.type === 'no_programada';
 
         const polygon = L.polygon(latLngs, {
-          color: isSelected ? (isEmergency ? '#DC2626' : '#3e6ae1') : '#5c5e62',
-          fillColor: isEmergency ? '#DC2626' : '#3e6ae1',
-          fillOpacity: isSelected ? 0.22 : 0.08,
+          color: isSelected ? (isEmergency ? '#dc2626' : '#2563eb') : '#64748b',
+          fillColor: isEmergency ? '#ef4444' : '#3b82f6',
+          fillOpacity: isSelected ? 0.26 : 0.12,
           weight: isSelected ? 2.5 : 1.5,
           dashArray: isSelected ? '6 4' : '4 4',
           lineCap: 'round',
@@ -209,7 +261,6 @@ if (selectComuna) {
         zIndexOffset: isSelected ? 600 : 200,
       }).addTo(_markersGroup);
 
-      // Popup técnico minimalista estilo plaque
       const popupHtml = `
         <div class="map-popup-plaque">
           <div class="popup-tag ${outage.type === 'no_programada' ? 'tag-emergency' : 'tag-scheduled'}">
@@ -235,68 +286,132 @@ if (selectComuna) {
       marker.on('click', () => {
         if (_onSelectOutageCallback) _onSelectOutageCallback(outage.id);
       });
-    });
 
-    // 3. Renderizar móvil y ruta del corte seleccionado
-    if (selectedOutage && selectedOutage.brigade) {
-      renderBrigadeVehicle(selectedOutage.brigade, selectedOutage.center);
-    } else {
-      clearVehicleAndRoute();
-    }
+      // 3. Marcador de Cuadrilla Técnica: Furgoneta en ruta O Brigadista en la zona
+      if (outage.brigade && outage.brigade.location) {
+        const brigade = outage.brigade;
+        const isOnSite = brigade.status === 'on_site';
+
+        const brigadeIcon = isOnSite
+          ? createBrigadeOnSiteIcon(brigade.leadName, isSelected)
+          : createVanIcon(brigade.vehicle?.plate, isSelected);
+
+        const brigadeMarker = L.marker([brigade.location.lat, brigade.location.lng], {
+          icon: brigadeIcon,
+          zIndexOffset: isSelected ? 1200 : (isOnSite ? 850 : 950),
+        }).addTo(_brigadesGroup);
+
+        const popupTagClass = isOnSite ? 'tag-onsite' : 'tag-brigade';
+        const popupTagText = isOnSite ? 'BRIGADISTA EN FAENA' : 'FURGONETA EN TRASLADO';
+        const statusDetail = isOnSite
+          ? 'Personal técnico trabajando en el lugar'
+          : `Llegada estimada en ~${brigade.etaMinutes || 8} min al punto`;
+
+        const brigadePopupHtml = `
+          <div class="map-popup-plaque">
+            <div class="popup-tag ${popupTagClass}">${popupTagText}</div>
+            <div class="popup-id">${outage.id}</div>
+            <div class="popup-title">${brigade.leadName}</div>
+            <div class="popup-meta">
+              <span><strong>${statusDetail}</strong></span>
+            </div>
+            <div class="popup-submeta">
+              <span>Móvil: ${brigade.vehicle?.model || 'Furgoneta Técnica'} (${brigade.vehicle?.plate || '—'})</span>
+            </div>
+            <button class="popup-cta-btn" onclick="window.selectOutageFromMap('${outage.id}')">
+              Ver estado del corte y reposición
+            </button>
+          </div>
+        `;
+
+        brigadeMarker.bindPopup(brigadePopupHtml, {
+          className: 'tesla-map-popup',
+          maxWidth: 290,
+        });
+
+        brigadeMarker.on('click', () => {
+          if (_onSelectOutageCallback) _onSelectOutageCallback(outage.id);
+        });
+
+        _vehicleMarkersMap.set(outage.id, brigadeMarker);
+
+        // Si este corte está seleccionado y la furgoneta está en traslado, trazar la ruta real por las calles
+        if (isSelected && !isOnSite) {
+          const routePoints = (brigade.routeWaypoints && brigade.routeWaypoints.length > 0)
+            ? brigade.routeWaypoints.slice(brigade.currentWaypointIndex || 0)
+            : (outage.center ? [[brigade.location.lat, brigade.location.lng], [outage.center.lat, outage.center.lng]] : []);
+
+          if (routePoints.length > 1) {
+            _routeLine = L.polyline(routePoints, {
+              color: '#2563eb',
+              weight: 3.5,
+              opacity: 0.9,
+              dashArray: '8 6',
+              lineCap: 'round',
+              lineJoin: 'round',
+            }).addTo(_map);
+          }
+        }
+      }
+    });
   }
 
-  // ─── Renderizado de Móvil de Brigada y Ruta ────────────────────────────────
+  // ─── Renderizado y Actualización de Móvil de Brigada y Ruta ─────────────────
 
-  function renderBrigadeVehicle(brigade, destination) {
+  function renderBrigadeVehicle(brigade, destination, outageId = null) {
     if (!brigade || !brigade.location) return;
 
     const { lat, lng } = brigade.location;
+    const isOnSite = brigade.status === 'on_site';
 
-    if (_vehicleMarker) {
-      animateMarker(_vehicleMarker, [lat, lng]);
-    } else {
-      _vehicleMarker = L.marker([lat, lng], {
-        icon: createTruckIcon(brigade.vehicle?.plate),
-        zIndexOffset: 1000,
-      }).addTo(_map);
-
-      _vehicleMarker.bindPopup(`
-        <div class="map-popup-plaque">
-          <div class="popup-tag tag-brigade">MÓVIL EN RUTA</div>
-          <div class="popup-title">${brigade.leadName}</div>
-          <div class="popup-meta">
-            <span>${brigade.vehicle?.model} (${brigade.vehicle?.plate})</span>
-          </div>
-        </div>
-      `, { className: 'tesla-map-popup' });
+    let marker = outageId ? _vehicleMarkersMap.get(outageId) : null;
+    if (!marker && _vehicleMarkersMap.size > 0) {
+      marker = _vehicleMarkersMap.values().next().value;
     }
 
-    // Ruta estimada al punto de falla
-    if (destination) {
+    if (marker) {
+      animateMarker(marker, [lat, lng]);
+
+      // Si cambió de estado dinámicamente, actualizar icono
+      const newIcon = isOnSite
+        ? createBrigadeOnSiteIcon(brigade.leadName, true)
+        : createVanIcon(brigade.vehicle?.plate, true);
+      marker.setIcon(newIcon);
+    }
+
+    if (!isOnSite) {
       if (_routeLine) _map.removeLayer(_routeLine);
 
-      _routeLine = L.polyline([[lat, lng], [destination.lat, destination.lng]], {
-        color: '#3e6ae1', // Tesla Blue
-        weight: 3,
-        opacity: 0.85,
-        dashArray: '8 6',
-        lineCap: 'round',
-      }).addTo(_map);
+      const routePoints = (brigade.routeWaypoints && brigade.routeWaypoints.length > 0)
+        ? brigade.routeWaypoints.slice(brigade.currentWaypointIndex || 0)
+        : (destination ? [[lat, lng], [destination.lat, destination.lng]] : []);
+
+      if (routePoints.length > 1) {
+        _routeLine = L.polyline(routePoints, {
+          color: '#2563eb',
+          weight: 3.5,
+          opacity: 0.9,
+          dashArray: '8 6',
+          lineCap: 'round',
+          lineJoin: 'round',
+        }).addTo(_map);
+      }
+    } else if (isOnSite && _routeLine) {
+      _map.removeLayer(_routeLine);
+      _routeLine = null;
     }
   }
 
   function clearVehicleAndRoute() {
-    if (_vehicleMarker) {
-      _map.removeLayer(_vehicleMarker);
-      _vehicleMarker = null;
-    }
+    _brigadesGroup.clearLayers();
+    _vehicleMarkersMap.clear();
     if (_routeLine) {
       _map.removeLayer(_routeLine);
       _routeLine = null;
     }
   }
 
-  // ─── Zoom enfocado en corte ────────────────────────────────────────────────
+    // ─── Zoom enfocado en corte ────────────────────────────────────────────────
 
   function focusOnOutage(outage) {
     if (!_map || !outage) return;

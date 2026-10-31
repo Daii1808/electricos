@@ -1,31 +1,30 @@
 <!DOCTYPE html>
-<html lang="es" dir="ltr" class="dark-mode">
+<html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Plataforma de Desconexiones Eléctricas en Línea y Trazabilidad en Tiempo Real — Grupo Saesa y Crell." />
-  <meta name="theme-color" content="#171a20" />
+  <meta name="description" content="Mapa de Desconexiones Eléctricas en Línea — Consulta el estado de tu servicio eléctrico, tiempos de llegada de furgonetas y reposición estimada en Puerto Montt y el sur." />
+  <meta name="theme-color" content="#ffffff" />
 
-  <title>Mapa de Desconexiones Eléctricas — Grupo Saesa</title>
+  <title>Mapa de Desconexiones — Grupo Saesa</title>
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Leaflet CSS (Corregido: sin integrity ni crossorigin bloqueantes) -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <!-- Estilos del Sistema de Diseño (DESIGN.md) -->
   <link rel="stylesheet" href="/src/css/main.css" />
-  <link rel="stylesheet" href="/src/css/components.css" />
-  <link rel="stylesheet" href="/src/css/map.css" />
   <link rel="stylesheet" href="/src/css/tesla-showroom.css" />
+  <link rel="stylesheet" href="/src/css/map.css" />
 </head>
 
-<body class="dark-mode">
+<body class="map-light-theme">
 
-  <!-- Header Minimalista Ancho Completo Showroom Tesla -->
+  <!-- Header Estandarizado -->
   <header class="tesla-navbar" role="banner">
     <a href="/" class="tesla-brand-link" aria-label="Ir a Inicio de Grupo Saesa">
       <span class="tesla-brand-name">GRUPO SAESA</span>
@@ -76,249 +75,184 @@
     </div>
   </header>
 
-  <div class="app-layout" role="application">
+  <!-- Viewport Principal del Mapa con Tarjetas Flotantes -->
+  <main class="client-map-viewport" role="main">
 
-    <!-- HERO / BARRA DE CONSULTA RÁPIDA -->
-    <section class="consultation-hero-bar" aria-label="Consulta de servicio eléctrico">
-      <div class="consultation-title-group">
-        <h1>Mapa de Desconexiones Eléctricas</h1>
-        <p>Monitoreo en tiempo real, geolocalización de cuadrillas y tiempos de reposición</p>
+    <!-- Lienzo Completo del Mapa (Leaflet + OpenStreetMap en tonos claros y neutros) -->
+    <div id="map" aria-label="Mapa interactivo de desconexiones eléctricas"></div>
+
+    <!-- TARJETA FLOTANTE 1: Centro de Consulta y Búsqueda para Clientes -->
+    <aside class="client-search-card" aria-label="Panel de consulta rápida para clientes">
+      <div class="search-card-header">
+        <div class="live-status-chip">
+          <span class="live-dot-pulse" aria-hidden="true"></span>
+          <span>Red 99.4% operativa</span>
+        </div>
+        <h1 class="search-card-title">Consulta de Suministro</h1>
+        <p class="search-card-subtitle">Verifica si tu hogar está en zona de corte o ingresa tu aviso.</p>
       </div>
 
-      <div class="consultation-actions">
-        <!-- Selector de Distribuidora -->
-        <div class="company-selector" role="group" aria-label="Seleccionar empresa distribuidora">
-          <button class="company-btn active" data-company="saesa" id="btn-company-saesa">
-            Grupo Saesa
-          </button>
-          <button class="company-btn" data-company="crell" id="btn-company-crell">
-            Crell
-          </button>
-        </div>
-
-        <!-- Estado en tiempo real de la red -->
-        <div class="status-pill" role="status">
-          <span class="status-dot-pulse" aria-hidden="true"></span>
-          <span id="header-status-text">Red operando con normalidad (99.4%)</span>
-        </div>
-
-        <!-- Input de búsqueda por N° de cliente o comuna -->
-        <div class="search-input-wrap">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Barra de Búsqueda Principal -->
+      <div class="search-form-group">
+        <div class="search-input-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input type="text"
                  id="search-service-input"
-                 placeholder="N° de cliente o Comuna"
-                 aria-label="Buscar por número de cliente o comuna" />
+                 placeholder="Ingresa tu N° de cliente o comuna"
+                 aria-label="Buscar por número de cliente o comuna"
+                 autocomplete="off" />
         </div>
-
-        <!-- Botón Primario CTA (Tesla Blue) -->
-        <button class="btn-primary-cta" id="search-service-btn">
+        <button class="btn-search-primary" id="search-service-btn">
           Consultar
         </button>
+      </div>
 
-        <!-- Botón Secundario Geolocalización ("Mi Ubicación") -->
-        <button class="btn-secondary-ghost" id="locate-user-btn" title="Detectar si tu sector cuenta con suministro">
-          Mi Ubicación
+      <!-- Acciones Rápidas para el Cliente -->
+      <div class="quick-actions-row">
+        <button class="quick-action-btn" id="locate-user-btn" title="Detectar si tu sector cuenta con suministro">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          <span>Mi Ubicación</span>
         </button>
 
-        <!-- Botón "Estoy sin luz / Reportar" -->
-        <button class="btn-secondary-ghost" id="open-report-modal-btn" style="border-color: var(--color-danger); color: var(--color-danger);">
-          Estoy sin luz
+        <button class="quick-action-btn btn-report-warning" id="open-report-modal-btn" title="Informar corte en tu sector">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M13 2L3 14h7v8l10-12h-7z"></path>
+          </svg>
+          <span>Estoy sin luz</span>
         </button>
       </div>
-    </section>
 
-    <!-- PLAQUES DE KPI / MÉTRICAS DE RED -->
-    <section class="kpi-row" aria-label="Estadísticas de la red eléctrica">
-      <div class="kpi-plaque">
-        <span class="kpi-label">Red en Operación</span>
-        <div class="kpi-value-group">
-          <span class="kpi-value" id="kpi-operational">99.4%</span>
-          <span class="kpi-sub">disponible</span>
-        </div>
-      </div>
-
-      <div class="kpi-plaque">
-        <span class="kpi-label">Desconexiones Activas</span>
-        <div class="kpi-value-group">
-          <span class="kpi-value" id="kpi-outages">5</span>
-          <span class="kpi-sub">sectores</span>
-        </div>
-      </div>
-
-      <div class="kpi-plaque">
-        <span class="kpi-label">Clientes sin Suministro</span>
-        <div class="kpi-value-group">
-          <span class="kpi-value" id="kpi-clients">1.482</span>
-          <span class="kpi-sub">en proceso de reposición</span>
-        </div>
-      </div>
-
-      <div class="kpi-plaque">
-        <span class="kpi-label">Brigadas en Terreno</span>
-        <div class="kpi-value-group">
-          <span class="kpi-value" id="kpi-brigades">8</span>
-          <span class="kpi-sub">cuadrillas desplegadas</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- CUERPO PRINCIPAL (Mapa + Panel Lateral Inspector) -->
-    <div class="app-body">
-
-      <!-- Contenedor del Mapa -->
-      <div id="map-container" role="region" aria-label="Mapa interactivo de desconexiones">
-
-        <!-- Barra flotante de filtros del mapa -->
-        <div class="map-filter-floating-bar" role="toolbar" aria-label="Filtros de desconexiones">
-          <button class="filter-pill-btn active" data-filter-type="all">Todas</button>
-          <button class="filter-pill-btn" data-filter-type="no_programada">Emergencias</button>
-          <button class="filter-pill-btn" data-filter-type="programada">Programadas</button>
-
-          <select class="comuna-select" id="comuna-filter-select" aria-label="Filtrar por comuna">
-            <option value="all">Todas las comunas</option>
-            <option value="Temuco">Temuco</option>
-            <option value="Valdivia">Valdivia</option>
-            <option value="Osorno">Osorno</option>
-            <option value="Puerto Montt">Puerto Montt</option>
+      <!-- Filtros Rápidos (Ciudad y Tipo) -->
+      <div class="search-card-filters">
+        <div class="filter-comuna-wrap">
+          <select class="client-comuna-select" id="comuna-filter-select" aria-label="Seleccionar ciudad o comuna">
+            <option value="Puerto Montt" selected>Puerto Montt</option>
             <option value="Puerto Varas">Puerto Varas</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Temuco">Temuco</option>
+            <option value="all">Todas las ciudades</option>
           </select>
         </div>
 
-        <!-- Lienzo de Leaflet -->
-        <div id="map"></div>
+        <div class="filter-pills-wrap" role="toolbar" aria-label="Filtrar por tipo de desconexión">
+          <button class="client-pill-btn active" data-filter-type="all">Todos</button>
+          <button class="client-pill-btn" data-filter-type="no_programada">Emergencias</button>
+          <button class="client-pill-btn" data-filter-type="programada">Programados</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- TARJETA FLOTANTE 2: Estado y Detalle de Suministro para el Cliente (Oculta por defecto al iniciar) -->
+    <aside class="client-result-card hidden" id="client-result-card" aria-label="Resultado del estado de suministro" role="region">
+      <div class="result-card-header">
+        <span class="result-status-badge badge--outage" id="result-status-badge">
+          Interrupción no programada
+        </span>
+        <button class="result-close-btn" id="close-result-card-btn" aria-label="Cerrar ficha">
+          &times;
+        </button>
       </div>
 
-      <!-- Panel Inspector Lateral -->
-      <aside class="side-panel" id="side-panel" role="complementary" aria-label="Inspector de corte eléctrico">
-
-        <!-- Pestañas del Panel -->
-        <div class="panel-tabs" role="tablist">
-          <button class="panel-tab-btn active" data-tab-target="tab-details" role="tab" aria-selected="true">
-            Detalle del Corte
-          </button>
-          <button class="panel-tab-btn" data-tab-target="tab-feed" role="tab" aria-selected="false">
-            Desconexiones <span id="outages-count-tab">(5)</span>
-          </button>
+      <div class="result-card-body">
+        <div class="result-location-group">
+          <h2 class="result-sector-title" id="result-sector-title">Puerto Montt — Sector Mirasol</h2>
+          <span class="result-filial-tag" id="result-filial-tag">Saesa · 285 hogares sin servicio</span>
         </div>
 
-        <!-- PESTAÑA 1: Ficha del Corte Seleccionado -->
-        <div class="panel-content-tab active" id="tab-details" role="tabpanel">
-
-          <div class="outage-plaque">
-            <div class="outage-badge-row">
-              <span class="badge-tag tag--emergency" id="outage-type-tag">Emergencia / No programada</span>
-              <span class="outage-ticket-id" id="outage-ticket-id">#CRT-2026-00847</span>
-            </div>
-
-            <h2 class="outage-headline" id="outage-title">Temuco — Los Notros</h2>
-
-            <!-- Caja con motivo del corte -->
-            <div class="outage-reason-box">
-              <span class="reason-icon" id="outage-reason-icon" aria-hidden="true"></span>
-              <p class="reason-text" id="outage-reason">
-                Caída de rama sobre tendido de media tensión en sector Los Notros
-              </p>
-            </div>
-
-            <!-- Cuenta regresiva de reposición -->
-            <div class="countdown-box" role="timer" aria-label="Tiempo restante estimado">
-              <span class="countdown-label">Tiempo estimado de reposición</span>
-              <span class="countdown-number" id="countdown-display">~1h 05m</span>
-              <span class="countdown-subtext" id="countdown-eta-time">Hora estimada: 23:45 hrs</span>
-            </div>
-
-            <!-- Lista de metadatos técnicos -->
-            <div class="detail-meta-list">
-              <div class="meta-item">
-                <span class="meta-item-label">Comuna</span>
-                <span class="meta-item-value" id="meta-comuna">Temuco</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-item-label">Distribuidora / Filial</span>
-                <span class="meta-item-value" id="meta-filial">Saesa</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-item-label">Hora de inicio / reporte</span>
-                <span class="meta-item-value" id="meta-reported">20:30 hrs</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-item-label">Clientes afectados en zona</span>
-                <span class="meta-item-value" id="meta-affected-users">234 clientes</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ficha de la Brigada Asignada -->
-          <div class="brigade-plaque">
-            <div class="brigade-header">
-              <span class="brigade-title">Cuadrilla Asignada</span>
-              <span class="brigade-status-chip" id="brigade-status-chip">En ruta al punto</span>
-            </div>
-
-            <div class="brigade-profile">
-              <div class="brigade-avatar" id="brigade-avatar">CF</div>
-              <div class="brigade-info">
-                <h4 id="brigade-lead-name">Carlos Andrés Fuentes Molina</h4>
-                <p id="brigade-employee-id">ID: EMP-12483</p>
-              </div>
-            </div>
-
-            <div class="vehicle-row">
-              <span id="brigade-vehicle-model">Toyota Hilux 4WD</span>
-              <span class="vehicle-plate-pill" id="brigade-vehicle-plate">RXLB-51</span>
-            </div>
-          </div>
-
-          <!-- Botón de actualización de estado -->
-          <button class="btn-plaque" id="refresh-state-btn" style="justify-content: center; width: 100%;">
-            Actualizar estado del corte
-          </button>
+        <!-- Banner de Furgoneta en Camino / en Terreno -->
+        <div class="result-van-eta-banner" id="result-van-banner">
+          <span class="van-eta-icon">
+            <svg viewBox="0 0 32 20" width="22" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="2" x2="23" y2="2"></line>
+              <path d="M3 14V11c0-1.5 1-2.5 2.5-3l4-2c.8-.4 1.7-.6 2.5-.6H25c1.1 0 2 .9 2 2v6.6"></path>
+              <circle cx="8" cy="14.5" r="2.5"></circle>
+              <circle cx="22" cy="14.5" r="2.5"></circle>
+            </svg>
+          </span>
+          <span id="result-van-status-text">Furgoneta en camino — Llegada estimada en ~8 min al sector</span>
         </div>
 
-        <!-- PESTAÑA 2: Listado de Desconexiones Activas -->
-        <div class="panel-content-tab" id="tab-feed" role="tabpanel">
-          <p style="font-size: 13px; color: var(--text-muted); margin-bottom: var(--spacing-8);">
-            Haz clic en cualquier sector para enfocar en el mapa:
+        <!-- Métrica Clave: Tiempo Estimado de Reposición (ETR) -->
+        <div class="result-eta-block" id="result-eta-block">
+          <span class="eta-block-label">Hora Estimada de Luz de Vuelta</span>
+          <div class="eta-time-value" id="result-eta-time">23:30 hrs</div>
+          <div class="eta-countdown-badge" id="result-eta-countdown">
+            Luz estimada en ~1 hora 15 minutos (Trabajo estimado: 1 hora 15 min)
+          </div>
+        </div>
+
+        <!-- Causa en Lenguaje Natural -->
+        <div class="result-info-box">
+          <span class="info-box-label">Causa del problema:</span>
+          <p class="info-box-text" id="result-reason-text">
+            Falla en seccionador de media tensión por ramas sobre red y ráfagas de viento.
           </p>
-          <div class="outages-feed-list" id="outages-list-container">
-            <!-- Rellenado dinámicamente por UIManager -->
+        </div>
+
+        <!-- Ficha de Cuadrilla y Furgoneta Asignada (Directamente Visible) -->
+        <div class="result-crew-details-box" id="result-crew-box">
+          <span class="crew-box-title">Cuadrilla y Furgoneta en Terreno</span>
+          <div class="crew-detail-line">
+            <span>Móvil asignado:</span>
+            <strong id="crew-van-model">Peugeot Partner 1.6 HDi (RHKL-18)</strong>
+          </div>
+          <div class="crew-detail-line">
+            <span>Jefe de Cuadrilla:</span>
+            <strong id="crew-lead-name">Rodrigo Alarcón Cárdenas</strong>
+          </div>
+          <div class="crew-detail-line">
+            <span>Personal de apoyo:</span>
+            <strong id="crew-assistant-name">Gonzalo Silva Tapia</strong>
           </div>
         </div>
 
-      </aside>
-    </div>
-  </div>
+        <!-- Botón de Confirmación Directa -->
+        <div class="result-actions">
+          <button class="btn-confirm-report" id="btn-quick-confirm-outage">
+            Vivo en este sector y sigo sin luz
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
 
   <!-- MODAL: "Reportar Corte / Estoy sin Luz" -->
   <div class="modal-overlay" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-report-title">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 class="modal-title" id="modal-report-title">Reportar Corte de Suministro</h3>
-        <button class="modal-close-btn" id="close-report-modal-btn" aria-label="Cerrar modal">&times;</button>
+        <h3 class="modal-title" id="modal-report-title">Aviso de Interrupción de Suministro</h3>
+        <button class="modal-close-btn" id="close-report-modal-btn" aria-label="Cerrar">&times;</button>
       </div>
 
       <form class="modal-form" id="report-outage-form">
-        <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.4;">
-          Si estás sin energía eléctrica o detectas una falla en la red de Saesa o Crell, ingresa tu reporte aquí.
+        <p class="modal-form-description">
+          Ingresa tus datos para registrar la incidencia directamente en el sistema de despacho técnico.
         </p>
 
         <div class="form-group">
-          <label class="form-label" for="report-client-number">Número de Cliente / Servicio</label>
-          <input type="text" class="form-input" id="report-client-number" placeholder="Ej: 1204859-1" required />
+          <label class="form-label" for="report-client-number">N° de Cliente</label>
+          <input type="text"
+                 class="form-input"
+                 id="report-client-number"
+                 placeholder="Ej: 6104820-1 (figura en tu boleta)"
+                 required />
         </div>
 
         <div class="form-group">
           <label class="form-label" for="report-comuna">Comuna</label>
           <select class="form-select" id="report-comuna" required>
-            <option value="Temuco">Temuco</option>
-            <option value="Valdivia">Valdivia</option>
-            <option value="Osorno">Osorno</option>
-            <option value="Puerto Montt">Puerto Montt</option>
+            <option value="Puerto Montt" selected>Puerto Montt</option>
             <option value="Puerto Varas">Puerto Varas</option>
+            <option value="Osorno">Osorno</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Temuco">Temuco</option>
             <option value="Castro">Castro</option>
             <option value="Coyhaique">Coyhaique</option>
           </select>
@@ -326,32 +260,36 @@
 
         <div class="form-group">
           <label class="form-label" for="report-address">Calle, Número y Sector</label>
-          <input type="text" class="form-input" id="report-address" placeholder="Ej: Av. Las Encinas 420" required />
+          <input type="text"
+                 class="form-input"
+                 id="report-address"
+                 placeholder="Ej: Av. Los Notros 1450, Mirasol"
+                 required />
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="report-reason">Causa aparente / Observación</label>
+          <label class="form-label" for="report-reason">¿Qué observas en tu sector?</label>
           <select class="form-select" id="report-reason" required>
-            <option value="Corte general en todo el sector">Corte general en todo el sector</option>
+            <option value="Corte general en todo el sector">Corte general en toda la cuadra / sector</option>
             <option value="Caída de árbol o ramas sobre cables">Caída de árbol o ramas sobre cables</option>
-            <option value="Poste chocado por vehículo">Poste chocado por vehículo</option>
-            <option value="Chispas, fuego o explosión en transformador">Chispas, fuego o explosión en transformador</option>
-            <option value="Corte solo en mi domicilio">Corte solo en mi domicilio</option>
+            <option value="Poste chocado por vehículo">Poste o línea chocada por vehículo</option>
+            <option value="Chispas, fuego o explosión en transformador">Chispas o explosión en transformador</option>
+            <option value="Corte solo en mi domicilio">Corte solo en mi domicilio (posible automático/medidor)</option>
           </select>
         </div>
 
         <div class="modal-actions">
           <button type="button" class="btn-secondary-ghost" id="cancel-report-btn">Cancelar</button>
-          <button type="submit" class="btn-primary-cta">Ingresar Reporte</button>
+          <button type="submit" class="btn-primary-cta">Ingresar Aviso</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Contenedor de Toasts -->
+  <!-- Contenedor de Toasts / Notificaciones -->
   <div id="toast-container" aria-live="polite"></div>
 
-  <!-- Scripts (Corregido: sin integrity ni crossorigin bloqueantes) -->
+  <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="/src/js/main.js"></script>
 </body>

@@ -26,20 +26,19 @@ const CONFIG = {
   },
 
   /** Intervalo de polling para posición del vehículo (ms) */
-  VEHICLE_POLL_INTERVAL_MS: 12000,
+  VEHICLE_POLL_INTERVAL_MS: 4500,
   REFRESH_COOLDOWN_MS: 30000,
 
-  /** Configuración del mapa (CartoDB Positron: limpio, minimalista, técnico) */
+  /** Configuración del mapa (OpenStreetMap con estética clara y descansada) */
   MAP: {
-    defaultCenter: [-39.8142, -73.2459], // Los Ríos / Araucanía / Los Lagos
-    defaultZoom: 10,
+    defaultCenter: [-41.4720, -72.9350], // Puerto Montt (Centro / Mirasol / Pelluco)
+    defaultZoom: 13,
     minZoom: 6,
-    maxZoom: 18,
-    // CartoDB Dark Matter — Estilo minimalista showroom técnico acorde a DESIGN.md
-    tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    // Fallback estándar OSM
-    fallbackTileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    maxZoom: 19,
+    // OpenStreetMap estándar confiable (sin marcas de agua ni restricciones de API Key)
+    tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    tileAttribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+    fallbackTileUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
   },
 
   /** Empresas distribuidoras */
