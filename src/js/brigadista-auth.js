@@ -28,15 +28,15 @@ const AuthManager = (() => {
       companyId:  'saesa',
       assignedCase: 'CRT-2026-00847',
     },
-    {
-      employeeId: 'EMP-09341',
-      password:   'crell2026',
-      name:       'María Fernanda Quispe Ramos',
-      role:       'Técnica de Terreno',
-      brigade:    'BRG-017',
-      companyId:  'crell',
-      assignedCase: 'CRT-2026-00847',
-    },
+//    {
+//      employeeId: 'EMP-09341',
+//      password:   'crell2026',
+//      name:       'María Fernanda Quispe Ramos',
+//      role:       'Técnica de Terreno',
+//      brigade:    'BRG-017',
+//      companyId:  'crell',
+//      assignedCase: 'CRT-2026-00847',
+//    },
   ];
 
   // ─── Sesión activa ─────────────────────────────────────────────────────────
