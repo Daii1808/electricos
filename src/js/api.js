@@ -412,8 +412,8 @@ const MOCK_DATA = {
   ],
 };
 
-// Variable interna para corte actualmente seleccionado
-let _currentOutageId = 'CRT-2026-00955';
+// Variable interna para corte actualmente seleccionado (inicia null hasta que el usuario elija uno)
+let _currentOutageId = null;
 
 const API = {
   /**
@@ -437,13 +437,13 @@ const API = {
   },
 
   /**
-   * Obtiene detalles del corte activo o del ID especificado
+   * Obtiene detalles del corte activo o del ID especificado (sin mutar _currentOutageId)
    */
   async getOutageDetails(outageId = null) {
     const id = outageId || _currentOutageId;
-    const outage = MOCK_DATA.outages.find(o => o.id === id) || MOCK_DATA.outages[0];
-    _currentOutageId = outage.id;
-    return outage;
+    if (!id) return null;
+    const outage = MOCK_DATA.outages.find(o => o.id === id);
+    return outage || null;
   },
 
   /**

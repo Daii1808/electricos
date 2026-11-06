@@ -60,16 +60,34 @@ const UIManager = (() => {
     // 4. Banner de Furgoneta en Camino / en Terreno
     const vanBanner = document.getElementById('result-van-banner');
     const vanStatusText = document.getElementById('result-van-status-text');
+    const vanIconWrap = vanBanner?.querySelector('.van-eta-icon');
     if (vanBanner && vanStatusText) {
       vanBanner.style.display = 'flex';
       const isOnSite = outage.brigade?.status === 'on_site';
       vanBanner.className = `result-van-eta-banner ${isOnSite ? 'van-on-site' : ''}`;
 
       if (isOnSite) {
-        vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
+        vanStatusText.textContent = outage.brigade?.statusText || 'Personal técnico en el lugar — Faenas de reparación en curso';
+        if (vanIconWrap) {
+          vanIconWrap.innerHTML = `
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+            </svg>
+          `;
+        }
       } else {
         const etaMin = outage.brigade?.etaMinutes || 8;
-        vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${etaMin} min al sector`;
+        vanStatusText.textContent = outage.brigade?.statusText || `Furgoneta en camino — Llegada estimada en ~${etaMin} min al sector`;
+        if (vanIconWrap) {
+          vanIconWrap.innerHTML = `
+            <svg viewBox="0 0 32 20" width="22" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="2" x2="23" y2="2"></line>
+              <path d="M3 14V11c0-1.5 1-2.5 2.5-3l4-2c.8-.4 1.7-.6 2.5-.6H25c1.1 0 2 .9 2 2v6.6"></path>
+              <circle cx="8" cy="14.5" r="2.5"></circle>
+              <circle cx="22" cy="14.5" r="2.5"></circle>
+            </svg>
+          `;
+        }
       }
     }
 

@@ -23,6 +23,7 @@ const App = (() => {
   };
 
   let _activeOutages = [];
+  let _selectedOutageId = null;
   let _vehicleTimer = null;
 
   async function init() {
@@ -54,6 +55,8 @@ const App = (() => {
       _activeOutages = await API.getAllOutages(_currentFilter);
 
       if (isFirstLoad) {
+        _selectedOutageId = null;
+        API.setCurrentOutageId(null);
         // En la carga inicial: NO abrir ninguna tarjeta de forma intrusiva
         MapManager.renderOutages(_activeOutages, null);
         UIManager.hideResultCard();
@@ -65,16 +68,18 @@ const App = (() => {
         return;
       }
 
-      const currentSelectedId = API.getCurrentOutageId();
-      let activeOutage = _activeOutages.find(o => o.id === currentSelectedId);
+      let activeOutage = _selectedOutageId ? _activeOutages.find(o => o.id === _selectedOutageId) : null;
+      if (!activeOutage) {
+        _selectedOutageId = null;
+        API.setCurrentOutageId(null);
+        UIManager.hideResultCard();
+      }
 
-      // Renderizar mapa
-      MapManager.renderOutages(_activeOutages, activeOutage ? activeOutage.id : null);
+      // Renderizar mapa con el corte seleccionado actualmente por el usuario (si existe)
+      MapManager.renderOutages(_activeOutages, _selectedOutageId);
 
       if (activeOutage) {
         UIManager.renderOutageDetails(activeOutage);
-      } else {
-        UIManager.hideResultCard();
       }
 
     } catch (err) {
@@ -86,6 +91,8 @@ const App = (() => {
   // ─── Selección de un corte ─────────────────────────────────────────────────
 
   async function selectOutage(outageId) {
+    if (!outageId) return;
+    _selectedOutageId = outageId;
     API.setCurrentOutageId(outageId);
     const outage = await API.getOutageDetails(outageId);
     if (!outage) return;
@@ -111,25 +118,43 @@ const App = (() => {
             const loc = await API.getVehicleLocation(outage.id);
             if (loc) {
               outage.brigade.location = loc;
-              MapManager.renderBrigadeVehicle(outage.brigade, outage.center, outage.id);
+              const isSelected = (_selectedOutageId === outage.id);
+              MapManager.renderBrigadeVehicle(outage.brigade, outage.center, outage.id, isSelected);
             }
           }
         }
 
-        // 2. Si hay una tarjeta abierta, actualizar dinámicamente sus contadores
-        const currentId = API.getCurrentOutageId();
-        if (currentId) {
-          const selectedOutage = _activeOutages.find(o => o.id === currentId);
+        // 2. Si el usuario seleccionó un corte, actualizar ÚNICAMENTE la ficha de ese corte específico
+        if (_selectedOutageId) {
+          const selectedOutage = _activeOutages.find(o => o.id === _selectedOutageId);
           if (selectedOutage && selectedOutage.brigade) {
             const vanStatusText = document.getElementById('result-van-status-text');
             const vanBanner = document.getElementById('result-van-banner');
+            const vanIconWrap = vanBanner?.querySelector('.van-eta-icon');
             if (vanStatusText) {
               if (selectedOutage.brigade.status === 'on_site') {
-                vanStatusText.textContent = 'Furgoneta en el lugar — Personal técnico trabajando en el punto';
+                vanStatusText.textContent = selectedOutage.brigade.statusText || 'Personal técnico en el lugar — Faenas de reparación en curso';
                 if (vanBanner) vanBanner.className = 'result-van-eta-banner van-on-site';
+                if (vanIconWrap) {
+                  vanIconWrap.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                  `;
+                }
               } else {
-                vanStatusText.textContent = `Furgoneta en camino — Llegada estimada en ~${selectedOutage.brigade.etaMinutes} min al sector`;
+                vanStatusText.textContent = selectedOutage.brigade.statusText || `Furgoneta en camino — Llegada estimada en ~${selectedOutage.brigade.etaMinutes} min al sector`;
                 if (vanBanner) vanBanner.className = 'result-van-eta-banner';
+                if (vanIconWrap) {
+                  vanIconWrap.innerHTML = `
+                    <svg viewBox="0 0 32 20" width="22" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="7" y1="2" x2="23" y2="2"></line>
+                      <path d="M3 14V11c0-1.5 1-2.5 2.5-3l4-2c.8-.4 1.7-.6 2.5-.6H25c1.1 0 2 .9 2 2v6.6"></path>
+                      <circle cx="8" cy="14.5" r="2.5"></circle>
+                      <circle cx="22" cy="14.5" r="2.5"></circle>
+                    </svg>
+                  `;
+                }
               }
             }
           }
@@ -182,6 +207,9 @@ const App = (() => {
           UIManager.showToast(`Corte detectado en ${targetOutage.comuna} (${targetOutage.sector})`, 'error');
         }
       } else {
+        _selectedOutageId = null;
+        API.setCurrentOutageId(null);
+        MapManager.renderOutages(_activeOutages, null);
         UIManager.renderNormalService(query);
         UIManager.showToast(`Servicio operando con normalidad para "${query}".`, 'success');
       }
@@ -206,6 +234,9 @@ const App = (() => {
             UIManager.showToast(`Tu ubicación está en el área de corte de ${assessment.outage.comuna}`, 'error');
             await selectOutage(assessment.outage.id);
           } else {
+            _selectedOutageId = null;
+            API.setCurrentOutageId(null);
+            MapManager.renderOutages(_activeOutages, null);
             UIManager.renderNormalService('tu ubicación GPS');
             UIManager.showToast('Tu sector se encuentra con suministro eléctrico normal.', 'success');
           }
@@ -217,6 +248,9 @@ const App = (() => {
     const closeResultBtn = document.getElementById('close-result-card-btn');
     if (closeResultBtn) {
       closeResultBtn.addEventListener('click', () => {
+        _selectedOutageId = null;
+        API.setCurrentOutageId(null);
+        MapManager.renderOutages(_activeOutages, null);
         UIManager.hideResultCard();
       });
     }
